@@ -15,7 +15,7 @@ public class HexaMap {
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n;
-	 * 
+	 * HexagonMap blir 1 +(size-1)*2
 	 * 
 	 **/
 	public HexaMap(int size) {
@@ -75,6 +75,15 @@ public class HexaMap {
 				}
 			}
 		}
+		
+		for(int i=0;i<HexaMap.length;i++){
+			for(int j=0;j<HexaMap.length;j++){
+				if(HexaMap[i][j] !=null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100){
+					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
+				}
+			}
+		}
+		
 	}
 	
 	/**
