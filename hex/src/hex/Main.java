@@ -16,13 +16,17 @@ public class Main {
 		frame.pack();
 
 		frame.setVisible(true);
-		Player[] player = new Player[3];
+		
+		
+		
+		Player[] player = new Player[4];
 		player[0] = new Player(1);
 		player[1] = new Player(2);
 		player[2] = new Player(3);
+		player[3] = new Player(4);
 		HexaMap H = new HexaMap(4);
-		H.startMap(3, player);
-		
+		H.startMap(4, player);
+		Hexagon test = H.GetNeighbour(3, 3, 0);
 		System.out.println();
 	}
 
