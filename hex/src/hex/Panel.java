@@ -45,7 +45,6 @@ public class Panel extends JPanel implements Runnable{
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    H.draw(g);
-	    
 	}
 
 
