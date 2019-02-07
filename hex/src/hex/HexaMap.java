@@ -107,10 +107,9 @@ public class HexaMap {
 	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
-				if(HexaMap[x][y] != null) {
+				if(HexaMap[x][y] != null) {	
 					int[] px, py;
 					if(y%2 == 0) {
-						
 						px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
 						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width, (int)(y*(side + dy) + side));
 					}else {
