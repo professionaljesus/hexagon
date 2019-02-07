@@ -8,9 +8,9 @@ public class HexaMap {
 	 * Spara hexagon i varje element
 	 * 
 	 **/
-
-	public Hexagon[][] HexaMap;
+	private Hexagon[][] HexaMap;
 	private int size;
+
 	private int widht;
 	private int height;
 	private Stack<Integer[]> stacken;

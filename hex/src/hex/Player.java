@@ -10,7 +10,7 @@ public class Player {
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 
 		
-		//Bajskod
+		//Bajsk	od
 		for (int i = 0; i < myMap.length; i++) {
 			for (int j = 0; j < myMap.length; j++) {
 				myMap[i][j] = new Hexagon();
