@@ -116,7 +116,7 @@ public class HexaMap {
 				}else {
 					px = new int[]{x + 5, x + 10, x + 10, x + 5, x, x};
 				}
-				py = new int[] {y, y - (int)dy, y - (int)dy - (int)side, y - (int)dy - (int)(2*side), y - (int)dy - (int)side, y - (int)dy};
+				py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy)) - (int)dy, (int)(y*(side + dy)) - (int)dy - (int)side, (int)(y*(side + dy)) - (int)dy - (int)(2*side), (int)(y*(side + dy)) - (int)dy - (int)side, (int)(y*(side + dy)) - (int)dy};
 				
 				g.drawPolygon(px,py,6);
 			}
