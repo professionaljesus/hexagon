@@ -18,9 +18,14 @@ public class Hexagon {
 		return resources;
 	}
 	
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+	
 	public int getOwner() {
 		return owner;
 	}
+	
 	
 	
 }
