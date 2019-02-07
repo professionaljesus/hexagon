@@ -28,6 +28,7 @@ public class HexaMap {
 	public void endTurn() {
 		while(!stacken.isEmpty()) {
 			Integer[] t = stacken.pop();
+			
 		}
 	}
 	
