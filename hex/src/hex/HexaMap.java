@@ -3,33 +3,33 @@ package hex;
 
 
 public class HexaMap {
-	/*Spara hexagon i varje element
+	/**Spara hexagon i varje element
 	 * 
 	 * 
 	 * 
 	 * 
 	 * 
-	 */
+	 **/
 	
 	Hexagon[][] HexaMap;
 	private int size;
 	
 	
-	/*Size resulterar i sum(0,size) 6*n;
+	/**Size resulterar i sum(0,size) 6*n;
 	 * 
 	 * 
-	 */
+	 **/
 	public HexaMap(int size){
 		this.size = size;
 		HexaMap = new Hexagon[1+(size-1)*2][1+(size-1)*2];
 	}
 	
-	/*Kallas vid start.
+	/**Kallas vid start.
 	 * Sätter ut start player & fyller Mapen Hexagon med empty hexagon samt null för odef
 	 * 
 	 * 
-	 */
-	public void startMap(int PlayerAmount){
+	 **/
+	public void startMap(int PlayerAmount,Player[] player){
 		
 		//Sätter ut hela mapen som nya hexagon
 		for(int i =0; i < HexaMap.length;i++){
@@ -46,18 +46,28 @@ public class HexaMap {
 				k--;
 			}
 		}
+		//Sätter in player
+		for(int i =0; i < PlayerAmount;i++){
+			double angle = 0;
+			if(i !=0){
+				angle = Math.PI/((double) i*PlayerAmount); ;
+			}
+			int x = Math.round((float) (Math.cos(Math.PI/2 + angle)));
+			int y = Math.round((float) (Math.sin(Math.PI/2 + angle)));
+			HexaMap[size-1+x][size-1+y] = new Hexagon(player[i].getId(),100);
+		}
 		
 		
 	}
 	
 	
-	/*Direction 0 = Öst
+	/**Direction 0 = Öst
 	 * Direction 1 = SydÖst
 	 * Direction 2 = SydVäst
 	 * Direction 3 = Väst
 	 * Direction 4 = NorrVäst
 	 * Direction 5 = NorrÖst
-	 */
+	 **/
 	public Hexagon GetNeighbour(int Direction){
 		
 		
