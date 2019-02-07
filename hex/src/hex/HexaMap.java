@@ -112,9 +112,9 @@ public class HexaMap {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				int[] px, py;
 				if(y%2 == 0) {
-					px = new int[]{x, x + 5, x + 5, x, x - 5, x - 5};
+					px = new int[]{10*x, 10*x + 5, 10*x + 5, 10*x, 10*x - 5, 10*x - 5};
 				}else {
-					px = new int[]{x + 5, x + 10, x + 10, x + 5, x, x};
+					px = new int[]{10*x + 5, 10*x + 10, 10*x + 10, 10*x + 5, 10*x, 10*x};
 				}
 				py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy)) - (int)dy, (int)(y*(side + dy)) - (int)dy - (int)side, (int)(y*(side + dy)) - (int)dy - (int)(2*side), (int)(y*(side + dy)) - (int)dy - (int)side, (int)(y*(side + dy)) - (int)dy};
 				
