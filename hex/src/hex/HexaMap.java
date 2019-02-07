@@ -38,6 +38,10 @@ public class HexaMap {
 	public void move(Integer[] t) {
 		stacken.push(t);
 	}
+	
+	public Hexagon[][] getHexaMap(){
+		return HexaMap;
+	}
 
 	/**
 	 * Kallas vid start. Sätter ut start player & fyller Mapen Hexagon med empty
