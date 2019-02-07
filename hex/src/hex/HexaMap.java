@@ -107,7 +107,7 @@ public class HexaMap {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				int[] px,py = new int[6];
 				if(x%2 == 0) {
-					
+					 
 				}
 			}
 		}
