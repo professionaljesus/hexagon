@@ -10,15 +10,22 @@ public class HexaMap {
 	 **/
 	private Hexagon[][] HexaMap;
 	private int size;
+
+	private int widht;
+	private int height;
 	private Stack<Integer[]> stacken;
+
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n;
-	 * 
+	 * HexagonMap blir 1 +(size-1)*2
 	 * 
 	 **/
-	public HexaMap(int size) {
+	public HexaMap(int size, int width, int height) {
 		this.size = size;
+		this.widht = width;
+		this.height = height;
+		
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		stacken = new Stack<Integer[]>();
 	}
@@ -74,6 +81,15 @@ public class HexaMap {
 				}
 			}
 		}
+		
+		for(int i=0;i<HexaMap.length;i++){
+			for(int j=0;j<HexaMap.length;j++){
+				if(HexaMap[i][j] !=null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100){
+					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
+				}
+			}
+		}
+		
 	}
 	
 	/**
@@ -162,7 +178,77 @@ public class HexaMap {
 
 		return HexaMap[x + d1][y + d2];
 	}
+	
+	public void draw(Graphics g){
+		for(int x = 0; x < HexaMap.length; x++) {
+			for(int y = 0; y < HexaMap[x].length; y++) {
+				if(x + y >= size-1 && x+y<= size*2 +1){
+					double rad = 20;
+					double originX = (widht/2) - rad*(size-1)+ x*rad*2;
+					double originY = (height/2) - rad * Math.sin(30) * (size-1) + y*rad*2;
+					drawHexagon(g, originX, originY,rad);
+				}
+				
+			}
+		}
+	}
+	
+	public void drawHexagon(Graphics g, double originX, double originY, double rad){
+		double base = rad * Math.sin(30);
+		int[] px,py;
+		
+		
+		py = new int[]{
+				(int) (originY-(rad/2)),//top left
+				(int) (originY+(rad/2)),//top right
+				(int) (originY+rad),// right
+				(int) (originY+(rad/2)),//bottom right
+				(int) (originY-(rad/2)),//bottom left
+				(int) (originY-rad),// left
+		};
+		
+		px = new int[]{
+				(int) (originX-base),//top left
+				(int) (originX-base),//top right
+				(int) (originX),// right
+				(int) (originX+base),//bottom right
+				(int) (originX+base),//bottom left
+				(int) (originX)// left
+		};
+		
+		
+		g.drawPolygon(px,py,6);
+		
+		/*
+		int width = 20;
+		double side = width/Math.cos(Math.PI/6);
+		double dy = width*Math.tan(Math.PI/6);
+		
+		int[] px, py;
+		if(y%2 == 0) {
+			px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
+			g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width + xTranslation, (int)(y*(side + dy) + side + yTranslation));
+		}else {
+			px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
+			g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x + xTranslation, (int)(y*(side + dy) + side + yTranslation));
+		}
 
+		py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
+		
+		
+		//Add the translations
+		for(int i = 0; i<px.length; i++){
+			px[i] +=  xTranslation;
+		}
+		for(int i = 0; i<py.length; i++){
+			py[i] +=  yTranslation;
+		}
+		*/
+	
+	}
+	
+	 
+	/*
 	public void draw(Graphics g) {
 		int width = 20;
 		double side = width/Math.cos(Math.PI/6);
@@ -186,6 +272,8 @@ public class HexaMap {
 				}
 			}
 		}
-	}
+	} 
+	 */
+	
 
 }
