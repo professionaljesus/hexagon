@@ -107,15 +107,17 @@ public class HexaMap {
 	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
-				int[] px, py;
-				if(y%2 == 0) {
-					px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
-				}else {
-					px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
+				if(HexaMap[x][y] != null) {
+					int[] px, py;
+					if(y%2 == 0) {
+						px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
+					}else {
+						px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
+					}
+					py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
+					
+					g.drawPolygon(px,py,6);
 				}
-				py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
-				
-				g.drawPolygon(px,py,6);
 			}
 		}
 	}
