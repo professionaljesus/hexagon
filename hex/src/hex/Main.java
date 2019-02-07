@@ -30,9 +30,6 @@ public class Main {
 		System.out.println();
 	}
 	
-	public void test(){
-		System.out.println("test");
-	}
-
+	
 }
 
