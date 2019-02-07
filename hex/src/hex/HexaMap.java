@@ -24,7 +24,9 @@ public class HexaMap {
 		stacken = new Stack<Integer[]>();
 	}
 	
-	
+	/**Get's called at the endofTurn
+	 * 
+	 */
 	public void endTurn() {
 		while(!stacken.isEmpty()) {
 			Integer[] t = stacken.pop();
