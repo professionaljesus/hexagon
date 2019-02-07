@@ -45,21 +45,17 @@ public class HexaMap {
 			}
 			k--;
 		}
-		// Sätter in player
-		for (int i = 0; i < PlayerAmount; i++) {
 
-			double angle = i * 2 * Math.PI / ((double) PlayerAmount);
-			
-
-			float x = ((float) (((size - 1)) * ((Math.cos(Math.PI / 2 + angle)))));
-			float y = ((float) (((size - 1)) * ((Math.sin(Math.PI / 2 + angle)))));
-
-			// Test pixel to Hex
-			int x2 = Math.round(((float) (Math.sqrt(3) / 3 * x - 1. / 3 * y)));
-			int y2 = Math.round((float) (2. / 3 * y));
-			HexaMap[size - 1 + x2][size - 1 + y2] = new Hexagon(player[i].getId(), 100);
-
+		
+		//Placering av spelar positioner
+		switch(PlayerAmount){
+		case 3:
+			HexaMap[0][size-1].setOwner(player[0].getId());
+			HexaMap[size-1][size*2-2].setOwner(player[1].getId());
+			HexaMap[size*2-2][0].setOwner(player[2].getId());
+			break;
 		}
+		
 
 	}
 
@@ -107,6 +103,7 @@ public class HexaMap {
 	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
+				//If y> size add 1++;
 				if(HexaMap[x][y] != null) {
 					int[] px, py;
 					if(y%2 == 0) {
