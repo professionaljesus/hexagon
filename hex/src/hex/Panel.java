@@ -17,6 +17,8 @@ public class Panel extends JPanel implements Runnable{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
+	private final int MAX_TURN = 18;
+
 	
 	public Panel() throws IOException {
 		super();
@@ -29,7 +31,7 @@ public class Panel extends JPanel implements Runnable{
 		player[3] = new Player(4,4);
 		H = new HexaMap(4);
 		H.startMap(4, player);
- 
+		
 	}
 	
 	public void addNotify() {
@@ -59,12 +61,20 @@ public class Panel extends JPanel implements Runnable{
         //game loop
         while(true) {
              
-            start = System.nanoTime();
+           // start = System.nanoTime();
              
-            elapsed = System.nanoTime() - start;
+           // elapsed = System.nanoTime() - start;
             
+            
+            try {
+				System.in.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             repaint();
-             
+            System.out.println("fuck");
+             /*
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;
              
@@ -76,7 +86,7 @@ public class Panel extends JPanel implements Runnable{
                 e.printStackTrace();
                  
             }
-             
+             */
              
         }
 		
