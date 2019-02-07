@@ -20,6 +20,10 @@ public class HexaMap {
 		this.size = size;
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 	}
+	
+	public Hexagon[][] getHexaMap(){
+		return HexaMap;
+	}
 
 	/**
 	 * Kallas vid start. Sätter ut start player & fyller Mapen Hexagon med empty
