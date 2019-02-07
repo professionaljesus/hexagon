@@ -105,7 +105,10 @@ public class HexaMap {
 	public void draw(Graphics g) {
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
-				
+				int[] px,py = new int[6];
+				if(x%2 == 0) {
+					
+				}
 			}
 		}
 	}
