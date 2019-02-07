@@ -70,6 +70,9 @@ public class Panel extends JPanel implements Runnable{
 		
 	}
 	
+	public void test2(){
+		System.out.println("testing");
+	}
 	
 	
 	public void test(){
