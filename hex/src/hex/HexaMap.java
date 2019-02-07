@@ -11,7 +11,7 @@ public class HexaMap {
 	 * 
 	 **/
 	
-	Hexagon[][] HexaMap;
+	public Hexagon[][] HexaMap;
 	private int size;
 	
 	
@@ -43,18 +43,19 @@ public class HexaMap {
 		for(int i=0;i<size-1;i++){
 			for(int j=0;j<k;j++){
 				HexaMap[i][j] = null;
-				k--;
+				HexaMap[HexaMap.length-i-1][HexaMap.length-j-1] = null;
 			}
+			k--;
 		}
 		//Sätter in player
 		for(int i =0; i < PlayerAmount;i++){
-			double angle = 0;
-			if(i !=0){
-				angle = Math.PI/((double) i*PlayerAmount); ;
-			}
-			int x = Math.round((float) (Math.cos(Math.PI/2 + angle)));
-			int y = Math.round((float) (Math.sin(Math.PI/2 + angle)));
-			HexaMap[size-1+x][size-1+y] = new Hexagon(player[i].getId(),100);
+
+			double angle = i*2*Math.PI/((double)PlayerAmount); ;
+
+			
+			int x =  Math.toIntExact((long)(((size-1))*((Math.cos(angle)))));
+			int y =  Math.toIntExact((long)(((size-1))*((Math.sin(angle)))));
+			HexaMap[size-1-x][size-1-y] = new Hexagon(player[i].getId(),100);
 		}
 		
 		
