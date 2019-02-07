@@ -2,7 +2,7 @@ package hex;
 
 
 
-public class Map {
+public class HexaMap {
 	/*Spara hexagon i varje element
 	 * 
 	 * 
@@ -11,7 +11,7 @@ public class Map {
 	 * 
 	 */
 	
-	Hexagon[][] Map;
+	Hexagon[][] HexaMap;
 	private int size;
 	
 	
@@ -19,9 +19,9 @@ public class Map {
 	 * 
 	 * 
 	 */
-	public Map(int size){
+	public HexaMap(int size){
 		this.size = size;
-		Map = new Hexagon[1+(size-1)*2][1+(size-1)*2];
+		HexaMap = new Hexagon[1+(size-1)*2][1+(size-1)*2];
 	}
 	
 	/*Kallas vid start.
@@ -32,9 +32,9 @@ public class Map {
 	public void startMap(int PlayerAmount){
 		
 		//Sätter ut hela mapen som nya hexagon
-		for(int i =0; i < Map.length;i++){
-			for(int j =0; j < Map.length;j++){
-				Map[i][j]=new Hexagon();
+		for(int i =0; i < HexaMap.length;i++){
+			for(int j =0; j < HexaMap.length;j++){
+				HexaMap[i][j]=new Hexagon();
 			}
 		}
 		
@@ -42,7 +42,7 @@ public class Map {
 		int k = size-1;
 		for(int i=0;i<size-1;i++){
 			for(int j=0;j<k;j++){
-				Map[i][j] = null;
+				HexaMap[i][j] = null;
 				k--;
 			}
 		}
