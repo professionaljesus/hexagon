@@ -1,4 +1,9 @@
 # hexagon
+Fun facts
+ - varje hexagon har en int som beskriver vem som äger rutan, alltså varje spelare har ett id.
+
+
+
 TODO
 
 - Klass Hexagon som håller koll på värde -- GUSTAF
@@ -6,6 +11,7 @@ TODO
 - Klass DrawMap med update()
 - Göra Player med Turn()
 
+<<<<<<< HEAD
 # hexagon-rl
 A Reinforcement Learning implementation for Danske Bank's Hexagon game. \
 
@@ -42,3 +48,5 @@ The implementation in this reproduction has these differences:
  - All edge cells (other than poles) have 7 neighbours rather than 6
  - Cells have consistent (according to hexagonal addressing) naming rather than random names
  - Order of playing moves at each round is random hence likelihood of moves overwriting other moves is equal for all players.
+=======
+>>>>>>> branch 'master' of https://github.com/professionaljesus/hexagon.git
