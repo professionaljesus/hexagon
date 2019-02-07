@@ -25,11 +25,12 @@ public class Panel extends JPanel implements Runnable{
 		setPreferredSize(new Dimension(width,height));
         requestFocus();
     	player = new Player[4];
-		player[0] = new Player(1);
-		player[1] = new Player(2);
-		player[2] = new Player(3);
-		player[3] = new Player(4);
+		player[0] = new Player(1,4);
+		player[1] = new Player(2,4);
+		player[2] = new Player(3,4);
+		player[3] = new Player(4,4);
 		H = new HexaMap(4,width,height);
+
 		H.startMap(4, player);
  
 	}

@@ -1,6 +1,7 @@
 package hex;
 
 import java.awt.Graphics;
+import java.util.Stack;
 
 public class HexaMap {
 	/**
@@ -12,10 +13,12 @@ public class HexaMap {
 	private int size;
 	private int widht;
 	private int height;
+	private Stack<Integer[]> stacken;
+
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n;
-	 * 
+	 * HexagonMap blir 1 +(size-1)*2
 	 * 
 	 **/
 	public HexaMap(int size, int width, int height) {
@@ -24,6 +27,81 @@ public class HexaMap {
 		this.height = height;
 		
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+		stacken = new Stack<Integer[]>();
+	}
+	
+	/**Get's called at the endofTurn
+	 * 
+	 */
+	public void endTurn() {
+		while(!stacken.isEmpty()) {
+			Integer[] t = stacken.pop();
+			if(HexaMap[t[3]][t[4]].getOwner() != t[0]){
+				continue;
+			}
+			int d1 = 0;
+			int d2 = 0;
+			switch (t[1]) {
+			case 0:
+				d1 = 1;
+				break;
+			case 1:
+				d2 = 1;
+				break;
+			case 2:
+				d1 = -1;
+				d2 = 1;
+				break;
+			case 3:
+				d1 = -1;
+				break;
+			case 4:
+				d2 = -1;
+				break;
+			case 5:
+				d1 = 1;
+				d2 = -1;
+				break;
+			}if (HexaMap[t[3]][t[4]] == null || (t[3] + d1 > 1 + size * 2) || (t[4] + d2 > 1 + size * 2)) {
+				continue;
+			}
+			if(HexaMap[t[3]][t[4]].getResources() < t[2]){
+				continue;
+			}
+			if (HexaMap[t[3] + d1][t[4] + d2].getOwner() == t[0]){
+				HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] + d1][t[4] + d2].getResources() + t[2]);
+				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()-t[2]);
+			}else{
+				if(HexaMap[t[3+ d1]][t[4 + d2]].getResources() > HexaMap[t[3]][t[4]].getResources()){
+					continue;
+				}else{
+					HexaMap[t[3+ d1]][t[4 + d2]].setResources(t[2] - HexaMap[t[3] + d1][t[4] + d2].getResources());
+					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()-t[2]);
+					HexaMap[t[3+ d1]][t[4 + d2]].setOwner(t[0]);
+				}
+			}
+		}
+		
+		for(int i=0;i<HexaMap.length;i++){
+			for(int j=0;j<HexaMap.length;j++){
+				if(HexaMap[i][j] !=null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100){
+					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * @param t playerid, dir, res, x, y
+	 *
+	 */
+	public void move(Integer[] t) {
+		stacken.push(t);
+	}
+	
+	public Hexagon[][] getHexaMap(){
+		return HexaMap;
 	}
 
 	/**
@@ -178,10 +256,9 @@ public class HexaMap {
 	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
-				if(HexaMap[x][y] != null) {
+				if(HexaMap[x][y] != null) {	
 					int[] px, py;
 					if(y%2 == 0) {
-						
 						px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
 						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width, (int)(y*(side + dy) + side));
 					}else {
