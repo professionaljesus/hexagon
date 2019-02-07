@@ -29,6 +29,10 @@ public class Main {
 		Hexagon test = H.GetNeighbour(3, 3, 0);
 		System.out.println();
 	}
+	
+	public void test(){
+		System.out.println("test");
+	}
 
 }
 
