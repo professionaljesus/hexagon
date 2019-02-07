@@ -101,12 +101,14 @@ public class HexaMap {
 	}
 
 	public void draw(Graphics g) {
-		int width = 10;
-		double side = width / Math.cos(Math.PI / 6);
-		double dy = width * Math.tan(Math.PI / 6);
 
-		for (int x = 0; x < HexaMap.length; x++) {
-			for (int y = 0; y < HexaMap[x].length; y++) {
+		int width = 20;
+		double side = width/Math.cos(Math.PI/6);
+		double dy = width*Math.tan(Math.PI/6);
+	
+		for(int x = 0; x < HexaMap.length; x++) {
+			for(int y = 0; y < HexaMap[x].length; y++) {
+
 				int[] px, py;
 				if (y % 2 == 0) {
 					px = new int[] { 2 * width * x, 2 * width * x + width, 2 * width * x + width, 2 * width * x,
