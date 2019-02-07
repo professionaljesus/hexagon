@@ -110,12 +110,17 @@ public class HexaMap {
 				if(HexaMap[x][y] != null) {
 					int[] px, py;
 					if(y%2 == 0) {
+						
 						px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
+						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width, (int)(y*(side + dy) + side));
 					}else {
 						px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
+						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x, (int)(y*(side + dy) + side));
 					}
 					py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
 					g.drawPolygon(px,py,6);
+					
+					
 				}
 			}
 		}
