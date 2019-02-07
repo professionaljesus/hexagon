@@ -30,11 +30,15 @@ public class Map {
 	 * 
 	 */
 	public void startMap(int PlayerAmount){
+		
+		//Sätter ut hela mapen som nya hexagon
 		for(int i =0; i < Map.length;i++){
 			for(int j =0; j < Map.length;j++){
 				Map[i][j]=new Hexagon();
 			}
 		}
+		
+		//Sätter de som inte används till null
 		int k = size-1;
 		for(int i=0;i<size-1;i++){
 			for(int j=0;j<k;j++){
@@ -42,7 +46,7 @@ public class Map {
 				k--;
 			}
 		}
-
+		
 		
 	}
 	
