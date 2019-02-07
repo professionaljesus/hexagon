@@ -6,10 +6,6 @@ public class HexaMap {
 	/**
 	 * Spara hexagon i varje element
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 **/
 
 	public Hexagon[][] HexaMap;
@@ -53,7 +49,7 @@ public class HexaMap {
 		for (int i = 0; i < PlayerAmount; i++) {
 
 			double angle = i * 2 * Math.PI / ((double) PlayerAmount);
-			;
+			
 
 			float x = ((float) (((size - 1)) * ((Math.cos(Math.PI / 2 + angle)))));
 			float y = ((float) (((size - 1)) * ((Math.sin(Math.PI / 2 + angle)))));
@@ -66,8 +62,6 @@ public class HexaMap {
 		}
 
 	}
-	
-
 
 	/**
 	 * Direction 0 = Öst Direction 1 = SydÖst Direction 2 = SydVäst Direction 3
@@ -84,7 +78,8 @@ public class HexaMap {
 			d2 = 1;
 			break;
 		case 2:
-			d1 = -1; d2 =1;
+			d1 = -1;
+			d2 = 1;
 			break;
 		case 3:
 			d1 = -1;
@@ -93,17 +88,18 @@ public class HexaMap {
 			d2 = -1;
 			break;
 		case 5:
-			d1 = 1;d2 =-1;
+			d1 = 1;
+			d2 = -1;
 			break;
 		}
 
-		if (HexaMap[x][y] == null || (x+d1 > 1+size*2) || (y+d2> 1+size*2) ){
+		if (HexaMap[x][y] == null || (x + d1 > 1 + size * 2) || (y + d2 > 1 + size * 2)) {
 			return null;
 		}
 
-			return HexaMap[x+d1][y+d2];
+		return HexaMap[x + d1][y + d2];
 	}
-	
+
 	public void draw(Graphics g) {
 		int width = 20;
 		double side = width/Math.cos(Math.PI/6);
