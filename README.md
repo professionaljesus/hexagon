@@ -7,7 +7,7 @@ Fun facts
 TODO
 
 - Klass Hexagon som håller koll på värde -- GUSTAF
-- Klass Map som har Hexagonen i en datastruktur
+- Klass Map som har Hexagonen i en datastruktur -- Jonte
 - Klass DrawMap med update()
 - Göra Player med Turn() -- GUSTAF
 

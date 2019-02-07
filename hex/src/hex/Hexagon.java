@@ -9,9 +9,9 @@ public class Hexagon {
 		this.resources = 0;
 	}
 	
-	public Hexagon(int owner) {
+	public Hexagon(int owner,int resources) {
 		this.owner = owner;
-		this.resources = 0;
+		this.resources = resources;
 	}
 	
 	public int getResources() {
