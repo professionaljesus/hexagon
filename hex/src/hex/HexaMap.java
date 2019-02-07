@@ -105,7 +105,7 @@ public class HexaMap {
 	}
 	
 	public void draw(Graphics g) {
-		int width = 10;
+		int width = 20;
 		double side = width/Math.cos(Math.PI/6);
 		double dy = width*Math.tan(Math.PI/6);
 	
