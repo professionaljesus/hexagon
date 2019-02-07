@@ -49,7 +49,7 @@ public class HexaMap {
 		for (int i = 0; i < PlayerAmount; i++) {
 
 			double angle = i * 2 * Math.PI / ((double) PlayerAmount);
-			;
+			
 
 			float x = ((float) (((size - 1)) * ((Math.cos(Math.PI / 2 + angle)))));
 			float y = ((float) (((size - 1)) * ((Math.sin(Math.PI / 2 + angle)))));
