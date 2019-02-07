@@ -59,13 +59,18 @@ public class HexaMap {
 			}if (HexaMap[t[3]][t[4]] == null || (t[3] + d1 > 1 + size * 2) || (t[4] + d2 > 1 + size * 2)) {
 				continue;
 			}
+			if(HexaMap[t[3]][t[4]].getResources() < t[2]){
+				continue;
+			}
 			if (HexaMap[t[3] + d1][t[4] + d2].getOwner() == t[0]){
-				HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] + d1][t[4] + d2].getResources() + HexaMap[t[3]][t[4]].getResources());
+				HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] + d1][t[4] + d2].getResources() + t[2]);
+				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()-t[2]);
 			}else{
 				if(HexaMap[t[3+ d1]][t[4 + d2]].getResources() > HexaMap[t[3]][t[4]].getResources()){
 					continue;
 				}else{
-					HexaMap[t[3+ d1]][t[4 + d2]].setResources(HexaMap[t[3]][t[4]].getResources() - HexaMap[t[3] + d1][t[4] + d2].getResources());
+					HexaMap[t[3+ d1]][t[4 + d2]].setResources(t[2] - HexaMap[t[3] + d1][t[4] + d2].getResources());
+					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()-t[2]);
 					HexaMap[t[3+ d1]][t[4 + d2]].setOwner(t[0]);
 				}
 			}
