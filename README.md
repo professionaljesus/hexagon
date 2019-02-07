@@ -1,4 +1,7 @@
 # hexagon
+På detta företag, har vi en strikt drogpolicy. Random pissprov kan förekomma.
+
+
 Fun facts
  - varje hexagon har en int som beskriver vem som äger rutan, alltså varje spelare har ett id.
 
