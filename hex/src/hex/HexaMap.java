@@ -107,6 +107,7 @@ public class HexaMap {
 	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
+				//If y> size add 1++;
 				if(HexaMap[x][y] != null) {
 					int[] px, py;
 					if(y%2 == 0) {
