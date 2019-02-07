@@ -101,5 +101,9 @@ public class HexaMap {
 
 			return HexaMap[x+d1][y+d2];
 	}
+	
+	public void draw() {
+		
+	}
 
 }
