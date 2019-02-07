@@ -17,17 +17,19 @@ public class Panel extends JPanel implements Runnable{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
+	private int width = 1280;
+	private int height = 720;
 	
 	public Panel() throws IOException {
 		super();
-		setPreferredSize(new Dimension(1280,720));
+		setPreferredSize(new Dimension(width,height));
         requestFocus();
     	player = new Player[4];
 		player[0] = new Player(1);
 		player[1] = new Player(2);
 		player[2] = new Player(3);
 		player[3] = new Player(4);
-		H = new HexaMap(4);
+		H = new HexaMap(4,width,height);
 		H.startMap(4, player);
  
 	}
