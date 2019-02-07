@@ -66,6 +66,8 @@ public class HexaMap {
 		}
 
 	}
+	
+
 
 	/**
 	 * Direction 0 = ÷st Direction 1 = Syd÷st Direction 2 = SydV‰st Direction 3

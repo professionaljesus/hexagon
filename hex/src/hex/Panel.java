@@ -82,6 +82,10 @@ public class Panel extends JPanel implements Runnable{
         }
 		
 	}
-
+	
+	
+	
+	
+	
 
 }
