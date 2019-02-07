@@ -53,9 +53,14 @@ public class HexaMap {
 			double angle = i*2*Math.PI/((double)PlayerAmount); ;
 
 			
-			int x =  Math.toIntExact((long)(((size-1))*((Math.cos(angle)))));
-			int y =  Math.toIntExact((long)(((size-1))*((Math.sin(angle)))));
-			HexaMap[size-1-x][size-1-y] = new Hexagon(player[i].getId(),100);
+			
+			float x =  ((float)(((size-1))*((Math.cos(Math.PI/2+angle)))));
+			float y =  ((float)(((size-1))*((Math.sin(Math.PI/2+angle)))));
+			
+			//Test pixel to Hex
+			int x2 = Math.round(((float)(Math.sqrt(3)/3 * x  -  1./3 * y) ));
+			int y2 =  Math.round((float)(   2./3 * y));
+			HexaMap[size-1+x2][size-1+y2] = new Hexagon(player[i].getId(),100);
 		}
 		
 		
