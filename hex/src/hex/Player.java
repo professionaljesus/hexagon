@@ -38,6 +38,14 @@ public class Player {
 
 	}
 	
+	/**
+	 * Gör ett Move
+	 * @param x
+	 * @param y
+	 * @param Direction
+	 * @param resource
+	 * @return
+	 */
 	public int[] PlayerMove(int x,int y, int Direction,int resource){
 		int[] v = new int[5];
 		v[0] = this.id;
