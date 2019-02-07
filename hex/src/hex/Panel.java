@@ -20,7 +20,7 @@ public class Panel extends JPanel implements Runnable{
 		super();
 		setPreferredSize(new Dimension(1280,720));
         requestFocus();
-        System.out.println();
+ 
 	}
 	
 	public void addNotify() {
