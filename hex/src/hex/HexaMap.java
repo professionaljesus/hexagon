@@ -1,6 +1,7 @@
 package hex;
 
 import java.awt.Graphics;
+import java.util.Stack;
 
 public class HexaMap {
 	/**
@@ -10,6 +11,7 @@ public class HexaMap {
 
 	public Hexagon[][] HexaMap;
 	private int size;
+	private Stack<Integer[]> stacken;
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n;
@@ -19,6 +21,22 @@ public class HexaMap {
 	public HexaMap(int size) {
 		this.size = size;
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+		stacken = new Stack<Integer[]>();
+	}
+	
+	
+	public void endTurn() {
+		while(!stacken.isEmpty()) {
+			Integer[] t = stacken.pop();
+		}
+	}
+	
+	/**
+	 * @param t playerid, dir, res, x, y
+	 *
+	 */
+	public void move(Integer[] t) {
+		stacken.push(t);
 	}
 
 	/**
