@@ -1,5 +1,7 @@
 package hex;
 
+import java.awt.Graphics;
+
 public class HexaMap {
 	/**
 	 * Spara hexagon i varje element
@@ -102,8 +104,15 @@ public class HexaMap {
 			return HexaMap[x+d1][y+d2];
 	}
 	
-	public void draw() {
-		
+	public void draw(Graphics g) {
+		for(int x = 0; x < HexaMap.length; x++) {
+			for(int y = 0; y < HexaMap[x].length; y++) {
+				int[] px,py = new int[6];
+				if(x%2 == 0) {
+					 
+				}
+			}
+		}
 	}
 
 }
