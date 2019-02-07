@@ -15,11 +15,20 @@ public class Panel extends JPanel implements Runnable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Thread thread;
+	private HexaMap H;
+	private Player[] player;
 	
 	public Panel() throws IOException {
 		super();
 		setPreferredSize(new Dimension(1280,720));
         requestFocus();
+    	player = new Player[4];
+		player[0] = new Player(1);
+		player[1] = new Player(2);
+		player[2] = new Player(3);
+		player[3] = new Player(4);
+		H = new HexaMap(4);
+		H.startMap(4, player);
  
 	}
 	
@@ -35,6 +44,8 @@ public class Panel extends JPanel implements Runnable{
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
+	    H.draw(g);
+	    
 	}
 
 
@@ -52,6 +63,8 @@ public class Panel extends JPanel implements Runnable{
             start = System.nanoTime();
              
             elapsed = System.nanoTime() - start;
+            
+            repaint();
              
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;

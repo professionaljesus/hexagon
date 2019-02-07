@@ -103,12 +103,20 @@ public class HexaMap {
 	}
 	
 	public void draw(Graphics g) {
+		double side = 5/Math.cos(Math.PI/6);
+		double dy = 5*Math.tan(Math.PI/6);
+	
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
-				int[] px,py = new int[6];
-				if(x%2 == 0) {
-					 
+				int[] px, py;
+				if(y%2 == 0) {
+					px = new int[]{x, x + 5, x + 5, x, x - 5, x - 5};
+				}else {
+					px = new int[]{x + 5, x + 10, x + 10, x + 5, x, x};
 				}
+				py = new int[] {y, y - (int)dy, y - (int)dy - (int)side, y - (int)dy - (int)(2*side), y - (int)dy - (int)side, y - (int)dy};
+				
+				g.drawPolygon(px,py,6);
 			}
 		}
 	}
