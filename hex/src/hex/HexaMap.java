@@ -10,7 +10,10 @@ public class HexaMap {
 	 **/
 	private Hexagon[][] HexaMap;
 	private int size;
-
+	
+	public static final int HEXAGON_HEIGHT = 80;
+	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI/6));
+	
 	private int widht;
 	private int height;
 	private Stack<Integer[]> stacken;
@@ -183,98 +186,50 @@ public class HexaMap {
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				if(x + y >= size-1 && x+y<= size*2 +1){
-					double rad = 20;
-					double originX = (widht/2) - rad*(size-1)+ x*rad*2;
-					double originY = (height/2) - rad * Math.sin(30) * (size-1) + y*rad*2;
-					drawHexagon(g, originX, originY,rad);
+					double originX = (widht/2) - (size-0.5)*(HEXAGON_WIDTH/2) //Center of the screen
+							- (HEXAGON_WIDTH/2)*(size-1)
+							+ x*(HEXAGON_WIDTH)// 
+							+ (y-size)*(HEXAGON_WIDTH/2); //Shift all the hexagons
+					double originY = (height/2) - (size-0.5)*(HEXAGON_HEIGHT/2)
+							- (HEXAGON_WIDTH/2) * (size-1)
+							+ y*(HEXAGON_HEIGHT/2)*1.5;
+					drawHexagon(g, x, y, originX, originY);
 				}
 				
 			}
 		}
 	}
 	
-	public void drawHexagon(Graphics g, double originX, double originY, double rad){
-		double base = rad * Math.sin(30);
-		
+
+	public void drawHexagon(Graphics g, int x, int y, double originX, double originY){
 		int[] px,py;
-		
-		
-		py = new int[]{
-				(int) (originY-(rad/2)),//top left
-				(int) (originY+(rad/2)),//top right
-				(int) (originY+rad),// right
-				(int) (originY+(rad/2)),//bottom right
-				(int) (originY-(rad/2)),//bottom left
-				(int) (originY-rad),// left
+
+		px = new int[]{
+				(int) (originX - (HEXAGON_WIDTH/2)), //top left
+				(int) (originX), //top
+				(int) (originX + (HEXAGON_WIDTH/2)), // top right
+				(int) (originX + (HEXAGON_WIDTH/2)), //top left
+				(int) (originX), //top
+				(int) (originX - (HEXAGON_WIDTH/2)) // top right
 		};
 		
-		px = new int[]{
-				(int) (originX-base),//top left
-				(int) (originX-base),//top right
-				(int) (originX),// right
-				(int) (originX+base),//bottom right
-				(int) (originX+base),//bottom left
-				(int) (originX)// left
+		py = new int[]{
+				(int) (originY - (HEXAGON_HEIGHT/4)), //top left
+				(int) (originY - (HEXAGON_HEIGHT/2)), //top
+				(int) (originY - (HEXAGON_HEIGHT/4)), // top right
+				(int) (originY + (HEXAGON_HEIGHT/4)), //top left
+				(int) (originY + (HEXAGON_HEIGHT/2)), //top
+				(int) (originY + (HEXAGON_HEIGHT/4) ) // top right
 		};
 		
 		
 		g.drawPolygon(px,py,6);
+		g.drawString("("+x+","+y+")", (int) originX-12, (int) originY+5); 
 		
-		/*
-		int width = 20;
-		double side = width/Math.cos(Math.PI/6);
-		double dy = width*Math.tan(Math.PI/6);
-		
-		int[] px, py;
-		if(y%2 == 0) {
-			px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
-			g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width + xTranslation, (int)(y*(side + dy) + side + yTranslation));
-		}else {
-			px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
-			g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x + xTranslation, (int)(y*(side + dy) + side + yTranslation));
-		}
 
-		py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
-		
-		
-		//Add the translations
-		for(int i = 0; i<px.length; i++){
-			px[i] +=  xTranslation;
-		}
-		for(int i = 0; i<py.length; i++){
-			py[i] +=  yTranslation;
-		}
-		*/
 	
 	}
 	
-	 
-	/*
-	public void draw(Graphics g) {
-		int width = 20;
-		double side = width/Math.cos(Math.PI/6);
-		double dy = width*Math.tan(Math.PI/6);
-	
-		for(int x = 0; x < HexaMap.length; x++) {
-			for(int y = 0; y < HexaMap[x].length; y++) {
-				if(HexaMap[x][y] != null) {	
-					int[] px, py;
-					if(y%2 == 0) {
-						px = new int[]{2*width*x, 2*width*x + width, 2*width*x + width, 2*width*x, 2*width*x - width, 2*width*x - width};
-						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x - width, (int)(y*(side + dy) + side));
-					}else {
-						px = new int[]{2*width*x + width, 2*width*x +2*width, 2*width*x + 2*width, 2*width*x + width, 2*width*x, 2*width*x};
-						g.drawString("(" + String.valueOf(x) + "," + String.valueOf(y) + ")", 2*width*x, (int)(y*(side + dy) + side));
-					}
-					py = new int[] {(int)(y*(side + dy)), (int)(y*(side + dy) + dy), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + 2*dy + side), (int)(y*(side + dy) + dy + side), (int)(y*(side + dy) + dy)};
-					g.drawPolygon(px,py,6);
-					
-					
-				}
-			}
-		}
-	} 
-	 */
 	
 
 }
