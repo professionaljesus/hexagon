@@ -19,8 +19,8 @@ public class Panel extends JPanel implements Runnable{
 	private Player[] player;
 	private final int MAX_TURN = 18;
 
-	private int width = 1280;
-	private int height = 720;
+	private final int width = 1280;
+	private final int height = 720;
 	
 	public Panel() throws IOException {
 		super();

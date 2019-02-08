@@ -195,6 +195,7 @@ public class HexaMap {
 	
 	public void drawHexagon(Graphics g, double originX, double originY, double rad){
 		double base = rad * Math.sin(30);
+		
 		int[] px,py;
 		
 		
