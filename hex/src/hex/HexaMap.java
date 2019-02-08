@@ -181,6 +181,111 @@ public class HexaMap {
 
 		return HexaMap[x + d1][y + d2];
 	}
+	
+	public Hexagon GetNeighbour2(int x, int y, int Direction) {
+		int targetX = 0;
+		int targetY = 0;
+		switch (Direction) {
+		case 0: //Höger
+			if(x+y == size*3 - 3){ //bottom right
+				targetX = x - (size-1);
+				targetY = y - (size-1);
+			}else if(x == size*2-2){ //top right
+				if(y<size-1){
+					targetX = 0;
+					targetY = y + size;
+				}else{
+					targetX = size-1;
+					targetY = 0;
+				}
+			}else{
+				targetX = x+1;
+				targetY = y;
+			}
+			break;
+		case 1: //Neråt Höger
+			if(y == size*2-2){ //bottom
+				targetX = x - (size-1);
+				targetY = 0;
+			}else if(x+y == size*3 - 3){
+				if(x >= size){ // bottom right
+					targetX = x-size;
+					targetY = y-(size-2);
+				}else{
+					targetX = size*2-2;
+					targetY = 0;
+				}
+			}else{
+				targetX = x;
+				targetY = y+1;
+			}
+			break;
+		case 2: //Neråt Vänster
+			if(x == 0){ //bottom left
+				targetX = size*2-2;
+				targetY = y-(size-1);
+			}else if(y == size*2-2){ //bottom 
+				if(y == size*2-2){
+					targetX = size*2-2;
+					targetY = y-(size-1);
+				}else{
+					targetX = size*2-2;
+					targetY = 0;
+				}
+			}else{
+				targetX = x-1;
+				targetY = y+1;
+			}
+			break;
+		case 3: //Vänster
+			if(x+y == size-1){ //top left
+				targetX = x + (size-1);
+				targetY = y + (size-1);
+			}else if(x == 0){ //bottom left
+				if(y == size-1){
+					targetX = size-1;
+					targetY = y + (size-1);
+				}else{
+					targetX = size*2-2;
+					targetY = y-size;
+				}
+			}else{
+				targetX = x-1;
+				targetY = y;
+			}
+			break;
+		case 4: //Upp åt vänster
+			if(y==0){//top
+				targetX = x - (size-1);
+				targetY = size*2 -2;
+			}else if(x+y == size-1){//top left
+				if(y == 0){
+					targetX = x - (size-1);
+					targetY = size*2 -2;
+				}else{
+					targetX = x+size;
+					targetY = y+(size-2);
+				}
+			}else{
+				targetX = x;
+				targetY = y-1;
+			}
+			break;
+		case 5: //Upp åt Höger
+			if(x == size*2-2){//top right
+				targetX = 0;
+				targetY = y + (size-1);
+			}else if(y == 0){//top
+				targetX = x-(size-2);
+				targetY = size*2-2;
+			}else{
+				targetX = x+1;
+				targetY = y-1;
+			}
+			break;
+		}
+		return HexaMap[targetX][targetY];
+	}
 
 	public void draw(Graphics g) {
 		for (int x = 0; x < HexaMap.length; x++) {
@@ -238,9 +343,7 @@ public class HexaMap {
 		g.setColor(Color.BLACK);
 		
 		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 8);
-		
-		int w = g.getFontMetrics().stringWidth(HexaMap[x][y].toString());
-		g.drawString(HexaMap[x][y].toString(), (int) originX-w/2, (int) originY-10);
+		g.drawString(HexaMap[x][y].toString(), (int) originX-g.getFontMetrics().stringWidth(HexaMap[x][y].toString())/2, (int) originY-10);
 		g.drawPolygon(px, py, 6);
 	}
 
