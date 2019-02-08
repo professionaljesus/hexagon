@@ -137,7 +137,7 @@ public class HexaMap {
 		// Detta borde göra samma
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
-				if (x + y >= size - 1 && x + y <= size * 2 + 1) {
+				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
 					HexaMap[x][y] = new Hexagon();
 				}
 			}
@@ -194,7 +194,7 @@ public class HexaMap {
 	public void draw(Graphics g) {
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
-				if (x + y >= size - 1 && x + y <= size * 2 + 1) {
+				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
 					double originX = (widht / 2)// Center of the screen
 							- HEXAGON_WIDTH * (size - 1)
 							+ x * (HEXAGON_WIDTH)

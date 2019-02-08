@@ -31,7 +31,7 @@ public class Panel extends JPanel implements Runnable{
 		player[1] = new Player(2,4);
 		player[2] = new Player(3,4);
 		player[3] = new Player(4,4);
-		H = new HexaMap(4,width,height);
+		H = new HexaMap(6,width,height);
 
 		H.startMap(4, player);
 		
