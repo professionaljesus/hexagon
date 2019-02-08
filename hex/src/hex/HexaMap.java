@@ -241,7 +241,7 @@ public class HexaMap {
 		
 	
 		
-		g.drawString(HexaMap[x][y].toString(), (int) originX-6, (int) originY-10);
+		g.drawString(HexaMap[x][y].toString(), (int) originX-g.getFontMetrics().stringWidth(HexaMap[x][y].toString())/2, (int) originY-12);
 		g.drawPolygon(px, py, 6);
 	}
 
