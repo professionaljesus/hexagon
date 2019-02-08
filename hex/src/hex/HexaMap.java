@@ -184,8 +184,6 @@ public class HexaMap {
 	}
 	
 	public void draw(Graphics g){
-		g.drawLine((widht/2), 0, (widht/2),height);
-		g.drawLine(0,height/2,widht,height/2);
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				if(x + y >= size-1 && x+y<= size*2 +1){
