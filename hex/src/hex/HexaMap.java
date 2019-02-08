@@ -239,9 +239,8 @@ public class HexaMap {
 		
 		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 8);
 		
-	
-		
-		g.drawString(HexaMap[x][y].toString(), (int) originX-6, (int) originY-10);
+		int w = g.getFontMetrics().stringWidth(HexaMap[x][y].toString());
+		g.drawString(HexaMap[x][y].toString(), (int) originX-w/2, (int) originY-10);
 		g.drawPolygon(px, py, 6);
 	}
 
