@@ -44,59 +44,59 @@ public class HexaMap {
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
 			Integer[] t = stacken.pop();
-			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
-				continue;
-			}
-			int d1 = 0;
-			int d2 = 0;
-			switch (t[1]) {
-			case 0:
-				d1 = 1;
-				break;
-			case 1:
-				d2 = 1;
-				break;
-			case 2:
-				d1 = -1;
-				d2 = 1;
-				break;
-			case 3:
-				d1 = -1;
-				break;
-			case 4:
-				d2 = -1;
-				break;
-			case 5:
-				d1 = 1;
-				d2 = -1;
-				break;
-			}
-			if (HexaMap[t[3]][t[4]] == null || (t[3] + d1 > 1 + size * 2) || (t[4] + d2 > 1 + size * 2)) {
-				continue;
-			}
-			if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
-				continue;
-			}
-			if (HexaMap[t[3] + d1][t[4] + d2].getOwner() == t[0]) {
-				HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] + d1][t[4] + d2].getResources() + t[2]);
-				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
-			} else {
-				if (HexaMap[t[3 + d1]][t[4 + d2]].getResources() > HexaMap[t[3]][t[4]].getResources()) {
-					continue;
-				} else {
-					HexaMap[t[3 + d1]][t[4 + d2]].setResources(t[2] - HexaMap[t[3] + d1][t[4] + d2].getResources());
-					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
-					HexaMap[t[3 + d1]][t[4 + d2]].setOwner(t[0]);
-				}
-			}
-		}
-
-		for (int i = 0; i < HexaMap.length; i++) {
-			for (int j = 0; j < HexaMap.length; j++) {
-				if (HexaMap[i][j] != null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100) {
-					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
-				}
-			}
+//			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
+//				continue;
+//			}
+//			int d1 = 0;
+//			int d2 = 0;
+//			switch (t[1]) {
+//			case 0:
+//				d1 = 1;
+//				break;
+//			case 1:
+//				d2 = 1;
+//				break;
+//			case 2:
+//				d1 = -1;
+//				d2 = 1;
+//				break;
+//			case 3:
+//				d1 = -1;
+//				break;
+//			case 4:
+//				d2 = -1;
+//				break;
+//			case 5:
+//				d1 = 1;
+//				d2 = -1;
+//				break;
+//			}
+//			if (HexaMap[t[3]][t[4]] == null || (t[3] + d1 > 1 + size * 2) || (t[4] + d2 > 1 + size * 2)) {
+//				continue;
+//			}
+//			if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
+//				continue;
+//			}
+//			if (HexaMap[t[3] + d1][t[4] + d2].getOwner() == t[0]) {
+//				HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] + d1][t[4] + d2].getResources() + t[2]);
+//				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
+//			} else {
+//				if (HexaMap[t[3 + d1]][t[4 + d2]].getResources() > HexaMap[t[3]][t[4]].getResources()) {
+//					continue;
+//				} else {
+//					HexaMap[t[3 + d1]][t[4 + d2]].setResources(t[2] - HexaMap[t[3] + d1][t[4] + d2].getResources());
+//					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
+//					HexaMap[t[3 + d1]][t[4 + d2]].setOwner(t[0]);
+//				}
+//			}
+//		}
+//
+//		for (int i = 0; i < HexaMap.length; i++) {
+//			for (int j = 0; j < HexaMap.length; j++) {
+//				if (HexaMap[i][j] != null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100) {
+//					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
+//				}
+//			}
 		}
 
 	}
@@ -222,7 +222,7 @@ public class HexaMap {
 
 		switch (HexaMap[x][y].getOwner()) {
 		case 1:
-			g.setColor(Color.BLUE);
+			g.setColor(Color.RED);
 			g.fillPolygon(px, py, 6);
 			break;
 		case 2:

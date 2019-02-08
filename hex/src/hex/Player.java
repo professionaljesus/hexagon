@@ -1,16 +1,17 @@
 package hex;
 
+import java.awt.Color;
+
 public class Player {
 	private int id;
-
+	private Color color;
 	private Hexagon[][] myMap;
 
 	public Player(int id, int size) {
 		this.id = id;
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 
-		
-		//Bajsk	od
+		//Bajsk	kod
 		for (int i = 0; i < myMap.length; i++) {
 			for (int j = 0; j < myMap.length; j++) {
 				myMap[i][j] = new Hexagon();
@@ -25,6 +26,10 @@ public class Player {
 			}
 			k--;
 		}
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 	public void getMap(Hexagon[][] h) {
