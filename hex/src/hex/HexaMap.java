@@ -117,22 +117,22 @@ public class HexaMap {
 	 **/
 	public void startMap(int PlayerAmount, Player[] player) {
 
-		// // Sätter ut hela mapen som nya hexagon
-		// for (int i = 0; i < HexaMap.length; i++) {
-		// for (int j = 0; j < HexaMap.length; j++) {
-		//
-		// }
-		// }
-		//
-		// // Sätter de som inte används till null
-		// int k = size - 1;
-		// for (int i = 0; i < size - 1; i++) {
-		// for (int j = 0; j < k; j++) {
-		// HexaMap[i][j] = null;
-		// HexaMap[HexaMap.length - i - 1][HexaMap.length - j - 1] = null;
-		// }
-		// k--;
-		// }
+//		 // Sätter ut hela mapen som nya hexagon
+//		 for (int i = 0; i < HexaMap.length; i++) {
+//		 for (int j = 0; j < HexaMap.length; j++) {
+//		
+//		 }
+//		 }
+//		
+//		 // Sätter de som inte används till null
+//		 int k = size - 1;
+//		 for (int i = 0; i < size - 1; i++) {
+//		 for (int j = 0; j < k; j++) {
+//		 HexaMap[i][j] = null;
+//		 HexaMap[HexaMap.length - i - 1][HexaMap.length - j - 1] = null;
+//		 }
+//		 k--;
+//		 }
 
 		// Detta borde göra samma
 		for (int x = 0; x < HexaMap.length; x++) {
