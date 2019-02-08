@@ -117,23 +117,6 @@ public class HexaMap {
 	 **/
 	public void startMap(int PlayerAmount, Player[] player) {
 
-//		 // Sätter ut hela mapen som nya hexagon
-//		 for (int i = 0; i < HexaMap.length; i++) {
-//		 for (int j = 0; j < HexaMap.length; j++) {
-//		
-//		 }
-//		 }
-//		
-//		 // Sätter de som inte används till null
-//		 int k = size - 1;
-//		 for (int i = 0; i < size - 1; i++) {
-//		 for (int j = 0; j < k; j++) {
-//		 HexaMap[i][j] = null;
-//		 HexaMap[HexaMap.length - i - 1][HexaMap.length - j - 1] = null;
-//		 }
-//		 k--;
-//		 }
-
 		// Detta borde göra samma
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
@@ -227,7 +210,7 @@ public class HexaMap {
 				(int) (originY + (HEXAGON_HEIGHT / 4)) // top right
 		};
 
-		g.drawPolygon(px, py, 6);
+		
 
 		switch (HexaMap[x][y].getOwner()) {
 		case 1:
@@ -246,7 +229,7 @@ public class HexaMap {
 
 		g.setColor(Color.BLACK);
 		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 5);
-
+		g.drawPolygon(px, py, 6);
 	}
 
 }
