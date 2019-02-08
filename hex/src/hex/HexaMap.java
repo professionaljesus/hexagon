@@ -152,44 +152,7 @@ public class HexaMap {
 
 	}
 
-	/**
-	 * Direction 0 = Öst Direction 1 = SydÖst Direction 2 = SydVäst Direction 3
-	 * = Väst Direction 4 = NorrVäst Direction 5 = NorrÖst
-	 **/
 	public Hexagon GetNeighbour(int x, int y, int Direction) {
-		int d1 = 0;
-		int d2 = 0;
-		switch (Direction) {
-		case 0:
-			d1 = 1;
-			break;
-		case 1:
-			d2 = 1;
-			break;
-		case 2:
-			d1 = -1;
-			d2 = 1;
-			break;
-		case 3:
-			d1 = -1;
-			break;
-		case 4:
-			d2 = -1;
-			break;
-		case 5:
-			d1 = 1;
-			d2 = -1;
-			break;
-		}
-
-		if (HexaMap[x][y] == null || (x + d1 > 1 + size * 2) || (y + d2 > 1 + size * 2)) {
-			return null;
-		}
-
-		return HexaMap[x + d1][y + d2];
-	}
-
-	public Hexagon GetNeighbour2(int x, int y, int Direction) {
 		int targetX = 0;
 		int targetY = 0;
 		switch (Direction) {
@@ -198,8 +161,13 @@ public class HexaMap {
 				targetX = x - (size - 1);
 				targetY = y - (size - 1);
 			} else if (x == size * 2 - 2) { // top right
-				targetX = 0;
-				targetY = y + size;
+				if (y < size - 1) {
+					targetX = 0;
+					targetY = y + size;
+				} else {
+					targetX = size - 1;
+					targetY = 0;
+				}
 			} else {
 				targetX = x + 1;
 				targetY = y;
