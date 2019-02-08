@@ -30,6 +30,9 @@ public class Hexagon {
 		return owner;
 	}
 	
+	public String toString(){
+		return Integer.toString(resources);
+	}
 	
 	
 }

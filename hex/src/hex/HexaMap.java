@@ -1,7 +1,12 @@
 package hex;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.font.TextAttribute;
+import java.text.AttributedCharacterIterator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class HexaMap {
@@ -130,8 +135,11 @@ public class HexaMap {
 		switch (PlayerAmount) {
 		case 3:
 			HexaMap[0][size - 1].setOwner(player[0].getId());
+			HexaMap[0][size - 1].setResources(100);
 			HexaMap[size - 1][size * 2 - 2].setOwner(player[1].getId());
+			HexaMap[size - 1][size * 2 - 2].setResources(100);
 			HexaMap[size * 2 - 2][0].setOwner(player[2].getId());
+			HexaMap[size * 2 - 2][0].setResources(100);
 			break;
 		}
 
@@ -228,7 +236,12 @@ public class HexaMap {
 		}
 
 		g.setColor(Color.BLACK);
-		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 5);
+		
+		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 8);
+		
+	
+		
+		g.drawString(HexaMap[x][y].toString(), (int) originX-6, (int) originY-10);
 		g.drawPolygon(px, py, 6);
 	}
 
