@@ -1,5 +1,6 @@
 package hex;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Stack;
 
@@ -21,7 +22,7 @@ public class HexaMap {
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n;
-	 * HexagonMap blir 1 +(size-1)*2
+	 * HexagonMap blir size*2-1
 	 * 
 	 **/
 	public HexaMap(int size, int width, int height) {
@@ -183,15 +184,18 @@ public class HexaMap {
 	}
 	
 	public void draw(Graphics g){
+		g.drawLine((widht/2), 0, (widht/2),height);
+		g.drawLine(0,height/2,widht,height/2);
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				if(x + y >= size-1 && x+y<= size*2 +1){
-					double originX = (widht/2) - (size-0.5)*(HEXAGON_WIDTH/2) //Center of the screen
-							- (HEXAGON_WIDTH/2)*(size-1)
-							+ x*(HEXAGON_WIDTH)// 
-							+ (y-size)*(HEXAGON_WIDTH/2); //Shift all the hexagons
-					double originY = (height/2) - (size-0.5)*(HEXAGON_HEIGHT/2)
-							- (HEXAGON_WIDTH/2) * (size-1)
+					double originX = (widht/2)//Center of the screen
+							- HEXAGON_WIDTH * (size-1)
+							+ x*(HEXAGON_WIDTH)
+							+ (y-size+1)*(HEXAGON_WIDTH/2)//Shift all the hexagons
+							; 
+					double originY = (height/2)
+							- HEXAGON_HEIGHT * (size-1)*0.75
 							+ y*(HEXAGON_HEIGHT/2)*1.5;
 					drawHexagon(g, x, y, originX, originY);
 				}
@@ -201,6 +205,7 @@ public class HexaMap {
 	}
 	
 	public void drawHexagon(Graphics g, int x, int y, double originX, double originY){
+	
 		int[] px,py;
 
 		px = new int[]{
@@ -223,6 +228,21 @@ public class HexaMap {
 		
 		
 		g.drawPolygon(px,py,6);
+		
+		switch(HexaMap[x][y].getOwner()){
+		case 1: g.setColor(Color.BLUE);
+		g.fillPolygon(px,py,6);
+		break;
+		case 2: g.setColor(Color.RED);
+		g.fillPolygon(px,py,6);
+		break;
+		case 3: g.setColor(Color.GREEN);
+		g.fillPolygon(px,py,6);
+		break;
+		}
+		
+		
+		g.setColor(Color.BLACK);
 		g.drawString("("+x+","+y+")", (int) originX-12, (int) originY+5); 
 		
 
