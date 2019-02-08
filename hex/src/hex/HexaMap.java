@@ -10,7 +10,10 @@ public class HexaMap {
 	 **/
 	private Hexagon[][] HexaMap;
 	private int size;
-
+	
+	public static final int HEXAGON_HEIGHT = 80;
+	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI/6));
+	
 	private int widht;
 	private int height;
 	private Stack<Integer[]> stacken;
@@ -183,44 +186,39 @@ public class HexaMap {
 		for(int x = 0; x < HexaMap.length; x++) {
 			for(int y = 0; y < HexaMap[x].length; y++) {
 				if(x + y >= size-1 && x+y<= size*2 +1){
-					double rad = 20;
-					double originX = (widht/2) - (size-0.5)*rad*Math.cos(Math.PI/6) //Center of the screen
-							- rad*(size-1) *Math.cos(Math.PI/6) 
-							+ x*rad*2*Math.cos(Math.PI/6) // 
-							+ (y-size)*rad*Math.cos(Math.PI/6); //Shift all the hexagons
-					double originY = (height/2) - (size-0.5)*rad
-							- rad * (size-1) *Math.cos(Math.PI/6)
-							+ y*rad*1.5;
-					drawHexagon(g, x, y, originX, originY,rad);
+					double originX = (widht/2) - (size-0.5)*(HEXAGON_WIDTH/2) //Center of the screen
+							- (HEXAGON_WIDTH/2)*(size-1)
+							+ x*(HEXAGON_WIDTH)// 
+							+ (y-size)*(HEXAGON_WIDTH/2); //Shift all the hexagons
+					double originY = (height/2) - (size-0.5)*(HEXAGON_HEIGHT/2)
+							- (HEXAGON_WIDTH/2) * (size-1)
+							+ y*(HEXAGON_HEIGHT/2)*1.5;
+					drawHexagon(g, x, y, originX, originY);
 				}
 				
 			}
 		}
 	}
 	
-	public void drawHexagon(Graphics g, int x, int y, double originX, double originY, double rad){
-		double base = rad * Math.cos(Math.PI/6);
+	public void drawHexagon(Graphics g, int x, int y, double originX, double originY){
 		int[] px,py;
-		
-		
-		
-		
+
 		px = new int[]{
-				(int) (originX - base), //top left
+				(int) (originX - (HEXAGON_WIDTH/2)), //top left
 				(int) (originX), //top
-				(int) (originX + base), // top right
-				(int) (originX + base), //top left
+				(int) (originX + (HEXAGON_WIDTH/2)), // top right
+				(int) (originX + (HEXAGON_WIDTH/2)), //top left
 				(int) (originX), //top
-				(int) (originX - base) // top right
+				(int) (originX - (HEXAGON_WIDTH/2)) // top right
 		};
 		
 		py = new int[]{
-				(int) (originY - rad/2), //top left
-				(int) (originY - rad), //top
-				(int) (originY - rad/2), // top right
-				(int) (originY + rad/2), //top left
-				(int) (originY + rad), //top
-				(int) (originY + rad/2 ) // top right
+				(int) (originY - (HEXAGON_HEIGHT/4)), //top left
+				(int) (originY - (HEXAGON_HEIGHT/2)), //top
+				(int) (originY - (HEXAGON_HEIGHT/4)), // top right
+				(int) (originY + (HEXAGON_HEIGHT/4)), //top left
+				(int) (originY + (HEXAGON_HEIGHT/2)), //top
+				(int) (originY + (HEXAGON_HEIGHT/4) ) // top right
 		};
 		
 		
