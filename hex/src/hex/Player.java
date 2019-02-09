@@ -10,21 +10,12 @@ public class Player {
 	public Player(int id, int size) {
 		this.id = id;
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
-
-		//Bajsk	kod
-		for (int i = 0; i < myMap.length; i++) {
-			for (int j = 0; j < myMap.length; j++) {
-				myMap[i][j] = new Hexagon();
+		for (int x = 0; x < myMap.length; x++) {
+			for (int y = 0; y < myMap[x].length; y++) {
+				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
+					myMap[x][y] = new Hexagon();
+				}
 			}
-		}
-
-		int k = size - 1;
-		for (int i = 0; i < size - 1; i++) {
-			for (int j = 0; j < k; j++) {
-				myMap[i][j] = null;
-				myMap[myMap.length - i - 1][myMap.length - j - 1] = null;
-			}
-			k--;
 		}
 	}
 
@@ -32,26 +23,32 @@ public class Player {
 		return color;
 	}
 
-	public void getMap(Hexagon[][] h) {
-		for (int i = 0; i < h.length; i++) {
-			for (int j = 0; j < h.length; j++) {
-				if (h[i][j].getOwner() == id) {
-					myMap[i][j] = h[i][j];
+	public void getMap(HexaMap h) {
+		Hexagon[][] Aux = h.getHexaMap();
+		for (int i = 0; i < Aux.length; i++) {
+			for (int j = 0; j < Aux.length; j++) {
+				if (Aux[i][j].getOwner() == id) {
+					myMap[i][j] = Aux[i][j];
+					for (int k = 0; k < 6; k++) {
+						int[] temppos = h.GetNeighbour2(i, j, k);
+						myMap[temppos[0]][temppos[1]] = Aux[temppos[0]][temppos[1]];
+					}
 				}
 			}
 		}
 
 	}
-	
+
 	/**
 	 * Gör ett Move
+	 * 
 	 * @param x
 	 * @param y
 	 * @param Direction
 	 * @param resource
 	 * @return
 	 */
-	public int[] PlayerMove(int x,int y, int Direction,int resource){
+	public int[] PlayerMove(int x, int y, int Direction, int resource) {
 		int[] v = new int[5];
 		v[0] = this.id;
 		v[1] = Direction;
@@ -59,7 +56,7 @@ public class Player {
 		v[3] = x;
 		v[4] = y;
 		return v;
-		
+
 	}
 
 	public int getId() {

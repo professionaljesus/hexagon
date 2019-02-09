@@ -237,6 +237,102 @@ public class HexaMap {
 		}
 		return HexaMap[targetX][targetY];
 	}
+	
+	public int[] GetNeighbour2(int x, int y, int Direction) {
+		int targetX = 0;
+		int targetY = 0;
+		int[] pos = new int[2];
+		switch (Direction) {
+		case 0: // Höger
+			if (x + y == size * 3 - 3) { // bottom right
+				targetX = x - (size - 1);
+				targetY = y - (size - 1);
+			} else if (x == size * 2 - 2) { // top right
+				if (y < size - 1) {
+					targetX = 0;
+					targetY = y + size;
+				} else {
+					targetX = size - 1;
+					targetY = 0;
+				}
+			} else {
+				targetX = x + 1;
+				targetY = y;
+			}
+			break;
+		case 1: // Neråt Höger
+			if (y == size * 2 - 2) { // bottom
+				targetX = x - (size - 1);
+				targetY = 0;
+			} else if (x + y == size * 3 - 3) { // bottom right
+				targetX = x - size;
+				targetY = y - (size - 2);
+			} else {
+				targetX = x;
+				targetY = y + 1;
+			}
+			break;
+		case 2: // Neråt Vänster
+			if (x == 0) { // bottom left
+				targetX = size * 2 - 2;
+				targetY = y - (size - 1);
+			} else if (y == size * 2 - 2) { // bottom
+					targetX = x + (size/2);
+					targetY = 0;
+			} else {
+				targetX = x - 1;
+				targetY = y + 1;
+			}
+			break;
+		case 3: // Vänster
+			if (x + y == size - 1) { // top left
+				targetX = x + (size - 1);
+				targetY = y + (size - 1);
+			} else if (x == 0) { // bottom left
+				targetX = size * 2 - 2;
+				targetY = y - size;
+			} else {
+				targetX = x - 1;
+				targetY = y;
+			}
+			break;
+		case 4: // Upp åt vänster
+			if (y == 0) {// top
+				targetX = x - (size - 1);
+				targetY = size * 2 - 2;
+			} else if (x + y == size - 1) {// top left
+				targetX = x + size;
+				targetY = y + (size - 2);
+			} else {
+				targetX = x;
+				targetY = y - 1;
+			}
+			break;
+		case 5: // Upp åt Höger
+			if (x == size * 2 - 2) {// top right
+				targetX = 0;
+				targetY = y + (size - 1);
+			} else if (y == 0) {// top
+				targetX = x - (size - 2);
+				targetY = size * 2 - 2;
+			} else {
+				targetX = x + 1;
+				targetY = y - 1;
+			}
+			break;
+		}
+		pos[0] = targetX;
+		pos[1] = targetY;
+		return pos;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 
 	public void draw(Graphics g) {
 		for (int x = 0; x < HexaMap.length; x++) {
