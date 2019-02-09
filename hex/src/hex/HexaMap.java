@@ -153,10 +153,6 @@ public class HexaMap {
 
 	}
 
-	/**
-	 * Direction 0 = Öst Direction 1 = SydÖst Direction 2 = SydVäst Direction 3
-	 * = Väst Direction 4 = NorrVäst Direction 5 = NorrÖst
-	 **/
 	public Hexagon GetNeighbour(int x, int y, int Direction) {
 		int targetX = 0;
 		int targetY = 0;
@@ -182,14 +178,9 @@ public class HexaMap {
 			if (y == size * 2 - 2) { // bottom
 				targetX = x - (size - 1);
 				targetY = 0;
-			} else if (x + y == size * 3 - 3) {
-				if (x >= size) { // bottom right
-					targetX = x - size;
-					targetY = y - (size - 2);
-				} else {
-					targetX = size * 2 - 2;
-					targetY = 0;
-				}
+			} else if (x + y == size * 3 - 3) { // bottom right
+				targetX = x - size;
+				targetY = y - (size - 2);
 			} else {
 				targetX = x;
 				targetY = y + 1;
@@ -200,13 +191,8 @@ public class HexaMap {
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-				if (y == size * 2 - 2) {
-					targetX = size * 2 - 2;
-					targetY = y - (size - 1);
-				} else {
-					targetX = size * 2 - 2;
+					targetX = x + (size/2);
 					targetY = 0;
-				}
 			} else {
 				targetX = x - 1;
 				targetY = y + 1;
@@ -217,13 +203,8 @@ public class HexaMap {
 				targetX = x + (size - 1);
 				targetY = y + (size - 1);
 			} else if (x == 0) { // bottom left
-				if (y == size - 1) {
-					targetX = size - 1;
-					targetY = y + (size - 1);
-				} else {
-					targetX = size * 2 - 2;
-					targetY = y - size;
-				}
+				targetX = size * 2 - 2;
+				targetY = y - size;
 			} else {
 				targetX = x - 1;
 				targetY = y;
@@ -234,13 +215,8 @@ public class HexaMap {
 				targetX = x - (size - 1);
 				targetY = size * 2 - 2;
 			} else if (x + y == size - 1) {// top left
-				if (y == 0) {
-					targetX = x - (size - 1);
-					targetY = size * 2 - 2;
-				} else {
-					targetX = x + size;
-					targetY = y + (size - 2);
-				}
+				targetX = x + size;
+				targetY = y + (size - 2);
 			} else {
 				targetX = x;
 				targetY = y - 1;
