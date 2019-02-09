@@ -19,6 +19,7 @@ public class Panel extends JPanel implements Runnable{
 	private HexaMap H;
 	private Player[] player;
 	private final int MAX_TURN = 18;
+	private int turn;
 
 	private final int width = 1280;
 	private final int height = 720;
@@ -36,6 +37,7 @@ public class Panel extends JPanel implements Runnable{
 		H = new HexaMap(4,width,height);
 		H.GetNeighbour(6, 3, 5);
 		H.startMap(3, player);
+		turn = 0;
 	}
 	
 	public void addNotify() {
@@ -52,7 +54,24 @@ public class Panel extends JPanel implements Runnable{
 	    super.paintComponent(g);
 	    H.draw(g);
 	}
-
+	
+	/**
+	 * Om det bara finns en spelare kvar på mappen
+	 * @return True om bara en kvar, false annars
+	 */
+	private boolean end() {
+		int owner = 0;
+		for (Hexagon[] u: H.getHexaMap()) {
+		    for (Hexagon elem: u) {
+		    	if(owner == 0)
+		    		owner = elem.getOwner();
+		    	else if(owner != elem.getOwner() && elem.getOwner() != 0)
+		    			return false;
+		    		
+		    }
+		}
+		return true;
+	}
 
 
 	@Override
@@ -78,6 +97,7 @@ public class Panel extends JPanel implements Runnable{
 			}
             repaint();
             System.out.println("fuck");
+            turn++;
              /*
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;
