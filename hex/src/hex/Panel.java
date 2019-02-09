@@ -34,9 +34,8 @@ public class Panel extends JPanel implements Runnable{
 		player[2] = new Player(3,4);
 		
 		H = new HexaMap(4,width,height);
-
+		H.GetNeighbour(6, 3, 5);
 		H.startMap(3, player);
-		
 	}
 	
 	public void addNotify() {

@@ -11,8 +11,7 @@ import java.util.Stack;
 
 public class HexaMap {
 	/**
-	 * Spara hexagon i varje element
-	 * 
+	 * Spara hexagon i en HexaMap[][] Använder Axial coordinates
 	 **/
 	private Hexagon[][] HexaMap;
 	private int size;
@@ -120,6 +119,8 @@ public class HexaMap {
 	public Hexagon[][] getHexaMap() {
 		return HexaMap;
 	}
+
+	
 
 	/**
 	 * Kallas vid start. Sätter ut start player & fyller Mapen Hexagon med empty

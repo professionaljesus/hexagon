@@ -1,17 +1,23 @@
 package hex;
 
+import java.awt.Color;
+
 public class Hexagon {
 	private int owner;
 	private int resources;
+	private Color color;
+	
 	
 	public Hexagon() {
 		this.owner = 0;
 		this.resources = 0;
+		color = Color.BLACK;
 	}
 	
-	public Hexagon(int owner,int resources) {
+	public Hexagon(int owner,int resources,Color color) {
 		this.owner = owner;
 		this.resources = resources;
+		this.color = color;
 	}
 	
 	public int getResources() {
