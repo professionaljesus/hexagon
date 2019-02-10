@@ -3,7 +3,7 @@ package hex;
 import java.awt.Color;
 
 public abstract class Player {
-	private int id;
+	protected int id;
 	private Color color;
 	protected Hexagon[][] myMap;
 
