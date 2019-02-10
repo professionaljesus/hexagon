@@ -16,7 +16,7 @@ public class SimpleBot extends Player{
 		moves[2] = super.myMap[0][3].getResources()/10;
 		//this.getMap(H);
 		return moves;
-		//g
+		
 		
 	}
 	
