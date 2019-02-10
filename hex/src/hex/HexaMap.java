@@ -75,7 +75,7 @@ public class HexaMap {
 			break;
 		case 3:
 			HexaMap[0][size - 1].setOwner(player[0].getId());
-			HexaMap[0][size - 1].setResources(100);
+			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 
 			HexaMap[size - 1][size * 2 - 2].setOwner(player[1].getId());

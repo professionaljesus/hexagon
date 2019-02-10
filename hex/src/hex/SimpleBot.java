@@ -84,9 +84,7 @@ public class SimpleBot extends Player {
 				}else{
 					TurnMoves(h, ne, h.getResources(),2);
 				}
-			}
-			int Collections.max(Actionlist, (int[] e1,int[] e2) -> e1[5] < e2[5]);
-			
+			}			
 		}
 		
 		
