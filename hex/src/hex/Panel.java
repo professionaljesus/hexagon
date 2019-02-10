@@ -20,7 +20,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
-	private final int MAX_TURN = 100;
+	private final int MAX_TURN = 1000;
 	private int turn;
 
 	private final int width = 1280;
@@ -38,7 +38,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		player[0] = new GustafBot(1,4, Color.GREEN);
 		//player[1] = new SimpleBot(2,4, Color.BLUE);
 
-		H = new HexaMap(4,width,height,player);
+		H = new HexaMap(6,width,height,player);
 	
 		turn = 0;
 	}
