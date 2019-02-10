@@ -139,6 +139,7 @@ public class SimpleBot extends Player {
 	 */
 	private void TurnMoves(Hexagon A, Hexagon B, int resourcs,int move){
 		int value = 0;
+		//
 		int GoodNeibooursA =0;
 		int EvilNeibooursA = 0;
 		int HardcoreNeibooursA =0;
