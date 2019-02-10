@@ -23,8 +23,23 @@ public class GustafBot extends Player{
 		for(int x = 0; x < m.length; x++) {
 			for(int y = 0; y < m[x].length; y++) {
 				if(m[x][y] != null) {
-					if(m[x][y].getOwner() == this.id)
-						H.GetNeighbour(x, y, 1);
+					if(m[x][y].getOwner() == this.id) {
+						boolean r = false;
+						Hexagon n;
+						n = H.GetNeighbour(x, y, 0);
+						for(int i = 1; i < 6; i++) {
+							if(n.getOwner() == 0) {
+								r = true;
+								i = 6;
+							}else {
+								n = H.GetNeighbour(x, y, i);
+							}
+						}
+						
+						if(r)
+							rand.add(new int[] {x,y});
+					}
+						
 				}
 			}
 		}
