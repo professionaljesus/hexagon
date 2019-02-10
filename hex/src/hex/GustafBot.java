@@ -38,7 +38,7 @@ public class GustafBot extends Player{
 
 		for(Hexagon r : rand) {
 
-			if(r.getResources() < 130) {
+			if(r.getResources() < 50) {
 				for(Hexagon s: h) {
 					if(!rand.contains(s)) {
 						moves = new int[] {this.getId(), (3*s.getResources() )/ 4, s.getX(), s.getY(), r.getX(), r.getY()};
