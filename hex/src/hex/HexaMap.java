@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
 import java.util.HashSet;
-
+import java.util.List;
 import java.util.Stack;
 
 public class HexaMap {
@@ -104,29 +104,34 @@ public class HexaMap {
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
-
-			
 			int id = t[0];
 			int res = t[1];
 			int x = t[2];
 			int y = t[3];
 			int targetX = t[4];
 			int targetY = t[5];
-			
-			
-			if (HexaMap[x][y].getOwner() != id) {
 
+			//Inte din hexagon
+			if (HexaMap[x][y].getOwner() != id)
 				continue;
-
-				
-			}
-
 
 			// Om man har för lite resources
 			if (HexaMap[x][y].getResources() < res)
 				continue;
+			
+			
+			boolean illegal = true;
 
 			if (HexaMap[targetX][targetY].getOwner() == id) {
+				for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+					if(n.getOwner() == id) {
+						illegal = false;
+						break;
+					}
+				}
+				if(illegal)
+					continue;
+					
 				HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
 				HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
 				if (HexaMap[x][y].getResources() == 0) {
@@ -134,48 +139,60 @@ public class HexaMap {
 					phex.get(id - 1).remove(HexaMap[x][y]);
 				}
 			} else { // Någon annans ruta
-				if (HexaMap[targetX][targetY].getResources() > HexaMap[x][y].getResources()) {
-					continue;
-				} else { // Mer resources än den
-					HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
-					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
-
-					// Du slösa alla
-					if (HexaMap[x][y].getResources() == 0) {
-						HexaMap[x][y].setOwner(0);
-						phex.get(id - 1).remove(HexaMap[x][y]);
-					}
-
-
-						for(HashSet<Hexagon> a : phex){
-							a.remove(HexaMap[targetX][targetY]);
-						}
-						phex.get(t[0] - 1).add(HexaMap[targetX][targetY]);
-						HexaMap[targetX][targetY].setOwner(id);
-					
-				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
-
-
+				for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+					if(n.equals(HexaMap[x][y]))
+						illegal = false;
 				}
+				if(illegal)
+					continue;
+				
+				if(HexaMap[targetX][targetY].getOwner() == 0) {
+					HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
+					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+					HexaMap[targetX][targetY].setOwner(id);
+					phex.get(id - 1).add(HexaMap[targetX][targetY]);					
+				}else {
+					if(res < HexaMap[targetX][targetY].getResources()) 
+						HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
+					else {
+						if(res == HexaMap[targetX][targetY].getResources()) {
+							HexaMap[targetX][targetY].setResources(0);
+							HexaMap[targetX][targetY].setOwner(0);
+						}else {
+							HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
+							HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+							HexaMap[targetX][targetY].setOwner(id);
+							phex.get(id - 1).add(HexaMap[targetX][targetY]);
+
+						}
+						phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
+
+					}
+				}
+				
+				// Du slösa alla
+				if (HexaMap[x][y].getResources() == 0) {
+					HexaMap[x][y].setOwner(0);
+					phex.get(id - 1).remove(HexaMap[x][y]);
+				}				
 			}
 		}
 
 		for (HashSet<Hexagon> uu : phex) {
-			for (Hexagon u : uu)
-				if (u.getResources() < 100) {
+			for (Hexagon u : uu) {
+				if (u.getResources() < 100) 
 					u.setResources(u.getResources() + 1);
-				}
+			}
 		}
 
 	}
 
 	/**
 	 * @param t
-	 *            playerid, dir, res, x, y
+	 *            playerid, dir, res, x, y, targetx, targety
 	 *
 	 */
 	public void move(int[] t) {
-
 		stacken.push(t);
 	}
 
