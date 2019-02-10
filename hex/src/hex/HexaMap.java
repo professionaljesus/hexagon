@@ -97,7 +97,7 @@ public class HexaMap {
 			case 3: // Vänster
 				if (t[3] + t[4] == size - 1) { // top left
 					targetX = t[3] + (size - 1);
-					targetY = t[43] + (size - 1);
+					targetY = t[4] + (size - 1);
 				} else if (t[3] == 0) { // bottom left
 					targetX = size * 2 - 2;
 					targetY = t[4] - size;
