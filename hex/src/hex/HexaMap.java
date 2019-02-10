@@ -55,7 +55,7 @@ public class HexaMap {
 				continue;
 			}
 			int targetX, targetY;
-			if(t[1] != 6) {
+			if(t[1] > 5) {
 				int[] target =  GetNeighbourXY(t[3], t[4], t[1]);
 				targetX = target[0];
 				targetY = target[1];
