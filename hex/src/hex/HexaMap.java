@@ -43,66 +43,117 @@ public class HexaMap {
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
 			Integer[] t = stacken.pop();
-			// if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
-			// continue;
-			// }
-			// int d1 = 0;
-			// int d2 = 0;
-			// switch (t[1]) {
-			// case 0:
-			// d1 = 1;
-			// break;
-			// case 1:
-			// d2 = 1;
-			// break;
-			// case 2:
-			// d1 = -1;
-			// d2 = 1;
-			// break;
-			// case 3:
-			// d1 = -1;
-			// break;
-			// case 4:
-			// d2 = -1;
-			// break;
-			// case 5:
-			// d1 = 1;
-			// d2 = -1;
-			// break;
-			// }
-			// if (HexaMap[t[3]][t[4]] == null || (t[3] + d1 > 1 + size * 2) ||
-			// (t[4] + d2 > 1 + size * 2)) {
-			// continue;
-			// }
-			// if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
-			// continue;
-			// }
-			// if (HexaMap[t[3] + d1][t[4] + d2].getOwner() == t[0]) {
-			// HexaMap[t[3] + d1][t[4] + d2].setResources(HexaMap[t[3] +
-			// d1][t[4] + d2].getResources() + t[2]);
-			// HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()
-			// - t[2]);
-			// } else {
-			// if (HexaMap[t[3 + d1]][t[4 + d2]].getResources() >
-			// HexaMap[t[3]][t[4]].getResources()) {
-			// continue;
-			// } else {
-			// HexaMap[t[3 + d1]][t[4 + d2]].setResources(t[2] - HexaMap[t[3] +
-			// d1][t[4] + d2].getResources());
-			// HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources()
-			// - t[2]);
-			// HexaMap[t[3 + d1]][t[4 + d2]].setOwner(t[0]);
-			// }
-			// }
-			// }
-			//
-			// for (int i = 0; i < HexaMap.length; i++) {
-			// for (int j = 0; j < HexaMap.length; j++) {
-			// if (HexaMap[i][j] != null && HexaMap[i][j].getOwner() != 0 &&
-			// HexaMap[i][j].getResources() < 100) {
-			// HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
-			// }
-			// }
+			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
+				continue;
+			}
+			int targetX = 0;
+			int targetY = 0;
+			switch (t[1]) {
+			case 0: // Höger
+				if (t[3] + t[4] == size * 3 - 3) { // bottom right
+					targetX = t[3] - (size - 1);
+					targetY = t[4] - (size - 1);
+				} else if (t[3] == size * 2 - 2) { // top right
+					if (t[4] < size - 1) {
+						targetX = 0;
+						targetY = t[4] + size;
+					} else {
+						targetX = size - 1;
+						targetY = 0;
+					}
+				} else {
+					targetX = t[4] + 1;
+					targetY = t[3];
+				}
+				break;
+			case 1: // Neråt Höger
+				if (t[4] == size * 2 - 2) { // bottom
+					targetX = t[3] - (size - 1);
+					targetY = 0;
+				} else if (t[3] + t[4] == size * 3 - 3) { // bottom right
+					targetX = t[3] - size;
+					targetY = t[4] - (size - 2);
+				} else {
+					targetX = t[3];
+					targetY = t[4] + 1;
+				}
+				break;
+			case 2: // Neråt Vänster
+				if (t[3] == 0) { // bottom left
+					targetX = size * 2 - 2;
+					targetY = t[4] - (size - 1);
+				} else if (t[4] == size * 2 - 2) { // bottom
+					targetX = t[3] + (size / 2);
+					targetY = 0;
+				} else {
+					targetX = t[3] - 1;
+					targetY = t[4] + 1;
+				}
+				break;
+			case 3: // Vänster
+				if (t[3] + t[4] == size - 1) { // top left
+					targetX = t[3] + (size - 1);
+					targetY = t[43] + (size - 1);
+				} else if (t[3] == 0) { // bottom left
+					targetX = size * 2 - 2;
+					targetY = t[4] - size;
+				} else {
+					targetX = t[3] - 1;
+					targetY = t[4];
+				}
+				break;
+			case 4: // Upp åt vänster
+				if (t[4] == 0) {// top
+					targetX = t[3] - (size - 1);
+					targetY = size * 2 - 2;
+				} else if (t[3] + t[4] == size - 1) {// top left
+					targetX = t[3] + size;
+					targetY = t[4] + (size - 2);
+				} else {
+					targetX = t[3];
+					targetY = t[4] - 1;
+				}
+				break;
+			case 5: // Upp åt Höger
+				if (t[3] == size * 2 - 2) {// top right
+					targetX = 0;
+					targetY = t[4] + (size - 1);
+				} else if (t[4] == 0) {// top
+					targetX = t[3] - (size - 2);
+					targetY = size * 2 - 2;
+				} else {
+					targetX = t[3] + 1;
+					targetY = t[4] - 1;
+				}
+				break;
+			}
+
+			if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
+				continue;
+			}
+			if (HexaMap[t[3] + targetX][t[4] + targetY].getOwner() == t[0]) {
+				HexaMap[t[3] + targetX][t[4] + targetY]
+						.setResources(HexaMap[t[3] + targetX][t[4] + targetY].getResources() + t[2]);
+				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
+			} else {
+				if (HexaMap[t[3 + targetX]][t[4 + targetY]].getResources() > HexaMap[t[3]][t[4]].getResources()) {
+					continue;
+				} else {
+					HexaMap[t[3 + targetX]][t[4 + targetY]]
+							.setResources(t[2] - HexaMap[t[3] + targetX][t[4] + targetY].getResources());
+					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
+					HexaMap[t[3 + targetX]][t[4 + targetY]].setOwner(t[0]);
+				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
+				}
+			}
+		}
+
+		for (int i = 0; i < HexaMap.length; i++) {
+			for (int j = 0; j < HexaMap.length; j++) {
+				if (HexaMap[i][j] != null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100) {
+					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
+				}
+			}
 		}
 
 	}
@@ -119,8 +170,6 @@ public class HexaMap {
 	public Hexagon[][] getHexaMap() {
 		return HexaMap;
 	}
-
-	
 
 	/**
 	 * Kallas vid start. Sätter ut start player & fyller Mapen Hexagon med empty
@@ -191,8 +240,8 @@ public class HexaMap {
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-					targetX = x + (size/2);
-					targetY = 0;
+				targetX = x + (size / 2);
+				targetY = 0;
 			} else {
 				targetX = x - 1;
 				targetY = y + 1;
@@ -237,7 +286,7 @@ public class HexaMap {
 		}
 		return HexaMap[targetX][targetY];
 	}
-	
+
 	public int[] GetNeighbour2(int x, int y, int Direction) {
 		int targetX = 0;
 		int targetY = 0;
@@ -277,8 +326,8 @@ public class HexaMap {
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-					targetX = x + (size/2);
-					targetY = 0;
+				targetX = x + (size / 2);
+				targetY = 0;
 			} else {
 				targetX = x - 1;
 				targetY = y + 1;
@@ -325,14 +374,6 @@ public class HexaMap {
 		pos[1] = targetY;
 		return pos;
 	}
-
-	
-	
-	
-	
-	
-	
-	
 
 	public void draw(Graphics g) {
 		for (int x = 0; x < HexaMap.length; x++) {
