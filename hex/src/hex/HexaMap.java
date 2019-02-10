@@ -159,21 +159,16 @@ public class HexaMap {
 					else {
 						if(res == HexaMap[targetX][targetY].getResources()) {
 							HexaMap[targetX][targetY].setResources(0);
+							phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 							HexaMap[targetX][targetY].setOwner(0);
 						}else {
 							HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
 							HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
 							HexaMap[targetX][targetY].setOwner(id);
+							phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 							phex.get(id - 1).add(HexaMap[targetX][targetY]);
 
 						}
-						if(HexaMap[targetX][targetY].getOwner() - 1 == -1) {
-							System.out.println("WHAATAFAAAAK");
-							System.out.println(HexaMap[targetX][targetY].getOwner());
-						}
-						
-						phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
-
 					}
 				}
 				
