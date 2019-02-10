@@ -415,7 +415,7 @@ public class HexaMap {
 			g.fillPolygon(px, py, 6);
 			break;
 		case 2:
-			g.setColor(Color.RED);
+			g.setColor(Color.BLUE);
 			g.fillPolygon(px, py, 6);
 			break;
 		case 3:
