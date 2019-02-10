@@ -6,9 +6,14 @@ public class SimpleBot extends Player{
 		super(id, size);
 	}
 	
-	public void algo(HexaMap H) {
+	public int[] algo(HexaMap H) {
+		int[] moves = new int[5];
 		this.getMap(H);
+		return moves;
+		
 		
 	}
+	
+	
 
 }
