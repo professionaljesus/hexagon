@@ -38,7 +38,11 @@ public class HexaMap {
 
 	/**
 	 * Get's called at the endofTurn
-	 * 
+	 * t[0] user
+	 * t[1] direction
+	 * t[2] resource
+	 * t[3] x
+	 * t[4] y
 	 */
 	public void endTurn() {
 		while (!stacken.isEmpty()) {

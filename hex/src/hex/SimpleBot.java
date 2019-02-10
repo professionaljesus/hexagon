@@ -8,7 +8,8 @@ public class SimpleBot extends Player{
 	
 	public int[] algo(HexaMap H) {
 		int[] moves = new int[5];
-		this.getMap(H);
+		//moves[1] = 
+		//this.getMap(H);
 		return moves;
 		
 		
