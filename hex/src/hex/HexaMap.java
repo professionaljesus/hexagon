@@ -31,6 +31,7 @@ public class HexaMap {
 	 * 
 	 **/
 	public HexaMap(int size, int width, int height, Player[] player) {
+		System.out.println(HEXAGON_WIDTH);
 		this.size = size;
 		this.width = width;
 		this.height = height;

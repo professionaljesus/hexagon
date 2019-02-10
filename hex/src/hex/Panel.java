@@ -40,7 +40,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		player[2] = new GustafBot(3,4, Color.RED);
  
 
+
 		H = new HexaMap(4,width,height,player);
+
 	
 		turn = 0;
 	}
