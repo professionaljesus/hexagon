@@ -9,13 +9,10 @@ public class GustafBot extends Player{
 	
 	ArrayList<Hexagon> rand;
 	ArrayList<Hexagon> set;
-	ArrayList<Hexagon> rbs;
 
 	public GustafBot(int id, int size, Color c) {
 		super(id, size, c);
 		rand = new ArrayList<Hexagon>();
-		set = new ArrayList<Hexagon>();
-
 
 	}
 	
@@ -40,21 +37,22 @@ public class GustafBot extends Player{
 		for(Hexagon r : rand) {
 			if(moves == null) {
 				for(Hexagon n: r.getNeighbours()) {
-					if(n.getOwner() == 0) {
-						moves = new int[] {getId(), (3*r.getResources() )/ 4, r.getX(), r.getY(), n.getX(), n.getY()};
+					if(n.getOwner() != this.getId() && n.getResources() < r.getResources()) {
+						moves = new int[] {this.getId(), (3*r.getResources() )/ 4, r.getX(), r.getY(), n.getX(), n.getY()};
 					}
 				}
 				if(moves == null) {
 					if(r.getResources() < 70) {
-						for(Hexagon s: set) {
+						for(Hexagon s: h) {
 							if(!rand.contains(s)) {
-								moves = new int[] {getId(), (3*s.getResources() )/ 4, s.getX(), s.getY(), r.getX(), r.getY()};
+								moves = new int[] {this.getId(), (3*s.getResources() )/ 4, s.getX(), s.getY(), r.getX(), r.getY()};
 							}
 	
 						}
 					}
 				}
-			}
+			}else break;
+			
 		}
 				
 		return moves;

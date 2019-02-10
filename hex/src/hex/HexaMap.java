@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
@@ -102,6 +103,8 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
+		Collections.shuffle(stacken);
+		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
 			int id = t[0];
