@@ -120,7 +120,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		if(!end() && turn < MAX_TURN) {
 			for(Player p: player) {
 				p.algo(H);
-				
 			}
 			
 			System.out.println("Turn: " + turn);
