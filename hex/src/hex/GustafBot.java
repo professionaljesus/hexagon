@@ -48,7 +48,7 @@ public class GustafBot extends Player{
 		}
 		
 		Hexagon m = itr.next();
-		moves = new int[] {1, 1, 1, 0, 5};
+		moves = new int[] {1, 1, 0, 5, 0,6};
 		 
 		
 		return moves;
