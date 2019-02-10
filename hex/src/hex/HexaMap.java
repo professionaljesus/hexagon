@@ -31,7 +31,6 @@ public class HexaMap {
 	 * 
 	 **/
 	public HexaMap(int size, int width, int height, Player[] player) {
-		System.out.println(HEXAGON_WIDTH);
 		this.size = size;
 		this.width = width;
 		this.height = height;
@@ -71,7 +70,7 @@ public class HexaMap {
 		case 1:
 
 			HexaMap[0][size - 1].setOwner(player[0].getId());
-			HexaMap[0][size - 1].setResources(100);
+			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 			break;
 		case 3:
@@ -80,11 +79,11 @@ public class HexaMap {
 			phex.get(0).add(HexaMap[0][size - 1]);
 
 			HexaMap[size - 1][size * 2 - 2].setOwner(player[1].getId());
-			HexaMap[size - 1][size * 2 - 2].setResources(100);
+			HexaMap[size - 1][size * 2 - 2].setResources(10);
 			phex.get(1).add(HexaMap[size - 1][size * 2 - 2]);
 
 			HexaMap[size * 2 - 2][0].setOwner(player[2].getId());
-			HexaMap[size * 2 - 2][0].setResources(100);
+			HexaMap[size * 2 - 2][0].setResources(10);
 			phex.get(2).add(HexaMap[size * 2 - 2][0]);
 
 			break;

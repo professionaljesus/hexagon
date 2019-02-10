@@ -20,6 +20,8 @@ public class GustafBot extends Player{
 		rand =  new ArrayList<Hexagon>();
 		int[] moves = null;
 		
+		
+		
 		for(Hexagon a : h) {
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {

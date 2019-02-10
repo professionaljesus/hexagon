@@ -1,7 +1,7 @@
 package hex;
 
 
-public class Hexagon {
+public class Hexagon{
 	private int owner, x ,y;
 	private int resources;
 	private Hexagon[] neighbours;
@@ -61,6 +61,5 @@ public class Hexagon {
 		else
 			return false;
 	}
-	
-	
+
 }
