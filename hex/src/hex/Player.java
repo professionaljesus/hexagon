@@ -13,7 +13,7 @@ public abstract class Player {
 		for (int x = 0; x < myMap.length; x++) {
 			for (int y = 0; y < myMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					myMap[x][y] = new Hexagon();
+					myMap[x][y] = new Hexagon(x,y);
 				}
 			}
 		}

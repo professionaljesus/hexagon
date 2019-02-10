@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -31,6 +32,7 @@ public class HexaMap {
 		this.size = size;
 		this.widht = width;
 		this.height = height;
+		
 
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		stacken = new Stack<int[]>();
@@ -187,7 +189,8 @@ public class HexaMap {
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					HexaMap[x][y] = new Hexagon();
+					HexaMap[x][y] = new Hexagon(x,y);
+					
 				}
 			}
 		}
