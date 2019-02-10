@@ -66,8 +66,8 @@ public class HexaMap {
 						targetY = 0;
 					}
 				} else {
-					targetX = t[4] + 1;
-					targetY = t[3];
+					targetX = t[3] + 1;
+					targetY = t[4];
 				}
 				break;
 			case 1: // Neråt Höger
