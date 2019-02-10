@@ -45,6 +45,8 @@ public class HexaMap {
 	 * t[2] resource
 	 * t[3] x
 	 * t[4] y
+	 * t[5] targetX
+	 * t[6] targetY
 	 */
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
@@ -52,86 +54,14 @@ public class HexaMap {
 			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
 				continue;
 			}
-			int targetX = 0;
-			int targetY = 0;
-			switch (t[1]) {
-			case 0: // Höger
-				if (t[3] + t[4] == size * 3 - 3) { // bottom right
-					targetX = t[3] - (size - 1);
-					targetY = t[4] - (size - 1);
-				} else if (t[3] == size * 2 - 2) { // top right
-					if (t[4] < size - 1) {
-						targetX = 0;
-						targetY = t[4] + size;
-					} else {
-						targetX = size - 1;
-						targetY = 0;
-					}
-				} else {
-					targetX = t[4] + 1;
-					targetY = t[3];
-				}
-				break;
-			case 1: // Neråt Höger
-				if (t[4] == size * 2 - 2) { // bottom
-					targetX = t[3] - (size - 1);
-					targetY = 0;
-				} else if (t[3] + t[4] == size * 3 - 3) { // bottom right
-					targetX = t[3] - size;
-					targetY = t[4] - (size - 2);
-				} else {
-					targetX = t[3];
-					targetY = t[4] + 1;
-				}
-				break;
-			case 2: // Neråt Vänster
-				if (t[3] == 0) { // bottom left
-					targetX = size * 2 - 2;
-					targetY = t[4] - (size - 1);
-				} else if (t[4] == size * 2 - 2) { // bottom
-					targetX = t[3] + (size / 2);
-					targetY = 0;
-				} else {
-					targetX = t[3] - 1;
-					targetY = t[4] + 1;
-				}
-				break;
-			case 3: // Vänster
-				if (t[3] + t[4] == size - 1) { // top left
-					targetX = t[3] + (size - 1);
-					targetY = t[43] + (size - 1);
-				} else if (t[3] == 0) { // bottom left
-					targetX = size * 2 - 2;
-					targetY = t[4] - size;
-				} else {
-					targetX = t[3] - 1;
-					targetY = t[4];
-				}
-				break;
-			case 4: // Upp åt vänster
-				if (t[4] == 0) {// top
-					targetX = t[3] - (size - 1);
-					targetY = size * 2 - 2;
-				} else if (t[3] + t[4] == size - 1) {// top left
-					targetX = t[3] + size;
-					targetY = t[4] + (size - 2);
-				} else {
-					targetX = t[3];
-					targetY = t[4] - 1;
-				}
-				break;
-			case 5: // Upp åt Höger
-				if (t[3] == size * 2 - 2) {// top right
-					targetX = 0;
-					targetY = t[4] + (size - 1);
-				} else if (t[4] == 0) {// top
-					targetX = t[3] - (size - 2);
-					targetY = size * 2 - 2;
-				} else {
-					targetX = t[3] + 1;
-					targetY = t[4] - 1;
-				}
-				break;
+			int targetX, targetY;
+			if(t[1] != 6) {
+				int[] target =  GetNeighbourXY(t[3], t[4], t[1]);
+				targetX = target[0];
+				targetY = target[1];
+			}else {
+				targetX = t[5];
+				targetY = t[6];
 			}
 
 			if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
@@ -208,93 +138,22 @@ public class HexaMap {
 		}
 
 	}
-
-	public Hexagon GetNeighbour(int x, int y, int Direction) {
-		int targetX = 0;
-		int targetY = 0;
-		switch (Direction) {
-		case 0: // Höger
-			if (x + y == size * 3 - 3) { // bottom right
-				targetX = x - (size - 1);
-				targetY = y - (size - 1);
-			} else if (x == size * 2 - 2) { // top right
-				if (y < size - 1) {
-					targetX = 0;
-					targetY = y + size;
-				} else {
-					targetX = size - 1;
-					targetY = 0;
-				}
-			} else {
-				targetX = x + 1;
-				targetY = y;
-			}
-			break;
-		case 1: // Neråt Höger
-			if (y == size * 2 - 2) { // bottom
-				targetX = x - (size - 1);
-				targetY = 0;
-			} else if (x + y == size * 3 - 3) { // bottom right
-				targetX = x - size;
-				targetY = y - (size - 2);
-			} else {
-				targetX = x;
-				targetY = y + 1;
-			}
-			break;
-		case 2: // Neråt Vänster
-			if (x == 0) { // bottom left
-				targetX = size * 2 - 2;
-				targetY = y - (size - 1);
-			} else if (y == size * 2 - 2) { // bottom
-				targetX = x + (size / 2);
-				targetY = 0;
-			} else {
-				targetX = x - 1;
-				targetY = y + 1;
-			}
-			break;
-		case 3: // Vänster
-			if (x + y == size - 1) { // top left
-				targetX = x + (size - 1);
-				targetY = y + (size - 1);
-			} else if (x == 0) { // bottom left
-				targetX = size * 2 - 2;
-				targetY = y - size;
-			} else {
-				targetX = x - 1;
-				targetY = y;
-			}
-			break;
-		case 4: // Upp åt vänster
-			if (y == 0) {// top
-				targetX = x - (size - 1);
-				targetY = size * 2 - 2;
-			} else if (x + y == size - 1) {// top left
-				targetX = x + size;
-				targetY = y + (size - 2);
-			} else {
-				targetX = x;
-				targetY = y - 1;
-			}
-			break;
-		case 5: // Upp åt Höger
-			if (x == size * 2 - 2) {// top right
-				targetX = 0;
-				targetY = y + (size - 1);
-			} else if (y == 0) {// top
-				targetX = x - (size - 2);
-				targetY = size * 2 - 2;
-			} else {
-				targetX = x + 1;
-				targetY = y - 1;
-			}
-			break;
+	
+	public Hexagon[] GetNeighbours(int x, int y) {
+		Hexagon[] n = new Hexagon[6];
+		for(int i = 0; i < 6; i++) {
+			n[i] = GetNeighbour(x, y, i);
 		}
-		return HexaMap[targetX][targetY];
+		return n;
+		
 	}
 
-	public int[] GetNeighbour2(int x, int y, int Direction) {
+	public Hexagon GetNeighbour(int x, int y, int direction) {
+		int[] target = GetNeighbourXY(x,y,direction);
+		return HexaMap[target[0]][target[1]];
+	}
+
+	public int[] GetNeighbourXY(int x, int y, int Direction) {
 		int targetX = 0;
 		int targetY = 0;
 		int[] pos = new int[2];

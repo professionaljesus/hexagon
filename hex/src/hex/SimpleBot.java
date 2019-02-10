@@ -1,9 +1,11 @@
 package hex;
 
+import java.awt.Color;
+
 public class SimpleBot extends Player{
 
-	public SimpleBot(int id, int size) {
-		super(id, size);
+	public SimpleBot(int id, int size, Color c) {
+		super(id, size, c);
 	}
 	
 	public int[] algo(HexaMap H) {

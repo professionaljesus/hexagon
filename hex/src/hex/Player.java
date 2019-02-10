@@ -7,8 +7,9 @@ public abstract class Player {
 	private Color color;
 	protected Hexagon[][] myMap;
 
-	public Player(int id, int size) {
+	public Player(int id, int size, Color c) {
 		this.id = id;
+		this.color = c;
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		for (int x = 0; x < myMap.length; x++) {
 			for (int y = 0; y < myMap[x].length; y++) {
@@ -31,7 +32,7 @@ public abstract class Player {
 					if (Aux[i][j].getOwner() == id) {
 						myMap[i][j] = Aux[i][j];
 						for (int k = 0; k < 6; k++) {
-							int[] temppos = h.GetNeighbour2(i, j, k);
+							int[] temppos = h.GetNeighbourXY(i, j, k);
 							myMap[temppos[0]][temppos[1]] = Aux[temppos[0]][temppos[1]];
 						}
 					}
@@ -40,6 +41,8 @@ public abstract class Player {
 		}
 
 	}
+	
+	
 
 
 	

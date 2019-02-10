@@ -16,6 +16,10 @@ public class Hexagon {
 		color = Color.BLACK;
 	}
 	
+	public Hexagon[] getNeighbours(HexaMap h) {
+		return h.GetNeighbours(x, y);
+	}
+	
 	
 	public int getResources() {
 		return resources;

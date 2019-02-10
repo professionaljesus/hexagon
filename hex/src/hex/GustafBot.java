@@ -1,5 +1,6 @@
 package hex;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class GustafBot extends Player{
@@ -7,8 +8,8 @@ public class GustafBot extends Player{
 	ArrayList<Hexagon> rand;
 	ArrayList<Hexagon> set;
 
-	public GustafBot(int id, int size) {
-		super(id, size);
+	public GustafBot(int id, int size, Color c) {
+		super(id, size, c);
 		rand = new ArrayList<Hexagon>();
 		set = new ArrayList<Hexagon>();
 
@@ -16,7 +17,7 @@ public class GustafBot extends Player{
 
 	@Override
 	public int[] algo(HexaMap H) {
-		int[] moves;
+		int[] moves = null;
 		
 		this.getMap(H);
 		
@@ -51,11 +52,22 @@ public class GustafBot extends Player{
 		
 		
 		for(Hexagon r : rand) {
-			if(r.getResources() < 70) {
-				for(Hexagon s: set) {
-					if(!rand.contains(s))
+			if(moves == null) {
+				for(Hexagon n: r.getNeighbours(H)) {
+					if(n.getOwner() == 0) {
+						moves = new int[] {this.id, 6, (3*r.getResources() )/ 4, r.getX(), r.getY(), n.getX(), n.getY()};
+					}
+				}
+				
+				
+				
+				if(r.getResources() < 70) {
+					for(Hexagon s: set) {
+						if(!rand.contains(s)) {
+							moves = new int[] {this.id, 6, (3*s.getResources() )/ 4, s.getX(), s.getY(), r.getX(), r.getY()};
+						}
 						
-						
+					}
 				}
 			}
 		}

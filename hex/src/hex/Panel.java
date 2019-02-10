@@ -34,9 +34,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         requestFocus();
     	player = new Player[3];
 
-		player[0] = new SimpleBot(1,4);
-		player[1] = new SimpleBot(2,4);
-		player[2] = new SimpleBot(3,4);
+		player[0] = new SimpleBot(1,4, Color.GREEN);
+		player[1] = new SimpleBot(2,4, Color.BLUE);
+		player[2] = new SimpleBot(3,4, Color.RED);
 		
 		H = new HexaMap(4,width,height);
 		H.GetNeighbour(6, 3, 5);
