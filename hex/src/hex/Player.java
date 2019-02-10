@@ -2,10 +2,10 @@ package hex;
 
 import java.awt.Color;
 
-public class Player {
+public abstract class Player {
 	private int id;
 	private Color color;
-	private Hexagon[][] myMap;
+	protected Hexagon[][] myMap;
 
 	public Player(int id, int size) {
 		this.id = id;
@@ -18,12 +18,12 @@ public class Player {
 			}
 		}
 	}
-
+	
 	public Color getColor() {
 		return color;
 	}
 
-	public void getMap(HexaMap h) {
+	protected void getMap(HexaMap h) {
 		Hexagon[][] Aux = h.getHexaMap();
 		for (int i = 0; i < Aux.length; i++) {
 			for (int j = 0; j < Aux.length; j++) {
@@ -58,6 +58,8 @@ public class Player {
 		return v;
 
 	}
+	
+	abstract public void algo(HexaMap H);
 
 	public int getId() {
 		return id;
