@@ -154,13 +154,17 @@ public class HexaMap {
 			}
 		}
 
-		for (int i = 0; i < HexaMap.length; i++) {
-			for (int j = 0; j < HexaMap.length; j++) {
-				if (HexaMap[i][j] != null && HexaMap[i][j].getOwner() != 0 && HexaMap[i][j].getResources() < 100) {
-					HexaMap[i][j].setResources(HexaMap[i][j].getResources() + 1);
-				}
-			}
+
+
+		for(HashSet<Hexagon> uu: phex) {
+			for(Hexagon u: uu)
+				u.setResources(u.getResources() + 1);
 		}
+
+			
+	
+
+
 
 	}
 
