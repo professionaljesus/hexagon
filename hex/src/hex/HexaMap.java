@@ -34,11 +34,11 @@ public class HexaMap {
 		this.size = size;
 		this.width = width;
 		this.height = height;
-		
+
 		phex = new ArrayList<HashSet<Hexagon>>();
-		for(int i = 0; i < player.length; i++)
+		for (int i = 0; i < player.length; i++)
 			phex.add(new HashSet<Hexagon>());
-		
+
 		this.player = player;
 
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
@@ -52,12 +52,12 @@ public class HexaMap {
 				}
 			}
 		}
-		
-		for(Hexagon[] uu: HexaMap) {
-			for(Hexagon u: uu) {
-				if(u != null) {
+
+		for (Hexagon[] uu : HexaMap) {
+			for (Hexagon u : uu) {
+				if (u != null) {
 					Hexagon[] n = new Hexagon[6];
-					for(int i = 0; i < 6; i++) {
+					for (int i = 0; i < 6; i++) {
 						n[i] = getNeighbour(u.getX(), u.getY(), i);
 					}
 					u.setNeighbours(n);
@@ -104,6 +104,7 @@ public class HexaMap {
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
+
 			
 			int id = t[0];
 			int res = t[1];
@@ -114,6 +115,7 @@ public class HexaMap {
 			
 			
 			if (HexaMap[x][y].getOwner() != id) {
+
 				continue;
 
 				
@@ -144,6 +146,7 @@ public class HexaMap {
 						phex.get(id - 1).remove(HexaMap[x][y]);
 					}
 
+
 						for(HashSet<Hexagon> a : phex){
 							a.remove(HexaMap[targetX][targetY]);
 						}
@@ -152,23 +155,17 @@ public class HexaMap {
 					
 				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
 
+
 				}
 			}
 		}
 
-
-
-		for(HashSet<Hexagon> uu: phex) {
-			for(Hexagon u: uu) {
-				if(u.getResources() < 100)
+		for (HashSet<Hexagon> uu : phex) {
+			for (Hexagon u : uu)
+				if (u.getResources() < 100) {
 					u.setResources(u.getResources() + 1);
-			}
+				}
 		}
-
-			
-	
-
-
 
 	}
 
@@ -187,7 +184,7 @@ public class HexaMap {
 	}
 
 	public Hexagon getNeighbour(int x, int y, int direction) {
-		int[] target = getNeighbourXY(x,y,direction);
+		int[] target = getNeighbourXY(x, y, direction);
 		return HexaMap[target[0]][target[1]];
 	}
 
