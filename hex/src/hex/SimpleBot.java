@@ -8,6 +8,7 @@ public class SimpleBot extends Player{
 	
 	public void algo(HexaMap H) {
 		this.getMap(H);
+		
 	}
 
 }
