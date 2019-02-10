@@ -23,6 +23,12 @@ public class Hexagon {
 		neighbours = n;
 	}
 	
+	@Override
+	public String toString() {
+		return Integer.toString(resources) + "\n" + "(" + getX() + "," + getY() + ")";
+		
+	}
+	
 	public int getResources() {
 		return resources;
 	}
@@ -37,10 +43,6 @@ public class Hexagon {
 	
 	public int getOwner() {
 		return owner;
-	}
-	
-	public String toString(){
-		return Integer.toString(resources);
 	}
 	
 	public int getX() {
