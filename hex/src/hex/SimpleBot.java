@@ -1,6 +1,7 @@
 package hex;
 
 import java.awt.Color;
+import java.util.HashSet;
 
 public class SimpleBot extends Player{
 
@@ -8,17 +9,10 @@ public class SimpleBot extends Player{
 		super(id, size, c);
 	}
 	
-	public int[] algo(HexaMap H) {
-		super.getMap(H);
+	public int[] algo(HashSet<Hexagon> H) {
 		int[] moves = new int[5];
-		moves[0] = super.getId();
-		moves[1] = 0;
-		moves[3] = 0;
-		moves[4] = 3;
-		moves[2] = super.myMap[0][3].getResources()/10;
-		//this.getMap(H);
+
 		return moves;
-		//g
 		
 	}
 	
