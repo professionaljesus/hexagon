@@ -141,17 +141,31 @@ public class SimpleBot extends Player {
 				if(neA.getOwner() != super.getId() && A.getResources() < 10+neA.getResources()){
 					HardcoreNeibooursA++;
 					continue;
-				}else if(neA.getOwner() )
-				
-				
+				}else if(neA.getOwner() != super.getId() && A.getResources() > neA.getResources()){
+					EvilNeibooursA++;
+					continue;
+				}
 			}
-			
+		}
+		for(Hexagon neB : B.getNeighbours()){
+			if(neB.getOwner() == super.getId()){
+				GoodNeibooursB++;
+				continue;
+			}else{
+				if(neB.getOwner() != super.getId() && A.getResources() < 10+neB.getResources()){
+					HardcoreNeibooursB++;
+					continue;
+				}else if(neB.getOwner() != super.getId() && A.getResources() > neB.getResources()){
+					EvilNeibooursB++;
+					continue;
+				}
+			}
 		}
 		
 		if(move == 1){
 
 		}else if(move == 0){
-			value += resource*5*(6-A.getNeighbours()) 
+			value += resource*5*(6-) 
 			
 			
 			
