@@ -128,7 +128,7 @@ public class HexaMap {
 				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
 				if(HexaMap[t[3]][t[4]].getResources() == 0) {
 					HexaMap[t[3]][t[4]].setOwner(0);
-					phex.get(t[0]).remove(HexaMap[t[3]][t[4]]);
+					phex.get(t[0] - 1).remove(HexaMap[t[3]][t[4]]);
 				}
 			} else { //Någon annans ruta
 				if (HexaMap[targetX][targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
@@ -141,12 +141,12 @@ public class HexaMap {
 					//Du slösa alla
 					if(HexaMap[t[3]][t[4]].getResources() == 0){
 						HexaMap[t[3]][t[4]].setOwner(0);
-						phex.get(t[0]).remove(HexaMap[t[3]][t[4]]);
+						phex.get(t[0] - 1).remove(HexaMap[t[3]][t[4]]);
 					}
 						for(HashSet<Hexagon> a : phex){
 							a.remove(HexaMap[targetX][targetY]);
 						}
-						phex.get(t[0]).add(HexaMap[targetX][targetY]);
+						phex.get(t[0] - 1).add(HexaMap[targetX][targetY]);
 						HexaMap[targetX][targetY].setOwner(t[0]);
 					
 				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
