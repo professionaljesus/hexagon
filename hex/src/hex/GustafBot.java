@@ -3,7 +3,6 @@ package hex;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class GustafBot extends Player{
 	
@@ -21,6 +20,8 @@ public class GustafBot extends Player{
 		rand =  new ArrayList<Hexagon>();
 		int[] moves = null;
 		
+		
+		
 		for(Hexagon a : h) {
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {
@@ -36,10 +37,8 @@ public class GustafBot extends Player{
 		
 
 		for(Hexagon r : rand) {
-			if(getId() == 1)
-				System.out.println(r.toString());
-			
-			if(r.getResources() < 70) {
+
+			if(r.getResources() < 130) {
 				for(Hexagon s: h) {
 					if(!rand.contains(s)) {
 						moves = new int[] {this.getId(), (3*s.getResources() )/ 4, s.getX(), s.getY(), r.getX(), r.getY()};

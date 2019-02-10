@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Stack;
 
 public class HexaMap {
@@ -71,7 +70,7 @@ public class HexaMap {
 		case 1:
 
 			HexaMap[0][size - 1].setOwner(player[0].getId());
-			HexaMap[0][size - 1].setResources(100);
+			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 			break;
 		case 3:
@@ -80,11 +79,11 @@ public class HexaMap {
 			phex.get(0).add(HexaMap[0][size - 1]);
 
 			HexaMap[size - 1][size * 2 - 2].setOwner(player[1].getId());
-			HexaMap[size - 1][size * 2 - 2].setResources(100);
+			HexaMap[size - 1][size * 2 - 2].setResources(10);
 			phex.get(1).add(HexaMap[size - 1][size * 2 - 2]);
 
 			HexaMap[size * 2 - 2][0].setOwner(player[2].getId());
-			HexaMap[size * 2 - 2][0].setResources(100);
+			HexaMap[size * 2 - 2][0].setResources(10);
 			phex.get(2).add(HexaMap[size * 2 - 2][0]);
 
 			break;
@@ -103,7 +102,7 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
-		//Collections.shuffle(stacken);
+		Collections.shuffle(stacken);
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
@@ -342,28 +341,18 @@ public class HexaMap {
 				(int) (originY + (HEXAGON_HEIGHT / 2)), // top
 				(int) (originY + (HEXAGON_HEIGHT / 4)) // top right
 		};
-
-		switch (HexaMap[x][y].getOwner()) {
-
-		case 1:
-			g.setColor(player[0].getColor());
+		
+		if(HexaMap[x][y].getOwner() != 0) {
+			g.setColor(player[HexaMap[x][y].getOwner() - 1].getColor());
 			g.fillPolygon(px, py, 6);
-			break;
-		case 2:
-			g.setColor(player[1].getColor());
-			g.fillPolygon(px, py, 6);
-			break;
-		case 3:
-			g.setColor(player[2].getColor());
-			g.fillPolygon(px, py, 6);
-			break;
 		}
 
 		g.setColor(Color.BLACK);
 
-
-		g.drawString(HexaMap[x][y].toString(),
+		g.drawString(Integer.toString(HexaMap[x][y].getResources()),
 				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY - 10);
+		g.drawString(HexaMap[x][y].toString(),
+				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY + 8);
 
 		g.drawPolygon(px, py, 6);
 	}

@@ -1,7 +1,7 @@
 package hex;
 
 
-public class Hexagon {
+public class Hexagon{
 	private int owner, x ,y;
 	private int resources;
 	private Hexagon[] neighbours;
@@ -25,7 +25,7 @@ public class Hexagon {
 	
 	@Override
 	public String toString() {
-		return Integer.toString(resources) + "\n" + "(" + getX() + "," + getY() + ")";
+		return "(" + getX() + "," + getY() + ")";
 		
 	}
 	
@@ -63,6 +63,4 @@ public class Hexagon {
 	}
 
 
-
-	
 }
