@@ -116,6 +116,7 @@ public class HexaMap {
 			if (HexaMap[x][y].getOwner() != id) {
 				continue;
 
+				
 			}
 
 
