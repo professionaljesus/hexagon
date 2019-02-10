@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Stack;
 
 public class HexaMap {
@@ -342,21 +341,10 @@ public class HexaMap {
 				(int) (originY + (HEXAGON_HEIGHT / 2)), // top
 				(int) (originY + (HEXAGON_HEIGHT / 4)) // top right
 		};
-
-		switch (HexaMap[x][y].getOwner()) {
-
-		case 1:
-			g.setColor(player[0].getColor());
+		
+		if(HexaMap[x][y].getOwner() != 0) {
+			g.setColor(player[HexaMap[x][y].getOwner() - 1].getColor());
 			g.fillPolygon(px, py, 6);
-			break;
-		case 2:
-			g.setColor(player[1].getColor());
-			g.fillPolygon(px, py, 6);
-			break;
-		case 3:
-			g.setColor(player[2].getColor());
-			g.fillPolygon(px, py, 6);
-			break;
 		}
 
 		g.setColor(Color.BLACK);
