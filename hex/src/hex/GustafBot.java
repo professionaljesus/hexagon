@@ -34,6 +34,7 @@ public class GustafBot extends Player{
 				rand.add(a);
 		}
 		
+
 		for(Hexagon r : rand) {
 			if(moves == null) {
 				for(Hexagon n: r.getNeighbours()) {
@@ -55,6 +56,7 @@ public class GustafBot extends Player{
 			
 		}
 				
+
 		return moves;
 		
 	}

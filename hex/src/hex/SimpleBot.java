@@ -10,6 +10,13 @@ public class SimpleBot extends Player {
 	public SimpleBot(int id, int size,Color color) {
 		super(id, size,color);
 		heatmap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+		for (int x = 0; x < heatmap.length; x++) {
+			for (int y = 0; y < heatmap[x].length; y++) {
+				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
+					heatmap[x][y] = new Hexagon(x, y);
+				}
+			}
+		}
 		switch (id) {
 		case 1:
 			heatmap[size - 1][size * 2 - 2].setOwner(2);
