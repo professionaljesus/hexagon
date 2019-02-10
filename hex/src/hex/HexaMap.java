@@ -104,7 +104,7 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
-		//Collections.shuffle(stacken);
+		Collections.shuffle(stacken);
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
@@ -362,9 +362,10 @@ public class HexaMap {
 
 		g.setColor(Color.BLACK);
 
-
-		g.drawString(HexaMap[x][y].toString(),
+		g.drawString(Integer.toString(HexaMap[x][y].getResources()),
 				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY - 10);
+		g.drawString(HexaMap[x][y].toString(),
+				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY + 8);
 
 		g.drawPolygon(px, py, 6);
 	}
