@@ -20,16 +20,8 @@ public class GustafBot extends Player{
 
 	}
 	
-	/**
-	 * Get's called at the endofTurn t[0] user 
-	 * t[1] direction 
-	 * t[2] resource 
-	 * t[3] x
-	 * t[4] y t[5] targetX t[6] targetY
-	 * 
-	 * Om dir > 5 så går den på targetX och Y
-	 */
-
+	
+	//id, res, x, y, targetX, targetY
 	@Override
 	public int[] algo(HashSet<Hexagon> h) {
 		int[] moves = null;
@@ -48,7 +40,8 @@ public class GustafBot extends Player{
 		}
 		
 		Hexagon m = itr.next();
-		moves = new int[] {1, 1, 0, 5, 0,6};
+
+		moves = new int[] {1, 5, 0, 5, 0, 6};
 		 
 		
 		return moves;
