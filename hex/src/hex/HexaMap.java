@@ -18,7 +18,7 @@ public class HexaMap {
 	private Hexagon[][] HexaMap;
 	private int size;
 
-	public static final int HEXAGON_HEIGHT = 80;
+	public static final int HEXAGON_HEIGHT = 64;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
 
 	private Player[] player;
@@ -103,7 +103,7 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
-		Collections.shuffle(stacken);
+		//Collections.shuffle(stacken);
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
@@ -168,6 +168,11 @@ public class HexaMap {
 							phex.get(id - 1).add(HexaMap[targetX][targetY]);
 
 						}
+						if(HexaMap[targetX][targetY].getOwner() - 1 == -1) {
+							System.out.println("WHAATAFAAAAK");
+							System.out.println(HexaMap[targetX][targetY].getOwner());
+						}
+						
 						phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 
 					}
@@ -304,8 +309,16 @@ public class HexaMap {
 							- HEXAGON_WIDTH * (size - 1) + x * (HEXAGON_WIDTH) + (y - size + 1) * (HEXAGON_WIDTH / 2);// Shift
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
+					
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-2), originY - HEXAGON_HEIGHT*(0.75)*size);
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-1), originY + HEXAGON_HEIGHT*(0.75)*(size-1));
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5), originY + HEXAGON_HEIGHT*(0.75)*(size*2-1));
+					
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-2), originY + HEXAGON_HEIGHT*(0.75)*size);
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-1), originY - HEXAGON_HEIGHT*(0.75)*(size-1));
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5), originY - HEXAGON_HEIGHT*(0.75)*(size*2-1));
+					
 				}
-
 			}
 		}
 	}
@@ -348,7 +361,6 @@ public class HexaMap {
 
 		g.setColor(Color.BLACK);
 
-		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 8);
 
 		g.drawString(HexaMap[x][y].toString(),
 				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY - 10);

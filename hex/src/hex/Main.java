@@ -14,12 +14,8 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(new Panel());
 		frame.pack();
-
 		frame.setVisible(true);
-		
-		
-		
-	
+
 	}
 	
 }

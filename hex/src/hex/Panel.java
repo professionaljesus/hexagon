@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import java.io.IOException;
-
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 
@@ -38,9 +38,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		player[0] = new GustafBot(1,4, Color.GREEN);
 		player[1] = new GustafBot(2,4, Color.BLUE);
 		player[2] = new GustafBot(3,4, Color.RED);
+ 
 
-
-		H = new HexaMap(4,width,height,player);
+		H = new HexaMap(6,width,height,player);
 	
 		turn = 0;
 	}
@@ -66,18 +66,13 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	 * @return True om bara en kvar, false annars
 	 */
 	private boolean end() {
-		int owner = 0;
-		for (Hexagon[] u: H.getHexaMap()) {
-		    for (Hexagon elem: u) {
-		    	if(elem != null) {
-			    	if(owner == 0)
-			    		owner = elem.getOwner();
-			    	else if(owner != elem.getOwner() && elem.getOwner() != 0)
-			    			return false;
-		    	}
-		    }
+		int left = 0;
+		for(HashSet<Hexagon> a : H.getPhex()) {
+			if(!a.isEmpty())
+				left++;
 		}
-		return true;
+		
+		return left < 2;
 	}
 
 
@@ -118,9 +113,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(turn < MAX_TURN) {
+		if(!end() && turn < MAX_TURN) {
 			for(Player p: player) {
-				System.out.println(p.getId());
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
 			}
 			H.endTurn();
