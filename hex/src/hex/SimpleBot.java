@@ -1,5 +1,6 @@
 package hex;
 import java.awt.Color;
+import java.util.Collections;
 import java.util.HashSet;
 public class SimpleBot extends Player {
 	int turnorder;
@@ -10,6 +11,7 @@ public class SimpleBot extends Player {
 	private int[] heatdir;
 	private Hexagon[][] myMap;
 	private HashSet<int[]> Actionlist;
+
 
 	public SimpleBot(int id, int size,Color color) {
 		super(id, size,color);
@@ -65,7 +67,7 @@ public class SimpleBot extends Player {
 	}
 		
 	public int[] algo(HashSet<Hexagon> H) {
-		//Updata data
+		//Update data
 		generating = 0;
 		own = H.size();
 		for(Hexagon h : H){
@@ -82,13 +84,8 @@ public class SimpleBot extends Player {
 				}else{
 					TurnMoves(h, ne, h.getResources(),2);
 				}
-				
-				
 			}
-			
-			
-			
-			
+			int Collections.max(Actionlist, (int[] e1,int[] e2) -> e1[5] < e2[5]);
 			
 		}
 		
@@ -163,14 +160,31 @@ public class SimpleBot extends Player {
 		}
 		
 		if(move == 1){
-
+			for(Hexagon neB : B.getNeighbours()){
+				if(B.getResources() + resourcs > neB.getResources()){
+					value += (B.getResources() + resourcs - neB.getResources())*GoodNeibooursB-10*EvilNeibooursB;
+					if(neB.getResources() > B.getResources()){
+						value += 100;
+						Actionlist.add(generateMove(super.getId(),neB.getResources()-B.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
+					}
+					Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+				}
+				
+			}
 		}else if(move == 0){
-			value += resource*5*(6-) 
-			
-			
-			
+			value += resourcs*5*(6-EvilNeibooursA)-resourcs*HardcoreNeibooursA*10 + resourcs*10*(6-EvilNeibooursB)-resourcs*HardcoreNeibooursB*15+resourcs*GoodNeibooursB;
+			if(A.getResources() >= 100){
+				value += -100;
+			}
+			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+			value += resourcs*2*(6-EvilNeibooursA)-resourcs*HardcoreNeibooursA*5 + resourcs*5*(6-EvilNeibooursB)-resourcs*HardcoreNeibooursB*8+resourcs*GoodNeibooursB-100;
+			Actionlist.add(generateMove(super.getId(),resourcs/2,A.getX(),A.getY(),B.getX(),B.getY(),value));
+			return;
 		}else{
-			
+			if(A.getResources() > B.getResources()){
+				value += 1000-EvilNeibooursB*10-HardcoreNeibooursB*100+100*GoodNeibooursB;
+				Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+			}		
 		}
 		
 		
@@ -184,6 +198,17 @@ public class SimpleBot extends Player {
 		
 	}
 	
+	private int[] generateMove(int id, int res, int x,int y,int targetx, int targety,int value){
+		int[] moves = new int[7];
+		moves[0] = id;
+		moves[1] = res;
+		moves[2] = x;
+		moves[3] = y;
+		moves[4] = targetx;
+		moves[5] = targety;
+		moves[6] = value;
+		return moves;
+	}
 	
 
 
