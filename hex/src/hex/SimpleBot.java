@@ -88,8 +88,9 @@ public class SimpleBot extends Player {
 				}else{
 					TurnMoves(h, ne, h.getResources(),2);
 				}
+			}			
 				
-			}
+			
 
 			Integer[] Action = Collections.max(Actionlist,(e1,e2) -> e1[6].compareTo(e2[6]));
 			
