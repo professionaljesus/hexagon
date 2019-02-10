@@ -106,6 +106,9 @@ public class HexaMap {
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
+			if(t == null){
+				continue;
+			}
 			int id = t[0];
 			int res = t[1];
 			int x = t[2];

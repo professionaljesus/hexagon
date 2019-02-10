@@ -184,6 +184,7 @@ public class SimpleBot extends Player {
 						Actionlist.add(generateMove(super.getId(),neB.getResources()-B.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 					}
 					Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+					return;
 				}
 				
 			}
@@ -193,12 +194,14 @@ public class SimpleBot extends Player {
 				value += -100;
 			}
 			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
-			value += resourcs*2*(6-EvilNeibooursA)-resourcs*HardcoreNeibooursA*5 + resourcs*5*(6-EvilNeibooursB)-resourcs*HardcoreNeibooursB*8+resourcs*GoodNeibooursB-100;
+			value = resourcs*2*(6-EvilNeibooursA)-resourcs*HardcoreNeibooursA*5 + resourcs*5*(6-EvilNeibooursB)-resourcs*HardcoreNeibooursB*8+resourcs*GoodNeibooursB-100;
 			Actionlist.add(generateMove(super.getId(),resourcs/2,A.getX(),A.getY(),B.getX(),B.getY(),value));
 			return;
 		}else{
 			if(A.getResources() > B.getResources()){
 				value += 1000-EvilNeibooursB*10-HardcoreNeibooursB*100+100*GoodNeibooursB;
+				Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+				value = 10000;
 				Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
 			}		
 		}
