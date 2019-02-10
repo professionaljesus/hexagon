@@ -21,7 +21,7 @@ public class HexaMap {
 
 	private int widht;
 	private int height;
-	private Stack<Integer[]> stacken;
+	private Stack<int[]> stacken;
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n; HexagonMap blir size*2-1
@@ -33,7 +33,7 @@ public class HexaMap {
 		this.height = height;
 
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
-		stacken = new Stack<Integer[]>();
+		stacken = new Stack<int[]>();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class HexaMap {
 	 */
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
-			Integer[] t = stacken.pop();
+			int[] t = stacken.pop();
 			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
 				continue;
 			}
@@ -163,7 +163,7 @@ public class HexaMap {
 	 *            playerid, dir, res, x, y
 	 *
 	 */
-	public void move(Integer[] t) {
+	public void move(int[] t) {
 		stacken.push(t);
 	}
 
