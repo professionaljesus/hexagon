@@ -3,21 +3,25 @@ package hex;
 import java.awt.Color;
 
 public class Hexagon {
-	private int owner;
+	private int owner, x ,y;
 	private int resources;
-	private Color color;
+	private Hexagon[] neighbours;
 	
 	
-	public Hexagon() {
+	public Hexagon(int x, int y) {
+		this.x = x;
+		this.y = y;
 		this.owner = 0;
 		this.resources = 0;
-		color = Color.BLACK;
 	}
 	
-	public Hexagon(int owner,int resources,Color color) {
-		this.owner = owner;
-		this.resources = resources;
-		this.color = color;
+	
+	public Hexagon[] getNeighbours() {
+		return neighbours;
+	}
+	
+	public void setNeighbours(Hexagon[] x) {
+		neighbours = x;
 	}
 	
 	public int getResources() {
@@ -38,6 +42,23 @@ public class Hexagon {
 	
 	public String toString(){
 		return Integer.toString(resources);
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Hexagon c = (Hexagon) o;
+		if(c.getX() == x && c.getY() == y)
+			return true;
+		else
+			return false;
 	}
 	
 	

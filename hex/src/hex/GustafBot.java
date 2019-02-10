@@ -1,22 +1,27 @@
 package hex;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GustafBot extends Player{
 	
-	ArrayList<int[]> rand;
+	ArrayList<Hexagon> rand;
+	ArrayList<Hexagon> set;
 
-	public GustafBot(int id, int size) {
-		super(id, size);
-		rand = new ArrayList<int[]>();
+	public GustafBot(int id, int size, Color c) {
+		super(id, size, c);
+		rand = new ArrayList<Hexagon>();
+		set = new ArrayList<Hexagon>();
+
 	}
 
 	@Override
-	public int[] algo(HexaMap H) {
-		int[] moves = new int[5];
+	public int[] algo(HashSet<Hexagon> H) {
+		int[] moves = null;
+	
+			
 
-		this.getMap(H);
-		
 		
 		return moves;
 		
