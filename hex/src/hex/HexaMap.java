@@ -18,7 +18,7 @@ public class HexaMap {
 	private Hexagon[][] HexaMap;
 	private int size;
 
-	public static final int HEXAGON_HEIGHT = 64;
+	public static final int HEXAGON_HEIGHT = 68;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
 
 	private Player[] player;
@@ -103,7 +103,7 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
-		//Collections.shuffle(stacken);
+		Collections.shuffle(stacken);
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
