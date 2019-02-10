@@ -26,8 +26,6 @@ public class RandomBot extends Player{
 		}
 		
 		Hexagon n = boi.getNeighbours()[r.nextInt(6)];
-		
-			
 			
 		return new int[] {getId(), r.nextInt(boi.getResources()), boi.getX(), boi.getY(), n.getX(), n.getY()};
 	}
