@@ -20,7 +20,7 @@ public class HexaMap {
 	public static final int HEXAGON_HEIGHT = 80;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
 
-	
+	private Player[] player;
 	private ArrayList<HashSet<Hexagon>> phex;
 	private int width;
 	private int height;
@@ -39,14 +39,16 @@ public class HexaMap {
 		for(int i = 0; i < player.length; i++)
 			phex.add(new HashSet<Hexagon>());
 		
+		this.player = player;
+
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		stacken = new Stack<int[]>();
-		
+
 		// Detta borde göra samma
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					HexaMap[x][y] = new Hexagon(x,y);					
+					HexaMap[x][y] = new Hexagon(x, y);
 				}
 			}
 		}
@@ -66,7 +68,7 @@ public class HexaMap {
 		// Placering av spelar positioner
 		switch (player.length) {
 		case 1:
-			
+
 			HexaMap[0][size - 1].setOwner(player[0].getId());
 			HexaMap[0][size - 1].setResources(100);
 			phex.get(0).add(HexaMap[0][size - 1]);
@@ -87,20 +89,14 @@ public class HexaMap {
 			break;
 		}
 	}
-	
-	public ArrayList<HashSet<Hexagon>> getPhex(){
+
+	public ArrayList<HashSet<Hexagon>> getPhex() {
 		return phex;
 	}
 
 	/**
-	 * Get's called at the endofTurn
-	 * t[0] user
-	 * t[1] direction
-	 * t[2] resource
-	 * t[3] x
-	 * t[4] y
-	 * t[5] targetX
-	 * t[6] targetY
+	 * Get's called at the endofTurn t[0] user t[1] direction t[2] resource t[3]
+	 * x t[4] y t[5] targetX t[6] targetY
 	 * 
 	 * Om dir > 5 så går den på targetX och Y
 	 */
@@ -113,40 +109,40 @@ public class HexaMap {
 			}
 
 			int targetX, targetY;
-			if(t[1] < 6) {
-				int[] target =  getNeighbourXY(t[3], t[4], t[1]);
+
+			if (t[1] < 6) {
+				int[] target = getNeighbourXY(t[3], t[4], t[1]);
 				targetX = target[0];
 				targetY = target[1];
-			}else {
+			} else {
 				targetX = t[5];
 				targetY = t[6];
 			}
-			
-			//Om man har för lite resources
-			if (HexaMap[t[3]][t[4]].getResources() < t[2]) 
+
+			// Om man har för lite resources
+			if (HexaMap[t[3]][t[4]].getResources() < t[2])
 				continue;
-			
-				
+
 			if (HexaMap[targetX][targetY].getOwner() == t[0]) {
 				HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + t[2]);
 				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
-				if(HexaMap[t[3]][t[4]].getResources() == 0) {
+				if (HexaMap[t[3]][t[4]].getResources() == 0) {
 					HexaMap[t[3]][t[4]].setOwner(0);
 					phex.get(t[0] - 1).remove(HexaMap[t[3]][t[4]]);
 				}
-			} else { //Någon annans ruta
+			} else { // Någon annans ruta
 				if (HexaMap[targetX][targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
 					continue;
-				} else { //Mer resources än den
+				} else { // Mer resources än den
 					HexaMap[targetX][targetY].setResources(t[2] - HexaMap[targetX][targetY].getResources());
 					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
-					
-					
-					//Du slösa alla
-					if(HexaMap[t[3]][t[4]].getResources() == 0){
+
+					// Du slösa alla
+					if (HexaMap[t[3]][t[4]].getResources() == 0) {
 						HexaMap[t[3]][t[4]].setOwner(0);
 						phex.get(t[0] - 1).remove(HexaMap[t[3]][t[4]]);
 					}
+
 						for(HashSet<Hexagon> a : phex){
 							a.remove(HexaMap[targetX][targetY]);
 						}
@@ -154,6 +150,7 @@ public class HexaMap {
 						HexaMap[targetX][targetY].setOwner(t[0]);
 					
 				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
+
 				}
 			}
 		}
@@ -188,7 +185,6 @@ public class HexaMap {
 
 	public Hexagon getNeighbour(int x, int y, int direction) {
 		int[] target = getNeighbourXY(x,y,direction);
-
 		return HexaMap[target[0]][target[1]];
 	}
 
@@ -315,16 +311,17 @@ public class HexaMap {
 		};
 
 		switch (HexaMap[x][y].getOwner()) {
+
 		case 1:
-			g.setColor(Color.RED);
+			g.setColor(player[0].getColor());
 			g.fillPolygon(px, py, 6);
 			break;
 		case 2:
-			g.setColor(Color.BLUE);
+			g.setColor(player[1].getColor());
 			g.fillPolygon(px, py, 6);
 			break;
 		case 3:
-			g.setColor(Color.GREEN);
+			g.setColor(player[2].getColor());
 			g.fillPolygon(px, py, 6);
 			break;
 		}
