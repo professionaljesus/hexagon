@@ -103,6 +103,7 @@ public class HexaMap {
 	public void endTurn() {
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
+			
 			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
 				continue;
 
