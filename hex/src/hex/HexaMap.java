@@ -78,13 +78,13 @@ public class HexaMap {
 			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 
-			HexaMap[size - 1][size * 2 - 2].setOwner(player[1].getId());
-			HexaMap[size - 1][size * 2 - 2].setResources(10);
-			phex.get(1).add(HexaMap[size - 1][size * 2 - 2]);
+			HexaMap[size - 1][size -1].setOwner(player[1].getId());
+			HexaMap[size - 1][size -1].setResources(10);
+			phex.get(1).add(HexaMap[size - 1][size -1]);
 
-			HexaMap[size * 2 - 2][0].setOwner(player[2].getId());
-			HexaMap[size * 2 - 2][0].setResources(10);
-			phex.get(2).add(HexaMap[size * 2 - 2][0]);
+			HexaMap[size * 2 - 2][size -1].setOwner(player[2].getId());
+			HexaMap[size * 2 - 2][size -1].setResources(10);
+			phex.get(2).add(HexaMap[size * 2 - 2][size -1]);
 
 			break;
 		}
