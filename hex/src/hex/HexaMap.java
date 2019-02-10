@@ -17,7 +17,7 @@ public class HexaMap {
 	private Hexagon[][] HexaMap;
 	private int size;
 
-	public static final int HEXAGON_HEIGHT = 80;
+	public static final int HEXAGON_HEIGHT = 64;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
 
 	private Player[] player;
@@ -301,8 +301,16 @@ public class HexaMap {
 							- HEXAGON_WIDTH * (size - 1) + x * (HEXAGON_WIDTH) + (y - size + 1) * (HEXAGON_WIDTH / 2);// Shift
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
+					
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-2), originY - HEXAGON_HEIGHT*(0.75)*size);
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-1), originY + HEXAGON_HEIGHT*(0.75)*(size-1));
+					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5), originY + HEXAGON_HEIGHT*(0.75)*(size*2-1));
+					
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-2), originY + HEXAGON_HEIGHT*(0.75)*size);
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-1), originY - HEXAGON_HEIGHT*(0.75)*(size-1));
+					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5), originY - HEXAGON_HEIGHT*(0.75)*(size*2-1));
+					
 				}
-
 			}
 		}
 	}
