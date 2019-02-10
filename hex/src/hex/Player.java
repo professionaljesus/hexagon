@@ -27,11 +27,13 @@ public abstract class Player {
 		Hexagon[][] Aux = h.getHexaMap();
 		for (int i = 0; i < Aux.length; i++) {
 			for (int j = 0; j < Aux.length; j++) {
-				if (Aux[i][j].getOwner() == id) {
-					myMap[i][j] = Aux[i][j];
-					for (int k = 0; k < 6; k++) {
-						int[] temppos = h.GetNeighbour2(i, j, k);
-						myMap[temppos[0]][temppos[1]] = Aux[temppos[0]][temppos[1]];
+				if(Aux[i][j] != null) {
+					if (Aux[i][j].getOwner() == id) {
+						myMap[i][j] = Aux[i][j];
+						for (int k = 0; k < 6; k++) {
+							int[] temppos = h.GetNeighbour2(i, j, k);
+							myMap[temppos[0]][temppos[1]] = Aux[temppos[0]][temppos[1]];
+						}
 					}
 				}
 			}
