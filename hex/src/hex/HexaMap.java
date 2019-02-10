@@ -18,7 +18,7 @@ public class HexaMap {
 	private Hexagon[][] HexaMap;
 	private int size;
 
-	public static final int HEXAGON_HEIGHT = 64;
+	public static final int HEXAGON_HEIGHT = 68;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
 
 	private Player[] player;
@@ -32,6 +32,7 @@ public class HexaMap {
 	 * 
 	 **/
 	public HexaMap(int size, int width, int height, Player[] player) {
+		System.out.println(HEXAGON_WIDTH);
 		this.size = size;
 		this.width = width;
 		this.height = height;
