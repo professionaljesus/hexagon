@@ -1,6 +1,5 @@
 package hex;
 
-import java.awt.Color;
 
 public class Hexagon {
 	private int owner, x ,y;
