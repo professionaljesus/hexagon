@@ -137,7 +137,7 @@ public class HexaMap {
 			}
 			if (HexaMap[targetX][targetY].getOwner() == t[0]) {
 				HexaMap[targetX][targetY]
-						.setResources(HexaMap[t[3]][t[4]].getResources() + t[2]);
+						.setResources(HexaMap[targetX][targetY].getResources() + t[2]);
 				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
 			} else {
 				if (HexaMap[targetX][ targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
