@@ -61,7 +61,7 @@ public abstract class Player {
 
 	}
 	
-	abstract public void algo(HexaMap H);
+	abstract public int[] algo(HexaMap H);
 
 	public int getId() {
 		return id;
