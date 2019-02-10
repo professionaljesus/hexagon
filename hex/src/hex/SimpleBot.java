@@ -1,6 +1,7 @@
 package hex;
 import java.awt.Color;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 public class SimpleBot extends Player {
 	int turnorder;
@@ -10,13 +11,14 @@ public class SimpleBot extends Player {
 	private Hexagon[][] heatMap;
 	private int[] heatdir;
 	private Hexagon[][] myMap;
-	private HashSet<int[]> Actionlist;
+	private HashSet<Integer[]> Actionlist;
 
 
 	public SimpleBot(int id, int size,Color color) {
 		super(id, size,color);
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		heatMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+		Actionlist = new HashSet<Integer[]>();
 		for (int x = 0; x < heatMap.length; x++) {
 			for (int y = 0; y < heatMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
@@ -70,12 +72,14 @@ public class SimpleBot extends Player {
 		//Update data
 		generating = 0;
 		own = H.size();
-		for(Hexagon h : H){
+		
+		for(Hexagon h : H){	
 			if(h.getResources() < 100){
 				generating++;
 			}
 			myMap[h.getX()][h.getY()] = h;
 			for(Hexagon ne : h.getNeighbours()){
+				
 				myMap[ne.getX()][ne.getY()] = ne;
 				if(ne.getOwner() == super.getId()){
 					TurnMoves(h, ne, h.getResources(),1);
@@ -84,9 +88,19 @@ public class SimpleBot extends Player {
 				}else{
 					TurnMoves(h, ne, h.getResources(),2);
 				}
+				
 			}
-			int Collections.max(Actionlist, (int[] e1,int[] e2) -> e1[5] < e2[5]);
+
+			Integer[] Action = Collections.max(Actionlist,(e1,e2) -> e1[6].compareTo(e2[6]));
 			
+			int[] realaction = new int[6];
+			realaction[0] = Action[0];
+			realaction[1] = Action[1];
+			realaction[2] = Action[2];
+			realaction[3] = Action[3];
+			realaction[4] = Action[4];
+			realaction[5] = Action[5];
+			return realaction;
 		}
 		
 		
@@ -138,7 +152,7 @@ public class SimpleBot extends Player {
 				if(neA.getOwner() != super.getId() && A.getResources() < 10+neA.getResources()){
 					HardcoreNeibooursA++;
 					continue;
-				}else if(neA.getOwner() != super.getId() && A.getResources() > neA.getResources()){
+				}else if(neA.getOwner() != 0 && A.getResources() > neA.getResources()){
 					EvilNeibooursA++;
 					continue;
 				}
@@ -152,7 +166,7 @@ public class SimpleBot extends Player {
 				if(neB.getOwner() != super.getId() && A.getResources() < 10+neB.getResources()){
 					HardcoreNeibooursB++;
 					continue;
-				}else if(neB.getOwner() != super.getId() && A.getResources() > neB.getResources()){
+				}else if(neB.getOwner() != 0 && A.getResources() > neB.getResources()){
 					EvilNeibooursB++;
 					continue;
 				}
@@ -198,8 +212,8 @@ public class SimpleBot extends Player {
 		
 	}
 	
-	private int[] generateMove(int id, int res, int x,int y,int targetx, int targety,int value){
-		int[] moves = new int[7];
+	private Integer[] generateMove(int id, int res, int x,int y,int targetx, int targety,int value){
+		Integer[] moves = new Integer[7];
 		moves[0] = id;
 		moves[1] = res;
 		moves[2] = x;
