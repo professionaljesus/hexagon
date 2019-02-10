@@ -1,14 +1,13 @@
 package hex;
 
 import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.Graphics;
-import java.awt.font.TextAttribute;
-import java.text.AttributedCharacterIterator;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.HashSet;
-import java.util.Map;
+
 import java.util.Stack;
 
 public class HexaMap {
@@ -132,7 +131,7 @@ public class HexaMap {
 					phex.get(t[0]).remove(HexaMap[t[3]][t[4]]);
 				}
 			} else { //Någon annans ruta
-				if (HexaMap[targetX][ targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
+				if (HexaMap[targetX][targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
 					continue;
 				} else { //Mer resources än den
 					HexaMap[targetX][targetY].setResources(t[2] - HexaMap[targetX][targetY].getResources());
@@ -143,13 +142,13 @@ public class HexaMap {
 					if(HexaMap[t[3]][t[4]].getResources() == 0){
 						HexaMap[t[3]][t[4]].setOwner(0);
 						phex.get(t[0]).remove(HexaMap[t[3]][t[4]]);
-					}else {
-						for(HashSet<Hexagon> a : phex)
+					}
+						for(HashSet<Hexagon> a : phex){
 							a.remove(HexaMap[targetX][targetY]);
-						
+						}
 						phex.get(t[0]).add(HexaMap[targetX][targetY]);
 						HexaMap[targetX][targetY].setOwner(t[0]);
-					}
+					
 				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
 				}
 			}
