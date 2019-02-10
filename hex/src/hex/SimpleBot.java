@@ -11,7 +11,7 @@ public class SimpleBot extends Player{
 		//moves[1] = 
 		//this.getMap(H);
 		return moves;
-		
+		//sd
 		
 	}
 	
