@@ -139,29 +139,42 @@ public class HexaMap {
 					phex.get(id - 1).remove(HexaMap[x][y]);
 				}
 			} else { // Någon annans ruta
-				for(Hexagon n: HexaMap[x][y].getNeighbours()) {
-					if(n.equals(HexaMap[targetX][targetY]))
+				for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+					if(n.equals(HexaMap[x][y]))
 						illegal = false;
 				}
 				if(illegal)
 					continue;
 				
-				HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
-				HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+				if(HexaMap[targetX][targetY].getOwner() == 0) {
+					HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
+					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+					HexaMap[targetX][targetY].setOwner(id);
+					phex.get(id - 1).add(HexaMap[targetX][targetY]);					
+				}else {
+					if(res < HexaMap[targetX][targetY].getResources()) 
+						HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
+					else {
+						if(res == HexaMap[targetX][targetY].getResources()) {
+							HexaMap[targetX][targetY].setResources(0);
+							HexaMap[targetX][targetY].setOwner(0);
+						}else {
+							HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
+							HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+							HexaMap[targetX][targetY].setOwner(id);
+							phex.get(id - 1).add(HexaMap[targetX][targetY]);
+
+						}
+						phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
+
+					}
+				}
 				
 				// Du slösa alla
 				if (HexaMap[x][y].getResources() == 0) {
 					HexaMap[x][y].setOwner(0);
 					phex.get(id - 1).remove(HexaMap[x][y]);
-				}
-
-				for(HashSet<Hexagon> a : phex)
-					a.remove(HexaMap[targetX][targetY]);
-				
-				phex.get(t[0] - 1).add(HexaMap[targetX][targetY]);
-				HexaMap[targetX][targetY].setOwner(id);
-					
-				
+				}				
 			}
 		}
 
