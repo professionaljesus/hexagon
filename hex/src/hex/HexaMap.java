@@ -53,12 +53,8 @@ public class HexaMap {
 			for (Hexagon u : uu) {
 				Hexagon[] n = new Hexagon[6];
 				if(u != null){
-				for (int i = 0; i < 6; i++) {
-					if(u.getY() == 6){
-						System.out.print("");
-					}
+				for (int i = 0; i < 6; i++) {	
 						n[i] = GetNeighbour(u.getX(), u.getY(), i);
-					
 				}
 				u.setNeighbours(n);
 				}
