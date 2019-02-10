@@ -135,18 +135,18 @@ public class HexaMap {
 			if (HexaMap[t[3]][t[4]].getResources() < t[2]) {
 				continue;
 			}
-			if (HexaMap[t[3] + targetX][t[4] + targetY].getOwner() == t[0]) {
-				HexaMap[t[3] + targetX][t[4] + targetY]
-						.setResources(HexaMap[t[3] + targetX][t[4] + targetY].getResources() + t[2]);
+			if (HexaMap[targetX][targetY].getOwner() == t[0]) {
+				HexaMap[targetX][targetY]
+						.setResources(HexaMap[t[3]][t[4]].getResources() + t[2]);
 				HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
 			} else {
-				if (HexaMap[t[3 + targetX]][t[4 + targetY]].getResources() > HexaMap[t[3]][t[4]].getResources()) {
+				if (HexaMap[targetX][ targetY].getResources() > HexaMap[t[3]][t[4]].getResources()) {
 					continue;
 				} else {
-					HexaMap[t[3 + targetX]][t[4 + targetY]]
-							.setResources(t[2] - HexaMap[t[3] + targetX][t[4] + targetY].getResources());
+					HexaMap[targetX][targetY]
+							.setResources(t[2] - HexaMap[targetX][targetY].getResources());
 					HexaMap[t[3]][t[4]].setResources(HexaMap[t[3]][t[4]].getResources() - t[2]);
-					HexaMap[t[3 + targetX]][t[4 + targetY]].setOwner(t[0]);
+					HexaMap[targetX][targetY].setOwner(t[0]);
 				//	HexaMap[t[3 + targetX]][t[4 + targetY]].setColor
 				}
 			}
