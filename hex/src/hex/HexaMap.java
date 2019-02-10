@@ -35,8 +35,10 @@ public class HexaMap {
 		this.width = width;
 		this.height = height;
 		
-		phex = new ArrayList<HashSet<Hexagon>>(player.length);
-
+		phex = new ArrayList<HashSet<Hexagon>>();
+		for(int i = 0; i < player.length; i++)
+			phex.add(new HashSet<Hexagon>());
+		
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		stacken = new Stack<int[]>();
 		
@@ -51,11 +53,13 @@ public class HexaMap {
 		
 		for(Hexagon[] uu: HexaMap) {
 			for(Hexagon u: uu) {
-				Hexagon[] n = new Hexagon[6];
-				for(int i = 0; i < 6; i++) {
-					n[i] = GetNeighbour(u.getX(), u.getY(), i);
+				if(u != null) {
+					Hexagon[] n = new Hexagon[6];
+					for(int i = 0; i < 6; i++) {
+						n[i] = getNeighbour(u.getX(), u.getY(), i);
+					}
+					u.setNeighbours(n);
 				}
-				u.setNeighbours(n);
 			}
 		}
 
@@ -110,7 +114,7 @@ public class HexaMap {
 
 			int targetX, targetY;
 			if(t[1] < 6) {
-				int[] target =  GetNeighbourXY(t[3], t[4], t[1]);
+				int[] target =  getNeighbourXY(t[3], t[4], t[1]);
 				targetX = target[0];
 				targetY = target[1];
 			}else {
@@ -182,12 +186,13 @@ public class HexaMap {
 		return HexaMap;
 	}
 
-	public Hexagon GetNeighbour(int x, int y, int direction) {
-		int[] target = GetNeighbourXY(x,y,direction);
+	public Hexagon getNeighbour(int x, int y, int direction) {
+		int[] target = getNeighbourXY(x,y,direction);
+
 		return HexaMap[target[0]][target[1]];
 	}
 
-	public int[] GetNeighbourXY(int x, int y, int Direction) {
+	public int[] getNeighbourXY(int x, int y, int Direction) {
 		int targetX = 0;
 		int targetY = 0;
 		int[] pos = new int[2];
@@ -211,7 +216,7 @@ public class HexaMap {
 			break;
 		case 1: // Neråt Höger
 			if (y == size * 2 - 2) { // bottom
-				targetX = x - (size - 1);
+				targetX = x + (size - 1);
 				targetY = 0;
 			} else if (x + y == size * 3 - 3) { // bottom right
 				targetX = x - size;

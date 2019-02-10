@@ -20,8 +20,8 @@ public class Hexagon {
 		return neighbours;
 	}
 	
-	public void setNeighbours(Hexagon[] x) {
-		neighbours = x;
+	public void setNeighbours(Hexagon[] n) {
+		neighbours = n;
 	}
 	
 	public int getResources() {
