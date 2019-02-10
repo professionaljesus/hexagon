@@ -361,9 +361,10 @@ public class HexaMap {
 
 		g.setColor(Color.BLACK);
 
-
-		g.drawString(HexaMap[x][y].toString(),
+		g.drawString(Integer.toString(HexaMap[x][y].getResources()),
 				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY - 10);
+		g.drawString(HexaMap[x][y].toString(),
+				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY + 8);
 
 		g.drawPolygon(px, py, 6);
 	}

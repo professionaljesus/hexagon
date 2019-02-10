@@ -25,7 +25,7 @@ public class Hexagon {
 	
 	@Override
 	public String toString() {
-		return Integer.toString(resources) + "\n" + "(" + getX() + "," + getY() + ")";
+		return "(" + getX() + "," + getY() + ")";
 		
 	}
 	
