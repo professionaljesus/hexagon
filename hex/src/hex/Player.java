@@ -41,25 +41,7 @@ public abstract class Player {
 
 	}
 
-	/**
-	 * Gör ett Move
-	 * 
-	 * @param x
-	 * @param y
-	 * @param Direction
-	 * @param resource
-	 * @return
-	 */
-	public int[] PlayerMove(int x, int y, int Direction, int resource) {
-		int[] v = new int[5];
-		v[0] = this.id;
-		v[1] = Direction;
-		v[2] = resource;
-		v[3] = x;
-		v[4] = y;
-		return v;
 
-	}
 	
 	abstract public int[] algo(HexaMap H);
 

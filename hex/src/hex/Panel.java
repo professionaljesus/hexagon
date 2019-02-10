@@ -122,8 +122,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 				H.move(p.algo(H));
 			}
 			H.endTurn();
-			
-			
 			System.out.println("Turn: " + turn);
 			turn++;
 		}
