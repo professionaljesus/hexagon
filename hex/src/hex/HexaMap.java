@@ -158,8 +158,10 @@ public class HexaMap {
 
 
 		for(HashSet<Hexagon> uu: phex) {
-			for(Hexagon u: uu)
-				u.setResources(u.getResources() + 1);
+			for(Hexagon u: uu) {
+				if(u.getResources() < 100)
+					u.setResources(u.getResources() + 1);
+			}
 		}
 
 			
