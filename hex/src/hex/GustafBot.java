@@ -1,15 +1,24 @@
 package hex;
 
+import java.util.ArrayList;
+
 public class GustafBot extends Player{
+	
+	ArrayList<int[]> rand;
 
 	public GustafBot(int id, int size) {
 		super(id, size);
-		// TODO Auto-generated constructor stub
+		rand = new ArrayList<int[]>();
 	}
 
 	@Override
 	public int[] algo(HexaMap H) {
-		// TODO Auto-generated method stub
+		int[] moves = new int[5];
+
+		this.getMap(H);
+		
+		
+		return moves;
 		
 	}
 
