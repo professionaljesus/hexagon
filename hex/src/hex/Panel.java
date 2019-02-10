@@ -3,13 +3,15 @@ package hex;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Panel extends JPanel implements Runnable{
+public class Panel extends JPanel implements Runnable, KeyListener{
 
 	/**
 	 * 
@@ -27,6 +29,8 @@ public class Panel extends JPanel implements Runnable{
 	public Panel() throws IOException {
 		super();
 		setPreferredSize(new Dimension(width,height));
+		setFocusable(true);
+
         requestFocus();
     	player = new Player[3];
 
@@ -44,6 +48,8 @@ public class Panel extends JPanel implements Runnable{
         super.addNotify();
         if(thread == null) {
             thread = new Thread(this);
+			addKeyListener(this);
+
             thread.start();
         }
     }
@@ -63,11 +69,12 @@ public class Panel extends JPanel implements Runnable{
 		int owner = 0;
 		for (Hexagon[] u: H.getHexaMap()) {
 		    for (Hexagon elem: u) {
-		    	if(owner == 0)
-		    		owner = elem.getOwner();
-		    	else if(owner != elem.getOwner() && elem.getOwner() != 0)
-		    			return false;
-		    		
+		    	if(elem != null) {
+			    	if(owner == 0)
+			    		owner = elem.getOwner();
+			    	else if(owner != elem.getOwner() && elem.getOwner() != 0)
+			    			return false;
+		    	}
 		    }
 		}
 		return true;
@@ -84,21 +91,14 @@ public class Panel extends JPanel implements Runnable{
         //game loop
         while(true) {
              
-           // start = System.nanoTime();
+           start = System.nanoTime();
              
-           // elapsed = System.nanoTime() - start;
+           elapsed = System.nanoTime() - start;
             
-            
-            try {
-				System.in.read();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
             repaint();
-            System.out.println("fuck");
-            turn++;
-             /*
+
+             
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;
              
@@ -110,9 +110,29 @@ public class Panel extends JPanel implements Runnable{
                 e.printStackTrace();
                  
             }
-             */
+             
              
         }
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(!end() && turn < MAX_TURN) {
+			System.out.println("fuck");
+			turn++;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 		
 	}
 	
