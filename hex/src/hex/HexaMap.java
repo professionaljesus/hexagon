@@ -51,13 +51,11 @@ public class HexaMap {
 		
 		for(Hexagon[] uu: HexaMap) {
 			for(Hexagon u: uu) {
-				
 				Hexagon[] n = new Hexagon[6];
 				for(int i = 0; i < 6; i++) {
 					n[i] = GetNeighbour(u.getX(), u.getY(), i);
 				}
 				u.setNeighbours(n);
-				
 			}
 		}
 
@@ -107,7 +105,9 @@ public class HexaMap {
 			int[] t = stacken.pop();
 			if (HexaMap[t[3]][t[4]].getOwner() != t[0]) {
 				continue;
+
 			}
+
 			int targetX, targetY;
 			if(t[1] < 6) {
 				int[] target =  GetNeighbourXY(t[3], t[4], t[1]);
