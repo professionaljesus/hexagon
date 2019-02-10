@@ -103,7 +103,7 @@ public class HexaMap {
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
-		Collections.shuffle(stacken);
+		//Collections.shuffle(stacken);
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
@@ -168,6 +168,11 @@ public class HexaMap {
 							phex.get(id - 1).add(HexaMap[targetX][targetY]);
 
 						}
+						if(HexaMap[targetX][targetY].getOwner() - 1 == -1) {
+							System.out.println("WHAATAFAAAAK");
+							System.out.println(HexaMap[targetX][targetY].getOwner());
+						}
+						
 						phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 
 					}
@@ -348,7 +353,6 @@ public class HexaMap {
 
 		g.setColor(Color.BLACK);
 
-		g.drawString("(" + x + "," + y + ")", (int) originX - 12, (int) originY + 8);
 
 		g.drawString(HexaMap[x][y].toString(),
 				(int) originX - g.getFontMetrics().stringWidth(HexaMap[x][y].toString()) / 2, (int) originY - 10);
