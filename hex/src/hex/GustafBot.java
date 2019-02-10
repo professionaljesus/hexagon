@@ -8,7 +8,7 @@ public class GustafBot extends Player{
 	}
 
 	@Override
-	public void algo(HexaMap H) {
+	public int[] algo(HexaMap H) {
 		// TODO Auto-generated method stub
 		
 	}
