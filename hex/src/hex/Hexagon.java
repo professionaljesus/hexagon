@@ -66,7 +66,6 @@ public class Hexagon implements Comparable<Hexagon>{
 
 	@Override
 	public int compareTo(Hexagon o) {
-		// TODO Auto-generated method stub
 		return this.resources - o.getResources();
 	}
 
