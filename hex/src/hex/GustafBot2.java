@@ -11,12 +11,19 @@ import java.util.Random;
 public class GustafBot2 extends Player{
 	
 	Random random;
+	double boost;
 
 	public GustafBot2(int id, int size, Color c) {
 		super(id, size, c);
 		random = new Random();
+		boost = 0.8;
 		
 	}
+	
+	private int[] move(int res, Hexagon n, Hexagon e) {
+		return new int[] {getId(), res, n.getX(), n.getY(), e.getX(), e.getY()};
+	}
+
 
 	//id, res, x, y, targetX, targetY
 	@Override
@@ -25,14 +32,14 @@ public class GustafBot2 extends Player{
 		if(h.isEmpty())
 			return null;
 		
+		
+		HashMap<Hexagon, ArrayList<Hexagon>> attackers = new HashMap<Hexagon, ArrayList<Hexagon>>();
 		ArrayList<Hexagon>  rand  =  new ArrayList<Hexagon>(), set =  new ArrayList<Hexagon>();
-		HashMap<Hexagon,Integer> danger = new HashMap<Hexagon,Integer>(), free = new HashMap<Hexagon,Integer>();
+		HashMap<Hexagon,Integer> danger = new HashMap<Hexagon,Integer>(), free = new HashMap<Hexagon,Integer>(), safety = new HashMap<Hexagon, Integer>();
 		
 		int[] moves = null;
 		
 		for(Hexagon a : h) {
-			System.out.println(a);
-
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {
 				if(n.getOwner() != getId()) {
@@ -40,23 +47,59 @@ public class GustafBot2 extends Player{
 					break;
 				}
 			}
-			if(r)
+			if(r) {
 				rand.add(a);
+				for(Hexagon nr : a.getNeighbours()) {
+					if(nr.getOwner() != getId()) {
+						if(attackers.get(nr) == null) {
+							ArrayList<Hexagon> boi = new ArrayList<Hexagon>();
+							boi.add(a);
+							attackers.put(nr, boi);
+						}else 
+							attackers.get(nr).add(a);
+						
+					}
+				}
+			}
 		}
 		
 		for(Hexagon a:h) {
-			if(!rand.contains(a))
+			if(!rand.contains(a)) {
 				set.add(a);
+				
+			}
 		}
 		
-		Collections.shuffle(rand);
+		for(Hexagon e: attackers.keySet()) {
+			Hexagon richest = Collections.max(attackers.get(e));
+
+			if(e.getOwner() == 0) {
+				moves = move((int) (boost*richest.getResources()), richest, e);
+			}else if(e.getOwner() != getId()) {
+				
+			}
+			
+		}
+
 		
+		
+		
+		
+		return moves;
+		
+	}
+	
+	/*
+	 * 	
 		for(Hexagon r : rand) {
 			for(Hexagon n: r.getNeighbours()) {
 				if(n.getOwner() == 0) {
 					free.put(n, 0);
 				}else if(n.getOwner() != getId()) {
-					danger.put(n, 0);
+					if(n.getResources() > r.getResources())
+						danger.put(n, 0);
+					else
+						free.put(n, 0);
 				}
 			}
 		}
@@ -129,10 +172,7 @@ public class GustafBot2 extends Player{
 			moves = new int[]{getId(), highest.getResources() - 1, highest.getX(), highest.getY(), maxfree.getKey().getX(), maxfree.getKey().getY()};
 
 		}
-		
-		return moves;
-		
-	}
+	 */
 	
 	
 	/*
