@@ -20,6 +20,9 @@ public class GustafBot extends Player{
 	//id, res, x, y, targetX, targetY
 	@Override
 	public int[] algo(HashSet<Hexagon> h) {
+		if(h.isEmpty())
+			return null;
+		
 		rand =  new ArrayList<Hexagon>();
 		int[] moves = null;
 		

@@ -10,26 +10,29 @@ import java.util.Random;
 
 public class GustafBot2 extends Player{
 	
-	ArrayList<Hexagon> rand;
-	HashMap<Hexagon,Integer> danger, free;
 	Random random;
 
 	public GustafBot2(int id, int size, Color c) {
 		super(id, size, c);
 		random = new Random();
-
+		
 	}
 
 	//id, res, x, y, targetX, targetY
 	@Override
 	public int[] algo(HashSet<Hexagon> h) {
-		rand =  new ArrayList<Hexagon>();
-		danger = new HashMap<Hexagon,Integer>();
-		free = new HashMap<Hexagon,Integer>();
+		
+		if(h.isEmpty())
+			return null;
+		
+		ArrayList<Hexagon>  rand  =  new ArrayList<Hexagon>(), set =  new ArrayList<Hexagon>();
+		HashMap<Hexagon,Integer> danger = new HashMap<Hexagon,Integer>(), free = new HashMap<Hexagon,Integer>();
 		
 		int[] moves = null;
 		
 		for(Hexagon a : h) {
+			System.out.println(a);
+
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {
 				if(n.getOwner() != getId()) {
@@ -39,6 +42,11 @@ public class GustafBot2 extends Player{
 			}
 			if(r)
 				rand.add(a);
+		}
+		
+		for(Hexagon a:h) {
+			if(!rand.contains(a))
+				set.add(a);
 		}
 		
 		Collections.shuffle(rand);
@@ -82,13 +90,13 @@ public class GustafBot2 extends Player{
 		
 		Map.Entry<Hexagon, Integer> maxdanger = null, maxfree = null;
 		for(Map.Entry<Hexagon, Integer> e: danger.entrySet()) {
-			System.out.println("Danger: " + e.getKey() + " " + e.getValue());
+			//System.out.println("Danger: " + e.getKey() + " " + e.getValue());
 			if(maxdanger == null || e.getValue().compareTo(maxdanger.getValue()) > 0) {
 				maxdanger = e;
 			}
 		}
 		for(Map.Entry<Hexagon, Integer> e: free.entrySet()) {
-			System.out.println("Free: " + e.getKey() + " " + e.getValue());
+			//System.out.println("Free: " + e.getKey() + " " + e.getValue());
 
 			if(maxfree == null || e.getValue().compareTo(maxfree.getValue()) > 0) {
 				maxfree = e;
@@ -102,11 +110,9 @@ public class GustafBot2 extends Player{
 						moves = new int[]{getId(), n.getResources() - 1, n.getX(), n.getY(), maxdanger.getKey().getX(), maxdanger.getKey().getY()};
 						break;
 					}else {
-						for(Hexagon s: h) {
-							if(!rand.contains(s)) {
-								moves = new int[] {this.getId(), s.getResources() - 1, s.getX(), s.getY(), n.getX(), n.getY()};
-								break;
-							}
+						for(Hexagon s: set) {
+							moves = new int[] {this.getId(), s.getResources() - 1, s.getX(), s.getY(), n.getX(), n.getY()};
+							break;
 						}
 					}
 					
