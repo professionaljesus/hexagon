@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 
 public class GustafBot2 extends Player{
@@ -58,7 +59,7 @@ public class GustafBot2 extends Player{
 			
 			for(Hexagon ne : e.getNeighbours()) {
 				if(danger.containsKey(ne))
-					score += score*ne.getResources();
+					score++;
 				
 			}
 			danger.put(e, danger.get(e) + score);
@@ -77,7 +78,52 @@ public class GustafBot2 extends Player{
 			}
 			free.put(f, free.get(f) + score);
 		}
-				
+		
+		
+		Map.Entry<Hexagon, Integer> maxdanger = null, maxfree = null;
+		for(Map.Entry<Hexagon, Integer> e: danger.entrySet()) {
+			System.out.println("Danger: " + e.getKey() + " " + e.getValue());
+			if(maxdanger == null || e.getValue().compareTo(maxdanger.getValue()) > 0) {
+				maxdanger = e;
+			}
+		}
+		for(Map.Entry<Hexagon, Integer> e: free.entrySet()) {
+			System.out.println("Free: " + e.getKey() + " " + e.getValue());
+
+			if(maxfree == null || e.getValue().compareTo(maxfree.getValue()) > 0) {
+				maxfree = e;
+			}
+		}
+		
+		if(maxfree == null || (maxdanger != null && maxdanger.getValue().compareTo(maxfree.getValue()) > 0)) {
+			for(Hexagon n: maxdanger.getKey().getNeighbours()) {
+				if(rand.contains(n)) {
+					if(n.getResources() + 1 > maxdanger.getKey().getResources()) {
+						moves = new int[]{getId(), n.getResources() - 1, n.getX(), n.getY(), maxdanger.getKey().getX(), maxdanger.getKey().getY()};
+						break;
+					}else {
+						for(Hexagon s: h) {
+							if(!rand.contains(s)) {
+								moves = new int[] {this.getId(), s.getResources() - 1, s.getX(), s.getY(), n.getX(), n.getY()};
+								break;
+							}
+						}
+					}
+					
+				}
+			}
+		}else {
+			Hexagon highest = null;
+			for(Hexagon n: maxfree.getKey().getNeighbours()) {
+				if(rand.contains(n)) {
+					if(highest == null || n.getResources() > highest.getResources())
+						highest = n;
+				}
+			}
+			moves = new int[]{getId(), highest.getResources() - 1, highest.getX(), highest.getY(), maxfree.getKey().getX(), maxfree.getKey().getY()};
+
+		}
+		
 		return moves;
 		
 	}
