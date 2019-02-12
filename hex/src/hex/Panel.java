@@ -20,7 +20,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
-	private final int MAX_TURN = 1000;
+	private final int MAX_TURN = 2000;
 	private int turn;
 
 	private final int width = 1280;
@@ -33,16 +33,12 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
 
-    	player = new Player[3];
+    	player = new Player[2];
 
-		player[0] = new GustafBot(1,4, Color.GREEN);
-		player[1] = new GustafBot(2,4, Color.BLUE);
-		player[2] = new GustafBot(3,4, Color.RED);
- 
-
+    	player[0] = new SimpleBot(1,4, Color.GREEN);
+		player[1] = new GustafBot(2,4, Color.RED);
 
 		H = new HexaMap(4,width,height,player);
-
 	
 		turn = 0;
 	}
@@ -115,14 +111,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(!end() && turn < MAX_TURN) {
+		//if(!end() && turn < MAX_TURN) {
 			for(Player p: player) {
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
 			}
 			H.endTurn();
 			System.out.println("Turn: " + turn);
 			turn++;
-		}
+		//}
 	}
 
 	@Override
@@ -139,7 +135,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	
 	
-	
+	//System.out.println("Player: " + p.getId() + " X Move :" + p.algo(H.getPhex().get(p.getId() - 1))[2] + " Y Move :" + p.algo(H.getPhex().get(p.getId() - 1))[3]+ " XTarget Move :" + p.algo(H.getPhex().get(p.getId() - 1))[4] + " YTarget Move :" + p.algo(H.getPhex().get(p.getId() - 1))[5]+" Res " + p.algo(H.getPhex().get(p.getId() - 1))[1]);
 	
 
 }
