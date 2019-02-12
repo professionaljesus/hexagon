@@ -71,7 +71,7 @@ public class GustafBot2 extends Player{
 		}
 		
 		for(Hexagon e: attackers.keySet()) {
-			Hexagon richest = Collections.max(attackers.get(e));
+			Hexagon richest = Collections.max(attackers.get(e));	
 
 			if(e.getOwner() == 0) {
 				moves = move((int) (boost*richest.getResources()), richest, e);
