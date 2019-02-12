@@ -92,12 +92,17 @@ public class SimpleBot extends Player {
 		generating = 0;
 		own = H.size();
 		for (Hexagon h : H) {
+			if(h == null){
+				continue;
+			}
 			if (h.getResources() < 100) {
 				generating++;
 			}
 			myMap[h.getX()][h.getY()] = h;
 			for (Hexagon ne : h.getNeighbours()) {
-				myMap[ne.getX()][ne.getY()] = ne;
+				if(ne == null){
+					break;
+				}
 				if (ne.getOwner() == super.getId()) {
 					for(int i =1; i < 10; i++){
 						
@@ -154,6 +159,9 @@ public class SimpleBot extends Player {
 	private void TurnMoves(Hexagon A, Hexagon B, int resourcs, int move) {
 		int value = 0;
 		for (Hexagon neA : A.getNeighbours()) {
+			if(neA == null){
+				break;
+			}
 			if (neA.getOwner() == super.getId()) {
 				Integer[] temp = new Integer[3];
 				temp[0] = neA.getX();
@@ -216,12 +224,15 @@ public class SimpleBot extends Player {
 			
 		} else if (move == 2){
 			
-			value = 10*map.get("EasyA").size()-6*map.get("HardcoreA").size()-1*map.get("BadA").size()+4*map.get("GoodA").size()+4*map.get("NoA").size()+resourcs;
+			value = 10*map.get("EasyA").size()-6*map.get("HardcoreA").size()-4*map.get("BadA").size()+6*map.get("GoodA").size()+8*map.get("NoA").size()+resourcs;
 			if(A.getResources() > 99){
-				value += 30;
+				value += 50;
 			}
 			if(A.getResources()-B.getResources() - resourcs > 1){
-				value +=50;
+				value +=100;
+			}
+			if(A.getResources()> -B.getResources()){
+				value +=40;
 			}
 			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
 			

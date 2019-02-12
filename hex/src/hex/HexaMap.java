@@ -73,6 +73,15 @@ public class HexaMap {
 			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 			break;
+		case 2:
+
+			HexaMap[0][size - 1].setOwner(player[0].getId());
+			HexaMap[0][size - 1].setResources(10);
+			phex.get(0).add(HexaMap[0][size - 1]);
+			HexaMap[size - 1][size -1].setOwner(player[1].getId());
+			HexaMap[size - 1][size -1].setResources(10);
+			phex.get(1).add(HexaMap[size - 1][size -1]);
+			break;
 		case 3:
 			HexaMap[0][size - 1].setOwner(player[0].getId());
 			HexaMap[0][size - 1].setResources(10);
@@ -147,6 +156,9 @@ public class HexaMap {
 					}
 				} else { // Någon annans ruta
 					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+						if(n == null){
+							break;
+						}
 						if(n.equals(HexaMap[x][y]))
 							illegal = false;
 					}
@@ -184,6 +196,9 @@ public class HexaMap {
 					}				
 				}
 			}
+			if(t != null){
+			System.out.println("Player: " + t[0] +" ( " + t[2]+" , " + t[3]+" ) ----> "+" ( " + t[4]+" , " + t[5]+" ) "+" Res: " + t[1]);}
+			
 		}
 
 		for (HashSet<Hexagon> uu : phex) {

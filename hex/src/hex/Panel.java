@@ -33,11 +33,10 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
 
-    	player = new Player[3];
+    	player = new Player[2];
 
-		player[0] = new GustafBot(1,4, Color.GREEN);
-		player[1] = new RandomBot(2,4, Color.YELLOW);
-		player[2] = new GustafBot2(3,4, Color.RED);
+		player[0] = new SimpleBot(1,4, Color.GREEN);
+		player[1] = new GustafBot(2,4, Color.RED);
 
 		H = new HexaMap(4,width,height,player);
 	
@@ -136,7 +135,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	
 	
-	
+	//System.out.println("Player: " + p.getId() + " X Move :" + p.algo(H.getPhex().get(p.getId() - 1))[2] + " Y Move :" + p.algo(H.getPhex().get(p.getId() - 1))[3]+ " XTarget Move :" + p.algo(H.getPhex().get(p.getId() - 1))[4] + " YTarget Move :" + p.algo(H.getPhex().get(p.getId() - 1))[5]+" Res " + p.algo(H.getPhex().get(p.getId() - 1))[1]);
 	
 
 }
