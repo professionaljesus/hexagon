@@ -128,7 +128,6 @@ public class HexaMap {
 	
 				//Inte din hexagon
 				if (HexaMap[x][y].getOwner() != id)
-
 					continue;
 	
 				// Om man har för lite resources
