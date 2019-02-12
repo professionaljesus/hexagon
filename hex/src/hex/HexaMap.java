@@ -106,80 +106,83 @@ public class HexaMap {
 		
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
-			if(t == null){
-				continue;
-			}
-			int id = t[0];
-			int res = t[1];
-			int x = t[2];
-			int y = t[3];
-			int targetX = t[4];
-			int targetY = t[5];
 
-			//Inte din hexagon
-			if (HexaMap[x][y].getOwner() != id)
-				continue;
 
-			// Om man har för lite resources
-			if (HexaMap[x][y].getResources() < res)
-				continue;
-			
-			
-			boolean illegal = true;
+			if(t != null) {
+				int id = t[0];
+				System.out.println(id);
+				int res = t[1];
+				int x = t[2];
+				int y = t[3];
+				int targetX = t[4];
+				int targetY = t[5];
+	
+				//Inte din hexagon
+				if (HexaMap[x][y].getOwner() != id)
 
-			if (HexaMap[targetX][targetY].getOwner() == id) {
-				for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
-					if(n.getOwner() == id) {
-						illegal = false;
-						break;
-					}
-				}
-				if(illegal)
 					continue;
-					
-				HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
-				HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
-				if (HexaMap[x][y].getResources() == 0) {
-					HexaMap[x][y].setOwner(0);
-					phex.get(id - 1).remove(HexaMap[x][y]);
-				}
-			} else { // Någon annans ruta
-				for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
-					if(n.equals(HexaMap[x][y]))
-						illegal = false;
-				}
-				if(illegal)
+	
+				// Om man har för lite resources
+				if (HexaMap[x][y].getResources() < res)
 					continue;
 				
-				if(HexaMap[targetX][targetY].getOwner() == 0) {
-					HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
-					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
-					HexaMap[targetX][targetY].setOwner(id);
-					phex.get(id - 1).add(HexaMap[targetX][targetY]);					
-				}else {
-					if(res < HexaMap[targetX][targetY].getResources()) 
-						HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
-					else {
-						if(res == HexaMap[targetX][targetY].getResources()) {
-							HexaMap[targetX][targetY].setResources(0);
-							phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
-							HexaMap[targetX][targetY].setOwner(0);
-						}else {
-							HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
-							HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
-							HexaMap[targetX][targetY].setOwner(id);
-							phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
-							phex.get(id - 1).add(HexaMap[targetX][targetY]);
-
+				
+				boolean illegal = true;
+	
+				if (HexaMap[targetX][targetY].getOwner() == id) {
+					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+						if(n.getOwner() == id) {
+							illegal = false;
+							break;
 						}
 					}
+					if(illegal)
+						continue;
+						
+					HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
+					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+					if (HexaMap[x][y].getResources() == 0) {
+						HexaMap[x][y].setOwner(0);
+						phex.get(id - 1).remove(HexaMap[x][y]);
+					}
+				} else { // Någon annans ruta
+					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+						if(n.equals(HexaMap[x][y]))
+							illegal = false;
+					}
+					if(illegal)
+						continue;
+					
+					if(HexaMap[targetX][targetY].getOwner() == 0) {
+						HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
+						HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+						HexaMap[targetX][targetY].setOwner(id);
+						phex.get(id - 1).add(HexaMap[targetX][targetY]);					
+					}else {
+						if(res < HexaMap[targetX][targetY].getResources()) 
+							HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
+						else {
+							if(res == HexaMap[targetX][targetY].getResources()) {
+								HexaMap[targetX][targetY].setResources(0);
+								phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
+								HexaMap[targetX][targetY].setOwner(0);
+							}else {
+								HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
+								HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
+								phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
+								HexaMap[targetX][targetY].setOwner(id);
+								phex.get(id - 1).add(HexaMap[targetX][targetY]);
+	
+							}
+						}
+					}
+					
+					// Du slösa alla
+					if (HexaMap[x][y].getResources() == 0) {
+						HexaMap[x][y].setOwner(0);
+						phex.get(id - 1).remove(HexaMap[x][y]);
+					}				
 				}
-				
-				// Du slösa alla
-				if (HexaMap[x][y].getResources() == 0) {
-					HexaMap[x][y].setOwner(0);
-					phex.get(id - 1).remove(HexaMap[x][y]);
-				}				
 			}
 		}
 
@@ -306,8 +309,9 @@ public class HexaMap {
 							- HEXAGON_WIDTH * (size - 1) + x * (HEXAGON_WIDTH) + (y - size + 1) * (HEXAGON_WIDTH / 2);// Shift
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
-					
-					if(false){
+
+					if(false) {
+
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-2), originY - HEXAGON_HEIGHT*(0.75)*size);
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-1), originY + HEXAGON_HEIGHT*(0.75)*(size-1));
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5), originY + HEXAGON_HEIGHT*(0.75)*(size*2-1));

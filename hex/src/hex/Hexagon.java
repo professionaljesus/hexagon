@@ -1,7 +1,7 @@
 package hex;
 
 
-public class Hexagon{
+public class Hexagon implements Comparable<Hexagon>{
 	private int owner, x ,y;
 	private int resources;
 	private Hexagon[] neighbours;
@@ -60,6 +60,13 @@ public class Hexagon{
 			return true;
 		else
 			return false;
+	}
+
+
+
+	@Override
+	public int compareTo(Hexagon o) {
+		return this.resources - o.getResources();
 	}
 
 

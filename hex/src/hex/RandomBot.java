@@ -18,7 +18,9 @@ public class RandomBot extends Player{
 
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
-
+		if(H.isEmpty())
+			return null;
+		
 		Iterator<Hexagon> itr = H.iterator();
 		Hexagon boi = itr.next();
 		for(int i = 0; i < r.nextInt(H.size()); i++) {
@@ -26,8 +28,6 @@ public class RandomBot extends Player{
 		}
 		
 		Hexagon n = boi.getNeighbours()[r.nextInt(6)];
-		
-			
 			
 		return new int[] {getId(), r.nextInt(boi.getResources()), boi.getX(), boi.getY(), n.getX(), n.getY()};
 	}

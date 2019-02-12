@@ -20,7 +20,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
-	private final int MAX_TURN = 1000;
+	private final int MAX_TURN = 2000;
 	private int turn;
 
 	private final int width = 1280;
@@ -37,12 +37,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 		player[0] = new GustafBot(1,4, Color.GREEN);
 		player[1] = new RandomBot(2,4, Color.YELLOW);
-		player[2] = new SimpleBot(3,4, Color.RED);
- 
-
+		player[2] = new GustafBot2(3,4, Color.RED);
 
 		H = new HexaMap(4,width,height,player);
-
 	
 		turn = 0;
 	}
@@ -115,14 +112,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(!end() && turn < MAX_TURN) {
+		//if(!end() && turn < MAX_TURN) {
 			for(Player p: player) {
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
 			}
 			H.endTurn();
 			System.out.println("Turn: " + turn);
 			turn++;
-		}
+		//}
 	}
 
 	@Override
