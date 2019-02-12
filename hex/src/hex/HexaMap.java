@@ -307,6 +307,7 @@ public class HexaMap {
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
 					
+					if(false){
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-2), originY - HEXAGON_HEIGHT*(0.75)*size);
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-1), originY + HEXAGON_HEIGHT*(0.75)*(size-1));
 					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5), originY + HEXAGON_HEIGHT*(0.75)*(size*2-1));
@@ -314,7 +315,7 @@ public class HexaMap {
 					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-2), originY + HEXAGON_HEIGHT*(0.75)*size);
 					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-1), originY - HEXAGON_HEIGHT*(0.75)*(size-1));
 					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5), originY - HEXAGON_HEIGHT*(0.75)*(size*2-1));
-					
+					}
 				}
 			}
 		}
@@ -332,6 +333,7 @@ public class HexaMap {
 				(int) (originX - (HEXAGON_WIDTH / 2)) // top right
 		};
 
+		
 		py = new int[] { (int) (originY - (HEXAGON_HEIGHT / 4)), // top left
 				(int) (originY - (HEXAGON_HEIGHT / 2)), // top
 				(int) (originY - (HEXAGON_HEIGHT / 4)), // top right
