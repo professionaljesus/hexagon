@@ -17,7 +17,7 @@ public abstract class Player {
 		return color;
 	}
 
-	
+	//id, res, x, y, targetX, targetY
 	abstract public int[] algo(HashSet<Hexagon> H);
 
 	public int getId() {
