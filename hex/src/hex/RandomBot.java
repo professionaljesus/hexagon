@@ -9,8 +9,8 @@ public class RandomBot extends Player{
 
 	Random r;
 
-	public RandomBot(int id, int size, Color c) {
-		super(id, size, c);
+	public RandomBot(int id, int size, Color c, String name) {
+		super(id, size, c, name);
 		r = new Random();
 	}
 

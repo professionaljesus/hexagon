@@ -14,8 +14,8 @@ public class GustafBot2 extends Player{
 	double boost;
 	boolean helpedlast;
 
-	public GustafBot2(int id, int size, Color c) {
-		super(id, size, c);
+	public GustafBot2(int id, int size, Color c, String name) {
+		super(id, size, c, name);
 		random = new Random();
 		boost = 0.8;
 		

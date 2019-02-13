@@ -11,8 +11,8 @@ public class GustafBot extends Player{
 	ArrayList<Hexagon> rand;
 	Random random;
 
-	public GustafBot(int id, int size, Color c) {
-		super(id, size, c);
+	public GustafBot(int id, int size, Color c, String name) {
+		super(id, size, c, name);
 		random = new Random();
 
 	}
