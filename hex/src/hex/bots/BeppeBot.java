@@ -1,7 +1,10 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.HashSet;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class BeppeBot extends Player{
 	
