@@ -33,7 +33,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
 
-    	player = new Player[3];
+    	player = new Player[2];
 
 
 
