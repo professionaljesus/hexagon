@@ -115,8 +115,11 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if(!end() && turn < MAX_TURN) {
+			long t;
 			for(Player p: player) {
+				t = System.currentTimeMillis();
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
+				System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
 			}
 			H.endTurn();
 			System.out.println("Turn: " + turn);
