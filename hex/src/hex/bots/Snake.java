@@ -37,6 +37,7 @@ public class Snake extends Player{
 
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
+		ArrayList<Hexagon> e;
 		
 		Hexagon head = Collections.max(H);
 		
@@ -49,6 +50,7 @@ public class Snake extends Player{
 		done.clear();
 		Hexagon target = Collections.min(enemynei(head));
 		return move(head.getResources() - 1, head, target);
+		
 		
 			
 	}
