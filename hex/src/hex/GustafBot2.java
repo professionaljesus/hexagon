@@ -83,7 +83,7 @@ public class GustafBot2 extends Player{
 		Collections.shuffle(rand);
 		
 		ArrayList<Hexagon> underattack = risks(rand);
-		if(underattack.size() == 0 || helpedlast) {
+		if(underattack.size() == 0) {
 			helpedlast = false;
 			return move(rand.get(0).getResources() - 1, rand.get(0), enemies(rand.get(0)).get(0));
 		}else {
