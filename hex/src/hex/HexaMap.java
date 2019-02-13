@@ -127,8 +127,10 @@ public class HexaMap {
 				int targetY = t[5];
 	
 				//Inte din hexagon
-				if (HexaMap[x][y].getOwner() != id)
+				if (HexaMap[x][y].getOwner() != id) {
+					System.out.println("Wrong owner");
 					continue;
+				}
 	
 				// Om man har för lite resources
 				if (HexaMap[x][y].getResources() < res)
@@ -192,7 +194,7 @@ public class HexaMap {
 					if (HexaMap[x][y].getResources() == 0) {
 						HexaMap[x][y].setOwner(0);
 						phex.get(id - 1).remove(HexaMap[x][y]);
-					}				
+					}
 				}
 			}
 			if(t != null){
