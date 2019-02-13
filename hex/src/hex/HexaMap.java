@@ -127,7 +127,7 @@ public class HexaMap {
 
 				// Inte din hexagon
 				if (HexaMap[x][y].getOwner() != id) {
-					System.out.println("Player:" + id + " Wrong owner");
+					System.out.println("Player: " + id + " Wrong owner");
 					continue;
 				}
 
