@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import hex.bots.BeppeBot;
 import hex.bots.GustafBot2;
 import hex.bots.SimpleBot;
+import hex.bots.Snake;
 
 public class Panel extends JPanel implements Runnable, KeyListener{
 
@@ -40,6 +41,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         mapsize = 6;
 
     	player = new Player[3];
+
 
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new BeppeBot(2,mapsize, Color.BLUE, "WILDCARD");
