@@ -82,7 +82,7 @@ public class BeppeBot extends Player {
 			moves.add(flytt);
 		}
 
-		int[] tempMove = moves.get(0);
+		int[] tempMove = null;
 		int maxValue = -1;
 		for (int i = 0; i < moves.size(); i++) {
 			if (moves.get(i)[5] > maxValue) {
@@ -92,7 +92,12 @@ public class BeppeBot extends Player {
 		}
 
 		// id, res, x, y, targetX, targetY
-		return new int[] { getId(), tempMove[0], tempMove[1], tempMove[2], tempMove[3], tempMove[4] };
+		if(tempMove == null){
+			return null;
+		}else{
+			return new int[] { getId(), tempMove[0], tempMove[1], tempMove[2], tempMove[3], tempMove[4] };
+		}
+		
 	}
 
 }
