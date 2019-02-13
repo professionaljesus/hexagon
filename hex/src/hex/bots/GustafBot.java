@@ -1,4 +1,4 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -6,13 +6,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
+import hex.Hexagon;
+import hex.Player;
+
 public class GustafBot extends Player{
 	
 	ArrayList<Hexagon> rand;
 	Random random;
 
-	public GustafBot(int id, int size, Color c) {
-		super(id, size, c);
+	public GustafBot(int id, int size, Color c, String name) {
+		super(id, size, c, name);
 		random = new Random();
 
 	}

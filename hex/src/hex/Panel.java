@@ -11,6 +11,12 @@ import java.util.HashSet;
 
 import javax.swing.JPanel;
 
+import hex.bots.BeppeBot;
+import hex.bots.GustafBot;
+import hex.bots.GustafBot2;
+import hex.bots.SimpleBot;
+import hex.bots.Snake;
+
 public class Panel extends JPanel implements Runnable, KeyListener{
 
 	/**
@@ -21,7 +27,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private HexaMap H;
 	private Player[] player;
 	private final int MAX_TURN = 2000;
-	private int turn;
+	private int turn, mapsize;
 
 	private final int width = 1280;
 	private final int height = 720;
@@ -32,13 +38,21 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		setFocusable(true);
 
         requestFocus();
+        
+        mapsize = 6;
 
-    	player = new Player[2];
+    	player = new Player[3];
 
-		player[0] = new GustafBot2(1,6, Color.GREEN);
-		player[1] = new SimpleBot(2,6, Color.RED);
 
-		H = new HexaMap(6,width,height,player);
+
+
+		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
+		player[1] = new BeppeBot(2,mapsize, Color.BLUE, "WILDCARD");
+		player[2] = new GustafBot2(3,mapsize, Color.RED, "GURRA");
+
+
+		H = new HexaMap(mapsize,width,height,player);
+
 
 	
 		turn = 0;

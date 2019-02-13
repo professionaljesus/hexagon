@@ -241,13 +241,8 @@ public class HexaMap {
 				targetX = x - (size - 1);
 				targetY = y - (size - 1);
 			} else if (x == size * 2 - 2) { // top right
-				if (y < size - 1) {
-					targetX = 0;
-					targetY = y + size;
-				} else {
-					targetX = size - 1;
-					targetY = 0;
-				}
+				targetX = 0;
+				targetY = y+size;
 			} else {
 				targetX = x + 1;
 				targetY = y;
@@ -270,7 +265,7 @@ public class HexaMap {
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-				targetX = x + (size / 2);
+				targetX = x + (size-2);
 				targetY = 0;
 			} else {
 				targetX = x - 1;
@@ -295,7 +290,7 @@ public class HexaMap {
 				targetY = size * 2 - 2;
 			} else if (x + y == size - 1) {// top left
 				targetX = x + size;
-				targetY = y + (size - 2);
+				targetY = y + (size-2);
 			} else {
 				targetX = x;
 				targetY = y - 1;
@@ -320,6 +315,25 @@ public class HexaMap {
 	}
 
 	public void draw(Graphics g) {
+		int sum;
+		
+		for (int i = 0;i<player.length; i++ ){
+			
+			g.setColor(player[i].getColor());
+			int tempX = (int) (width*0.8);
+			int tempY = (int) (height*0.125);
+	    	g.fillRect(tempX, tempY+20*i, 10, 10);
+	    	g.setColor(Color.BLACK);
+	    	sum = 0;
+	    	for(Hexagon h: phex.get(i)) {
+	    		sum += h.getResources();
+	    	}
+	    	g.drawString("Hexagons   |   Resources" , tempX+player[0].getName().length()*15 - 50, tempY - 10);
+	    	g.drawString(player[i].getName(), tempX+20, tempY+20*i+10);
+	    	g.drawString(phex.get(i).size() + " | " + sum, tempX + player[0].getName().length()*15, tempY+20*i+10);
+	    }
+		
+		
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {

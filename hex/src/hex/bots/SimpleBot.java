@@ -1,4 +1,4 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class SimpleBot extends Player {
 	int turnorder;
@@ -26,8 +29,8 @@ public class SimpleBot extends Player {
 	private List<Integer[]> easynei;
 	private List<Integer[]> nonei;
 
-	public SimpleBot(int id, int size, Color color,String S) {
-		super(id, size, color,S);
+	public SimpleBot(int id, int size, Color color, String name) {
+		super(id, size, color, name);
 		r = new Random();
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		heatMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
@@ -98,7 +101,7 @@ public class SimpleBot extends Player {
 			if (h.getResources() < 100) {
 				generating++;
 			}
-			//myMap[h.getX()][h.getY()] = h;
+			myMap[h.getX()][h.getY()] = h;
 			for (Hexagon ne : h.getNeighbours()) {
 				if(ne == null){
 					break;
