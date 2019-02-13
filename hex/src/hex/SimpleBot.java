@@ -252,7 +252,7 @@ public class SimpleBot extends Player {
 			
 		} else if (move == 1){
 			
-			value = 3*B.getResources()+resourcs+A.getResources()-10*map.get("HardcoreA").size()-2*map.get("BadA").size()+10*map.get("GoodA").size()+4*map.get("NoA").size();
+			value = -50+3*B.getResources()+resourcs+A.getResources()-10*map.get("HardcoreA").size()-2*map.get("BadA").size()+10*map.get("GoodA").size()+4*map.get("NoA").size();
 			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
 			
 		} else if (move == 2){
@@ -311,14 +311,17 @@ public class SimpleBot extends Player {
 				}if(B.getOwner() != super.getId()){
 					value += 1000;
 					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
+				}if(B.getResources() < 100+A.getResources()){
+					value += 10000;
+					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				}
 			}
 			
 		}else if(move == 9){
 			if(map.get("GoodA").size() > 6){
 				
-				value =200+A.getResources() - B.getResources() + resourcs;
-				
+				value =100+A.getResources() - B.getResources() + resourcs;
+				Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				
 			}
 			
