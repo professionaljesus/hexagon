@@ -35,10 +35,10 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
     	player = new Player[2];
 
-		player[0] = new SimpleBot(1,4, Color.GREEN);
-		player[1] = new GustafBot2(2,4, Color.RED);
+		player[0] = new GustafBot2(1,6, Color.GREEN);
+		player[1] = new SimpleBot(2,6, Color.RED);
 
-		H = new HexaMap(4,width,height,player);
+		H = new HexaMap(6,width,height,player);
 
 	
 		turn = 0;

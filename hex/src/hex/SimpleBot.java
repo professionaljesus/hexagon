@@ -98,7 +98,7 @@ public class SimpleBot extends Player {
 			if (h.getResources() < 100) {
 				generating++;
 			}
-			myMap[h.getX()][h.getY()] = h;
+			//myMap[h.getX()][h.getY()] = h;
 			for (Hexagon ne : h.getNeighbours()) {
 				if(ne == null){
 					break;
