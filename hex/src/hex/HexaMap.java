@@ -119,7 +119,6 @@ public class HexaMap {
 
 			if(t != null) {
 				int id = t[0];
-				System.out.println(id);
 				int res = t[1];
 				int x = t[2];
 				int y = t[3];
@@ -141,6 +140,8 @@ public class HexaMap {
 	
 				if (HexaMap[targetX][targetY].getOwner() == id) {
 					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
+						System.out.println(n.getOwner());
+						
 						if(n.getOwner() == id) {
 							illegal = false;
 							break;
