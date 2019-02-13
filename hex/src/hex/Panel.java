@@ -21,7 +21,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private HexaMap H;
 	private Player[] player;
 	private final int MAX_TURN = 2000;
-	private int turn;
+	private int turn, mapsize;
 
 	private final int width = 1280;
 	private final int height = 720;
@@ -32,13 +32,15 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		setFocusable(true);
 
         requestFocus();
+        
+        mapsize = 4;
 
     	player = new Player[2];
 
-		player[0] = new SimpleBot(1,4, Color.GREEN);
-		player[1] = new GustafBot2(2,4, Color.RED);
+		player[0] = new SimpleBot(1,mapsize, Color.GREEN);
+		player[1] = new GustafBot2(2,mapsize, Color.RED);
 
-		H = new HexaMap(4,width,height,player);
+		H = new HexaMap(mapsize,width,height,player);
 
 	
 		turn = 0;
