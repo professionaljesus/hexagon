@@ -37,8 +37,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
     	player = new Player[2];
 
-		player[0] = new SimpleBot(1,mapsize, Color.GREEN);
-		player[1] = new GustafBot2(2,mapsize, Color.RED);
+		player[0] = new SimpleBot(1,mapsize, Color.GREEN, "WILDCARD");
+		player[1] = new GustafBot2(2,mapsize, Color.RED, "GURRA");
 
 		H = new HexaMap(mapsize,width,height,player);
 

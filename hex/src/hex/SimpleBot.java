@@ -26,8 +26,8 @@ public class SimpleBot extends Player {
 	private List<Integer[]> easynei;
 	private List<Integer[]> nonei;
 
-	public SimpleBot(int id, int size, Color color) {
-		super(id, size, color);
+	public SimpleBot(int id, int size, Color color, String name) {
+		super(id, size, color, name);
 		r = new Random();
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		heatMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];

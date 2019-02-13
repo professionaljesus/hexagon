@@ -7,8 +7,8 @@ public class BeppeBot extends Player{
 	
 	public Hexagon[][] map;
 
-	public BeppeBot(int id, int size, Color c) {
-		super(id, size, c);
+	public BeppeBot(int id, int size, Color c, String name) {
+		super(id, size, c, name);
 		map = new Hexagon[size*2-1][size*2-1];
 	}
 

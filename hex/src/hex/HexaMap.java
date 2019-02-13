@@ -315,6 +315,17 @@ public class HexaMap {
 	}
 
 	public void draw(Graphics g) {
+		
+		for (int i = 0;i<player.length; i++ ){
+			g.setColor(player[i].getColor());
+			int tempX = (int) (width*0.875);
+			int tempY = (int) (height*0.125);
+	    	g.fillRect(tempX, tempY+20*i, 10, 10);
+	    	g.setColor(Color.BLACK);
+	    	g.drawString(player[i].getName(), tempX+20, tempY+20*i+10);
+	    }
+		
+		
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
