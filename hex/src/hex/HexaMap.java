@@ -315,14 +315,22 @@ public class HexaMap {
 	}
 
 	public void draw(Graphics g) {
+		int sum;
 		
 		for (int i = 0;i<player.length; i++ ){
+			
 			g.setColor(player[i].getColor());
-			int tempX = (int) (width*0.875);
+			int tempX = (int) (width*0.8);
 			int tempY = (int) (height*0.125);
 	    	g.fillRect(tempX, tempY+20*i, 10, 10);
 	    	g.setColor(Color.BLACK);
+	    	sum = 0;
+	    	for(Hexagon h: phex.get(i)) {
+	    		sum += h.getResources();
+	    	}
+	    	g.drawString("Hexagons   |   Resources" , tempX+player[0].getName().length()*15 - 50, tempY - 10);
 	    	g.drawString(player[i].getName(), tempX+20, tempY+20*i+10);
+	    	g.drawString(phex.get(i).size() + " | " + sum, tempX + player[0].getName().length()*15, tempY+20*i+10);
 	    }
 		
 		
