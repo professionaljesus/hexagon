@@ -24,14 +24,12 @@ public class GustafBot extends Player{
 			return null;
 		
 		rand =  new ArrayList<Hexagon>();
-		int[] moves = null;
 		
 		for(Hexagon a : h) {
 			boolean r = false;
-			for(Hexagon n : a.getNeighbours()) {
-				if(n == null){
-					break;
-				}
+
+			for(Neighbour n : a.getNeighbours()) {
+
 				if(n.getOwner() != getId()) {
 					r = true;
 					break;
@@ -45,31 +43,22 @@ public class GustafBot extends Player{
 		
 
 		for(Hexagon r : rand) {
-			
-			
-			for(Hexagon n: r.getNeighbours()) {
+			for(Neighbour n: r.getNeighbours()) {
 				if(n.getOwner() == 0) {
-					return moves = new int[] {this.getId(), r.getResources() - 1, r.getX(), r.getY(), n.getX(), n.getY()};
-				
+					return new int[] {this.getId(), r.getResources() - 1, r.getX(), r.getY(), n.getX(), n.getY()};
 				}else if(n.getOwner() != getId()) {
 					if(n.getResources() + 1 >= r.getResources()) {
 						for(Hexagon s: h) {
 							if(!rand.contains(s)) {
 								return new int[] {this.getId(), s.getResources() - 1, s.getX(), s.getY(), r.getX(), r.getY()};
-								
 							}
 						}
 					}else {
-						return moves = new int[] {this.getId(), n.getResources() + 1, r.getX(), r.getY(), n.getX(), n.getY()};
-						
+						return new int[] {this.getId(), n.getResources() + 1, r.getX(), r.getY(), n.getX(), n.getY()};
 					}
 				}
 			}
-			
-				
-			
 		}
-				
 
 		return null;
 		
