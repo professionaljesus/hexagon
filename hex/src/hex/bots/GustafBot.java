@@ -1,10 +1,13 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class GustafBot extends Player{
 	

@@ -1,4 +1,4 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class SimpleBot extends Player {
 	int turnorder;

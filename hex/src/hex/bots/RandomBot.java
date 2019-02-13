@@ -1,9 +1,12 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class RandomBot extends Player{
 
