@@ -19,9 +19,23 @@ public class BeppeBot extends Player{
 	//id, res, x, y, targetX, targetY
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
+		HashSet<Hexagon> H2 = new HashSet<Hexagon>();
+		
+		//Skapar nytt hashet med mina hexagoner plus mina grannar
+		for(Hexagon hex: H){
+			Hexagon[] neighbours = hex.getNeighbours();
+			H2.add(hex);
+			for(int i = 0; i<6; i++){
+				H2.add(neighbours[i]);
+			}
+		}
+		
+		//Överför den nya infon till min map
 		for(Hexagon hex: H){
 			map[hex.getX()][hex.getY()] = hex;
 		}
+		
+		
 		
 		
 		
