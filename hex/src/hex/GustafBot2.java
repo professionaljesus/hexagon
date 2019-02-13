@@ -78,8 +78,6 @@ public class GustafBot2 extends Player{
 			if(!rand.contains(a))
 				set.add(a);
 		}
-			
-		
 		
 		Collections.shuffle(rand);
 		
@@ -88,7 +86,13 @@ public class GustafBot2 extends Player{
 			return move(rand.get(0).getResources() - 1, rand.get(0), enemies(rand.get(0)).get(0));
 		}else {
 			Hexagon boi = Collections.min(underattack);
-			Hexagon helper = Collections.max(set);
+			Hexagon helper;
+			if(set.size() != 0)
+				helper = Collections.max(set);
+			else
+				helper = Collections.max(rand);
+			
+			
 			return move(helper.getResources() - 1, helper, boi);
 			
 		}
