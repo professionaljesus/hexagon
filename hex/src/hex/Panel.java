@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import hex.bots.GustafBot2;
 import hex.bots.SimpleBot;
+import hex.bots.Snake;
 
 public class Panel extends JPanel implements Runnable, KeyListener{
 
@@ -41,7 +42,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
     	player = new Player[2];
 
 		player[0] = new SimpleBot(1,mapsize, Color.GREEN, "WILDCARD");
-		player[1] = new GustafBot2(2,mapsize, Color.RED, "GURRA");
+		player[1] = new Snake(2,mapsize, Color.RED, "GURRA");
 
 		H = new HexaMap(mapsize,width,height,player);
 
