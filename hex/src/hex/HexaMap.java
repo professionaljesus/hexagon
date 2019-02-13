@@ -139,9 +139,7 @@ public class HexaMap {
 				boolean illegal = true;
 	
 				if (HexaMap[targetX][targetY].getOwner() == id) {
-					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
-						System.out.println(n.getOwner());
-						
+					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {						
 						if(n.getOwner() == id) {
 							illegal = false;
 							break;
