@@ -4,7 +4,7 @@ package hex;
 public class Hexagon implements Comparable<Hexagon>{
 	private int owner, x ,y;
 	private int resources;
-	private Neighbour[] neighbours;
+	private Hexagon[] neighbours;
 	
 	
 	public Hexagon(int x, int y) {
@@ -15,14 +15,14 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 	
 	
-	public Neighbour[] getNeighbours() {
+	public Hexagon[] getNeighbours() {
 		return neighbours;
 	}
 	
 	public void setNeighbours(Hexagon[] n) {
-		neighbours = new Neighbour[6];
+		neighbours = new Hexagon[6];
 		for(int i = 0; i < n.length; i++) {
-			neighbours[i] = new Neighbour(n[i].getX(), n[i].getY());
+			neighbours[i] = n[i];
 		}
 	}
 	
@@ -41,6 +41,7 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 
 	public void setOwner(int owner) {
+		
 		this.owner = owner;
 	}
 	

@@ -28,7 +28,7 @@ public class GustafBot extends Player{
 		for(Hexagon a : h) {
 			boolean r = false;
 
-			for(Neighbour n : a.getNeighbours()) {
+			for(Hexagon n : a.getNeighbours()) {
 
 				if(n.getOwner() != getId()) {
 					r = true;
@@ -43,7 +43,7 @@ public class GustafBot extends Player{
 		
 
 		for(Hexagon r : rand) {
-			for(Neighbour n: r.getNeighbours()) {
+			for(Hexagon n: r.getNeighbours()) {
 				if(n.getOwner() == 0) {
 					return new int[] {this.getId(), r.getResources() - 1, r.getX(), r.getY(), n.getX(), n.getY()};
 				}else if(n.getOwner() != getId()) {
