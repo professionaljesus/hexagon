@@ -241,13 +241,8 @@ public class HexaMap {
 				targetX = x - (size - 1);
 				targetY = y - (size - 1);
 			} else if (x == size * 2 - 2) { // top right
-				if (y < size - 1) {
-					targetX = 0;
-					targetY = y + size;
-				} else {
-					targetX = size - 1;
-					targetY = 0;
-				}
+				targetX = 0;
+				targetY = y+size;
 			} else {
 				targetX = x + 1;
 				targetY = y;
@@ -270,7 +265,7 @@ public class HexaMap {
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-				targetX = x + (size / 2);
+				targetX = x + (size-2);
 				targetY = 0;
 			} else {
 				targetX = x - 1;
@@ -295,7 +290,7 @@ public class HexaMap {
 				targetY = size * 2 - 2;
 			} else if (x + y == size - 1) {// top left
 				targetX = x + size;
-				targetY = y + (size - 2);
+				targetY = y + (size-2);
 			} else {
 				targetX = x;
 				targetY = y - 1;
