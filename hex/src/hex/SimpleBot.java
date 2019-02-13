@@ -137,7 +137,7 @@ public class SimpleBot extends Player {
 				// Random strat
 				TurnMoves(h, ne, h.getResources(), 5);
 				TurnMoves(h, ne, h.getResources(), 6);
-				
+				TurnMoves(h, ne, h.getResources(), 8);
 				if(h.getOwner() != ne.getOwner()){
 					TurnMoves(h, ne, h.getResources(), 7);
 				}
@@ -147,7 +147,7 @@ public class SimpleBot extends Player {
 		Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
 		Actionlist.clear();
 		int[] realaction = new int[6];
-		realaction[0] = Action[0];
+		realaction[0] = super.getId();
 		realaction[1] = Action[1];
 		realaction[2] = Action[2];
 		realaction[3] = Action[3];
@@ -268,7 +268,10 @@ public class SimpleBot extends Player {
 				value +=40;
 			}
 			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
-			
+			if(A.getResources() > B.getResources()+50){
+				value += 500;
+				Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
+			}
 			
 		}else if(move == 3){
 			
@@ -298,6 +301,29 @@ public class SimpleBot extends Player {
 		}else if(move == 7){
 			value = 2;
 			Actionlist.add(generateMove(super.getId(),A.getResources(),A.getX(),A.getY(),B.getX(),B.getY(),value));
+		}else if(move == 8){
+			if(A.getResources() > 100){
+				
+			
+				if(B.getResources() < A.getResources()){
+					value = 100;
+					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
+				}if(B.getOwner() != super.getId()){
+					value += 1000;
+					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
+				}
+			}
+			
+		}else if(move == 9){
+			if(map.get("GoodA").size() > 6){
+				
+				value =200+A.getResources() - B.getResources() + resourcs;
+				
+				
+			}
+			
+			
+			
 		}
 		goodnei = new ArrayList<Integer[]>();
 		badnei = new ArrayList<Integer[]>();
