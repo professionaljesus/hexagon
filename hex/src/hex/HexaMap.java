@@ -78,22 +78,22 @@ public class HexaMap {
 			HexaMap[0][size - 1].setOwner(player[0].getId());
 			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
-			HexaMap[size - 1][size -1].setOwner(player[1].getId());
-			HexaMap[size - 1][size -1].setResources(10);
-			phex.get(1).add(HexaMap[size - 1][size -1]);
+			HexaMap[size - 1][size - 1].setOwner(player[1].getId());
+			HexaMap[size - 1][size - 1].setResources(10);
+			phex.get(1).add(HexaMap[size - 1][size - 1]);
 			break;
 		case 3:
 			HexaMap[0][size - 1].setOwner(player[0].getId());
 			HexaMap[0][size - 1].setResources(10);
 			phex.get(0).add(HexaMap[0][size - 1]);
 
-			HexaMap[size - 1][size -1].setOwner(player[1].getId());
-			HexaMap[size - 1][size -1].setResources(10);
-			phex.get(1).add(HexaMap[size - 1][size -1]);
+			HexaMap[size - 1][size - 1].setOwner(player[1].getId());
+			HexaMap[size - 1][size - 1].setResources(10);
+			phex.get(1).add(HexaMap[size - 1][size - 1]);
 
-			HexaMap[size * 2 - 2][size -1].setOwner(player[2].getId());
-			HexaMap[size * 2 - 2][size -1].setResources(10);
-			phex.get(2).add(HexaMap[size * 2 - 2][size -1]);
+			HexaMap[size * 2 - 2][size - 1].setOwner(player[2].getId());
+			HexaMap[size * 2 - 2][size - 1].setResources(10);
+			phex.get(2).add(HexaMap[size * 2 - 2][size - 1]);
 
 			break;
 		}
@@ -104,50 +104,49 @@ public class HexaMap {
 	}
 
 	/**
-	 * Get's called at the endofTurn t[0] user t[1] resource 
-	 * t[2] x
-	 *  t[3] y t[4] targetX t[5] targetY
+	 * Get's called at the endofTurn t[0] user t[1] resource t[2] x t[3] y t[4]
+	 * targetX t[5] targetY
 	 * 
 	 * Om dir > 5 så går den på targetX och Y
 	 */
 	public void endTurn() {
 		Collections.shuffle(stacken);
-		
+
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
 
-
-			if(t != null) {
+			if (t != null) {
 				int id = t[0];
 				int res = t[1];
 				int x = t[2];
 				int y = t[3];
 				int targetX = t[4];
 				int targetY = t[5];
-	
-				//Inte din hexagon
+
+				// Inte din hexagon
 				if (HexaMap[x][y].getOwner() != id) {
 					System.out.println("Wrong owner");
 					continue;
 				}
-	
+
 				// Om man har för lite resources
 				if (HexaMap[x][y].getResources() < res)
 					continue;
-				
-				
+
 				boolean illegal = true;
-	
+
 				if (HexaMap[targetX][targetY].getOwner() == id) {
-					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
-						if(n.getOwner() == id) {
+
+					for (Hexagon n : HexaMap[targetX][targetY].getNeighbours()) {
+
+						if (n.getOwner() == id) {
 							illegal = false;
 							break;
 						}
 					}
-					if(illegal)
+					if (illegal)
 						continue;
-						
+
 					HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
 					HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
 					if (HexaMap[x][y].getResources() == 0) {
@@ -155,40 +154,40 @@ public class HexaMap {
 						phex.get(id - 1).remove(HexaMap[x][y]);
 					}
 				} else { // Någon annans ruta
-					for(Hexagon n: HexaMap[targetX][targetY].getNeighbours()) {
-						if(n == null){
+					for (Hexagon n : HexaMap[targetX][targetY].getNeighbours()) {
+						if (n == null) {
 							break;
 						}
-						if(n.equals(HexaMap[x][y]))
+						if (n.equals(HexaMap[x][y]))
 							illegal = false;
 					}
-					if(illegal)
+					if (illegal)
 						continue;
-					
-					if(HexaMap[targetX][targetY].getOwner() == 0) {
+
+					if (HexaMap[targetX][targetY].getOwner() == 0) {
 						HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() + res);
 						HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
 						HexaMap[targetX][targetY].setOwner(id);
-						phex.get(id - 1).add(HexaMap[targetX][targetY]);					
-					}else {
-						if(res < HexaMap[targetX][targetY].getResources()) 
+						phex.get(id - 1).add(HexaMap[targetX][targetY]);
+					} else {
+						if (res < HexaMap[targetX][targetY].getResources())
 							HexaMap[targetX][targetY].setResources(HexaMap[targetX][targetY].getResources() - res);
 						else {
-							if(res == HexaMap[targetX][targetY].getResources()) {
+							if (res == HexaMap[targetX][targetY].getResources()) {
 								HexaMap[targetX][targetY].setResources(0);
 								phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 								HexaMap[targetX][targetY].setOwner(0);
-							}else {
+							} else {
 								HexaMap[targetX][targetY].setResources(res - HexaMap[targetX][targetY].getResources());
 								HexaMap[x][y].setResources(HexaMap[x][y].getResources() - res);
 								phex.get(HexaMap[targetX][targetY].getOwner() - 1).remove(HexaMap[targetX][targetY]);
 								HexaMap[targetX][targetY].setOwner(id);
 								phex.get(id - 1).add(HexaMap[targetX][targetY]);
-	
+
 							}
 						}
 					}
-					
+
 					// Du slösa alla
 					if (HexaMap[x][y].getResources() == 0) {
 						HexaMap[x][y].setOwner(0);
@@ -196,14 +195,16 @@ public class HexaMap {
 					}
 				}
 			}
-			if(t != null){
-			System.out.println("Player: " + t[0] +" ( " + t[2]+" , " + t[3]+" ) ----> "+" ( " + t[4]+" , " + t[5]+" ) "+" Res: " + t[1]);}
-			
+			if (t != null) {
+				System.out.println("Player: " + t[0] + " ( " + t[2] + " , " + t[3] + " ) ----> " + " ( " + t[4] + " , "
+						+ t[5] + " ) " + " Res: " + t[1]);
+			}
+
 		}
 
 		for (HashSet<Hexagon> uu : phex) {
 			for (Hexagon u : uu) {
-				if (u.getResources() < 100) 
+				if (u.getResources() < 100)
 					u.setResources(u.getResources() + 1);
 			}
 		}
@@ -325,15 +326,21 @@ public class HexaMap {
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
 
-					if(false) {
+					if (false) {
 
-					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-2), originY - HEXAGON_HEIGHT*(0.75)*size);
-					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5)*(size*3-1), originY + HEXAGON_HEIGHT*(0.75)*(size-1));
-					drawHexagon(g, x, y, originX + HEXAGON_WIDTH*(0.5), originY + HEXAGON_HEIGHT*(0.75)*(size*2-1));
-					
-					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-2), originY + HEXAGON_HEIGHT*(0.75)*size);
-					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5)*(size*3-1), originY - HEXAGON_HEIGHT*(0.75)*(size-1));
-					drawHexagon(g, x, y, originX - HEXAGON_WIDTH*(0.5), originY - HEXAGON_HEIGHT*(0.75)*(size*2-1));
+						drawHexagon(g, x, y, originX + HEXAGON_WIDTH * (0.5) * (size * 3 - 2),
+								originY - HEXAGON_HEIGHT * (0.75) * size);
+						drawHexagon(g, x, y, originX + HEXAGON_WIDTH * (0.5) * (size * 3 - 1),
+								originY + HEXAGON_HEIGHT * (0.75) * (size - 1));
+						drawHexagon(g, x, y, originX + HEXAGON_WIDTH * (0.5),
+								originY + HEXAGON_HEIGHT * (0.75) * (size * 2 - 1));
+
+						drawHexagon(g, x, y, originX - HEXAGON_WIDTH * (0.5) * (size * 3 - 2),
+								originY + HEXAGON_HEIGHT * (0.75) * size);
+						drawHexagon(g, x, y, originX - HEXAGON_WIDTH * (0.5) * (size * 3 - 1),
+								originY - HEXAGON_HEIGHT * (0.75) * (size - 1));
+						drawHexagon(g, x, y, originX - HEXAGON_WIDTH * (0.5),
+								originY - HEXAGON_HEIGHT * (0.75) * (size * 2 - 1));
 					}
 				}
 			}
@@ -352,7 +359,6 @@ public class HexaMap {
 				(int) (originX - (HEXAGON_WIDTH / 2)) // top right
 		};
 
-		
 		py = new int[] { (int) (originY - (HEXAGON_HEIGHT / 4)), // top left
 				(int) (originY - (HEXAGON_HEIGHT / 2)), // top
 				(int) (originY - (HEXAGON_HEIGHT / 4)), // top right
@@ -360,8 +366,8 @@ public class HexaMap {
 				(int) (originY + (HEXAGON_HEIGHT / 2)), // top
 				(int) (originY + (HEXAGON_HEIGHT / 4)) // top right
 		};
-		
-		if(HexaMap[x][y].getOwner() != 0) {
+
+		if (HexaMap[x][y].getOwner() != 0) {
 			g.setColor(player[HexaMap[x][y].getOwner() - 1].getColor());
 			g.fillPolygon(px, py, 6);
 		}
