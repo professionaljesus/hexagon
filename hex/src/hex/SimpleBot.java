@@ -239,7 +239,7 @@ public class SimpleBot extends Player {
 		}
 		// Analys
 
-		//sd
+		//sdjj
 		if (move == 0) {
 			
 			value = 200-6*map.get("HardcoreA").size()-2*map.get("BadA").size()+3*map.get("GoodA").size()+8*map.get("NoA").size()+resourcs;
