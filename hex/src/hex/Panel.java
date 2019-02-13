@@ -33,12 +33,12 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
 
-    	player = new Player[2];
+    	player = new Player[3];
 
-		player[0] = new SimpleBot(1,4, Color.GREEN);
-		player[1] = new GustafBot(2,4, Color.RED);
-
-		H = new HexaMap(4,width,height,player);
+		player[0] = new SimpleBot(1,6, Color.GREEN);
+		player[1] = new GustafBot(2,6, Color.RED);
+		player[2] = new GustafBot(3,6, Color.YELLOW);
+		H = new HexaMap(6,width,height,player);
 	
 		turn = 0;
 	}
@@ -111,14 +111,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		//if(!end() && turn < MAX_TURN) {
+		if(!end() && turn < MAX_TURN) {
 			for(Player p: player) {
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
 			}
 			H.endTurn();
 			System.out.println("Turn: " + turn);
 			turn++;
-		//}
+		}
 	}
 
 	@Override

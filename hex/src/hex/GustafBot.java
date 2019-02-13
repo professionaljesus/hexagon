@@ -29,6 +29,9 @@ public class GustafBot extends Player{
 		for(Hexagon a : h) {
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {
+				if(n == null){
+					break;
+				}
 				if(n.getOwner() != getId()) {
 					r = true;
 					break;
