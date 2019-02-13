@@ -11,6 +11,9 @@ import java.util.HashSet;
 
 import javax.swing.JPanel;
 
+import hex.bots.GustafBot2;
+import hex.bots.SimpleBot;
+
 public class Panel extends JPanel implements Runnable, KeyListener{
 
 	/**

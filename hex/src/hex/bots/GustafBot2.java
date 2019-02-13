@@ -1,4 +1,4 @@
-package hex;
+package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+
+import hex.Hexagon;
+import hex.Player;
 
 public class GustafBot2 extends Player{
 	
@@ -83,7 +86,7 @@ public class GustafBot2 extends Player{
 		Collections.shuffle(rand);
 		
 		ArrayList<Hexagon> underattack = risks(rand);
-		if(underattack.size() == 0) {
+		if(underattack.size() == 0 || helpedlast) {
 			helpedlast = false;
 			return move(rand.get(0).getResources() - 1, rand.get(0), enemies(rand.get(0)).get(0));
 		}else {
