@@ -12,6 +12,7 @@ public class GustafBot2 extends Player{
 	
 	Random random;
 	double boost;
+	boolean helpedlast;
 
 	public GustafBot2(int id, int size, Color c) {
 		super(id, size, c);
@@ -23,6 +24,30 @@ public class GustafBot2 extends Player{
 	private int[] move(int res, Hexagon n, Hexagon e) {
 		return new int[] {getId(), res, n.getX(), n.getY(), e.getX(), e.getY()};
 	}
+	
+	private ArrayList<Hexagon> risks(ArrayList<Hexagon> a) {
+		ArrayList<Hexagon> underattack = new ArrayList<Hexagon>();
+		
+		for(Hexagon r: a) {
+			for(Hexagon n: r.getNeighbours()) {
+				if(n.getOwner() != getId() && n.getOwner() != 0 && n.getResources() >= r.getResources())
+					underattack.add(r);
+					
+			}
+		}
+		
+		return underattack;
+	}
+	
+	private ArrayList<Hexagon> enemies(Hexagon a){
+		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
+
+		for(Hexagon e : a.getNeighbours()) {
+			if(e.getOwner() != getId())
+				enemies.add(e);
+		}
+		return enemies;
+	}
 
 
 	//id, res, x, y, targetX, targetY
@@ -30,6 +55,56 @@ public class GustafBot2 extends Player{
 	public int[] algo(HashSet<Hexagon> h) {
 		
 		if(h.isEmpty())
+			return null;
+		
+		ArrayList<Hexagon> rand =  new ArrayList<Hexagon>();
+		ArrayList<Hexagon> set =  new ArrayList<Hexagon>();
+
+		
+		for(Hexagon a : h) {
+			boolean r = false;
+
+			for(Hexagon n : a.getNeighbours()) {
+
+				if(n.getOwner() != getId()) {
+					r = true;
+					break;
+				}
+			}
+			if(r)
+				rand.add(a);
+		}
+		
+		for(Hexagon a: h) {
+			if(!rand.contains(a))
+				set.add(a);
+		}
+		
+		Collections.shuffle(rand);
+		
+		ArrayList<Hexagon> underattack = risks(rand);
+		if(underattack.size() == 0 || helpedlast) {
+			helpedlast = false;
+			return move(rand.get(0).getResources() - 1, rand.get(0), enemies(rand.get(0)).get(0));
+		}else {
+			helpedlast = true;
+			Hexagon boi = Collections.min(underattack);
+			Hexagon helper;
+			if(set.size() != 0)
+				helper = Collections.max(set);
+			else
+				helper = Collections.max(rand);
+			
+			return move(helper.getResources() - 1, helper, boi);
+			
+		}
+
+		//return null;
+		
+	}
+	
+	/*
+	 * if(h.isEmpty())
 			return null;
 		
 		
@@ -86,8 +161,7 @@ public class GustafBot2 extends Player{
 		
 		
 		return moves;
-		
-	}
+	 */
 	
 	/*
 	 * 	

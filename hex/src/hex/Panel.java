@@ -35,7 +35,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
     	player = new Player[2];
 
-
 		player[0] = new SimpleBot(1,4, Color.GREEN);
 		player[1] = new GustafBot2(2,4, Color.RED);
 
@@ -113,14 +112,17 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		//if(!end() && turn < MAX_TURN) {
+		if(!end() && turn < MAX_TURN) {
+			long t;
 			for(Player p: player) {
+				t = System.currentTimeMillis();
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
+				System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
 			}
 			H.endTurn();
 			System.out.println("Turn: " + turn);
 			turn++;
-		//}
+		}
 	}
 
 	@Override

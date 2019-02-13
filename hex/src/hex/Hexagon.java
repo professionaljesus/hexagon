@@ -20,7 +20,10 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 	
 	public void setNeighbours(Hexagon[] n) {
-		neighbours = n;
+		neighbours = new Hexagon[6];
+		for(int i = 0; i < n.length; i++) {
+			neighbours[i] = n[i];
+		}
 	}
 	
 	@Override
@@ -38,6 +41,7 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 
 	public void setOwner(int owner) {
+		
 		this.owner = owner;
 	}
 	
