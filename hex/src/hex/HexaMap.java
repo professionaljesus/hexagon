@@ -116,8 +116,9 @@ public class HexaMap {
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
 
-
-			if(t != null) {
+			if(t == null) {
+				System.out.println("Ingen respons");
+			}else{
 				int id = t[0];
 				int res = t[1];
 				int x = t[2];
@@ -127,7 +128,7 @@ public class HexaMap {
 	
 				//Inte din hexagon
 				if (HexaMap[x][y].getOwner() != id) {
-					System.out.println("Wrong owner");
+					System.out.println("Player " + id + ": Wrong owner");
 					continue;
 				}
 	
