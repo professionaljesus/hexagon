@@ -159,46 +159,13 @@ public class SimpleBot extends Player {
 		realaction[3] = Action[3];
 		realaction[4] = Action[4];
 		realaction[5] = Action[5];
-		if(realaction[1] == 0){
-			realaction[0] = super.getId();
-			realaction[1] = Action[1];
-			realaction[2] = Action[2];
-			realaction[3] = Action[3];
-			realaction[4] = Action[4];
-			realaction[5] = Action[5];
-			if(realaction[1] == 0){
-				realaction[0] = super.getId();
-				realaction[1] = 1;
-				Hexagon a= H.iterator().next();
-				if(a != null){
-					realaction[2] = a.getX();
-					realaction[3] = a.getY();
-				}
-				Hexagon b= H.iterator().next();
-				if(b != null){
-					realaction[4] = b.getX();
-					realaction[5] = b.getY();
-				}
-			}
-			return realaction;
-		}
-		return null;
+		
+		return realaction;
+		
+		
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * move = 0; conc move = 1; collect move = 2; enemy value = - om bad, + om

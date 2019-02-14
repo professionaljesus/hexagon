@@ -46,7 +46,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         requestFocus();
         
 
-        mapsize = 4;
+        mapsize = 6;
 
 
     	player = new Player[3];
@@ -67,7 +67,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	
 	private void crazyTest() {
-		double safe = 0.00000001;
+		double safe = 0.00001;
 		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
 				-(rand.nextDouble() + safe)};
 		
@@ -125,7 +125,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
              
            elapsed = System.nanoTime() - start;
             
-           gamerun();
+       //    gamerun();
            repaint();
 
              
