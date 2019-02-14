@@ -99,7 +99,7 @@ public class BeppeBot extends Player {
 		for(Hexagon hex: outers){
 			Hexagon[] nei = hex.getNeighbours();
 			for(int i = 0; i<6; i++){
-				System.out.println(hex.calculateDistanceTo(hex));
+				
 			}
 		}
 
