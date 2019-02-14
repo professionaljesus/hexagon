@@ -46,8 +46,10 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
         
+
         mapsize = 4;
         write = false;
+
 
     	player = new Player[3];
     	rand = new Random();
