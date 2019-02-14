@@ -63,6 +63,16 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 	
 	@Override
+	public Hexagon clone() {
+		Hexagon n = new Hexagon(this.x,this.y);
+		n.setOwner(this.owner);
+		n.setResources(this.resources);
+		n.setNeighbours(this.neighbours);
+		return n;
+		
+	}
+	
+	@Override
 	public boolean equals(Object o) {
 		Hexagon c = (Hexagon) o;
 		if(c.getX() == x && c.getY() == y)

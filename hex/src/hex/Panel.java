@@ -12,6 +12,7 @@ import java.util.HashSet;
 import javax.swing.JPanel;
 
 import hex.bots.BeppeBot;
+import hex.bots.CrazyBot;
 import hex.bots.GustafBot;
 import hex.bots.GustafBot2;
 import hex.bots.SimpleBot;
@@ -44,7 +45,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
     	player = new Player[3];
 
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new SimpleBot(2,mapsize, Color.BLUE, "WILDCARD");
+		player[1] = new CrazyBot(2,mapsize, Color.BLUE, "WILDCARD");
 		player[2] = new GustafBot2(3,mapsize, Color.RED, "GURRA");
 
 
