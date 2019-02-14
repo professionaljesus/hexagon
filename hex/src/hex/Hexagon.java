@@ -1,5 +1,6 @@
 package hex;
 
+import java.util.HashSet;
 
 public class Hexagon implements Comparable<Hexagon>{
 	private int owner, x ,y;
@@ -58,8 +59,35 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 	
 	public int calculateDistanceTo(Hexagon target){
-		
-		return 0;
+		int dist = 0;
+		boolean foundTarget = false;
+		HashSet<Hexagon> scanned = new HashSet<Hexagon>();
+		HashSet<Hexagon> newlyScanned = new HashSet<Hexagon>();
+		HashSet<Hexagon> outers = new HashSet<Hexagon>();
+		HashSet<Hexagon> newOuters = new HashSet<Hexagon>();
+		scanned.add(this);
+		scanned.add(this);
+		while(!foundTarget){
+			newOuters.clear();
+			newlyScanned.clear();
+			dist++;
+			for(Hexagon outer:outers){
+				Hexagon[] neighbours = outer.getNeighbours();
+				for(int i = 0; i<6; i++){
+					if(target.equals(neighbours[i])){
+						foundTarget = true;
+					}
+					if(!scanned.contains(neighbours[i])){
+						newlyScanned.add(neighbours[i]);
+					}else{
+						newOuters.add(neighbours[i]);
+					}
+				}
+			}
+			scanned.addAll(newlyScanned);
+			outers = newOuters;
+		}
+		return dist;
 	}
 	
 	@Override
