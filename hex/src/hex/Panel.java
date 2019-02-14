@@ -53,6 +53,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 		crazyTest();
 	}
+
 	
 	private void crazyTest() {
 		double safe = 0.00000001;
@@ -84,7 +85,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	}
 	
 	/**
-	 * Om det bara finns en spelare kvar på mappen
+	 * Om det bara finns en spelare kvar pï¿½ mappen
 	 * @return True om bara en kvar, false annars
 	 */
 	private boolean end() {

@@ -10,6 +10,8 @@ import hex.Hexagon;
 import hex.Player;
 
 public class BeppeBot extends Player {
+	
+	private static boolean printMoveOptions = false;
 
 	HashSet<Hexagon> neighbours = new HashSet<Hexagon>();
 	HashSet<Hexagon> outers = new HashSet<Hexagon>();
@@ -73,7 +75,7 @@ public class BeppeBot extends Player {
 					move[3] = target.getX();
 					move[4] = target.getY();
 
-					// Om hexagonen går att erövra utan att släppa defence på
+					// Om hexagonen gï¿½r att erï¿½vra utan att slï¿½ppa defence pï¿½
 					// source hexagonen
 					if (source.getResources() > target.getResources()) {
 						// res,x,y,targetX,targetY, value
@@ -161,10 +163,11 @@ public class BeppeBot extends Player {
 				tempMove = moves.get(i);
 			}
 		}
-
-		System.out.println("Inners");
-		printHexes(inners);
-		printMoves(moves);
+		
+		if(printMoveOptions){
+			printMoves(moves);
+		}
+		
 
 		// id, res, x, y, targetX, targetY
 		if (tempMove == null) {
