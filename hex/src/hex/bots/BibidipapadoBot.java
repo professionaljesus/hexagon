@@ -16,9 +16,9 @@ public class BibidipapadoBot extends Player {
 		return null;
 	}
 
-	//Prepare Data
+	//Prepare Data and summerice Data - Knowledge Base
 	
-	
+	//Model with moves - Model
 	
 	
 	
