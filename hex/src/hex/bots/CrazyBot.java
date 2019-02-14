@@ -16,7 +16,7 @@ public class CrazyBot extends Player{
 
 	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		this.w = new double[]{0.5,0,-1,1,-0.5};
+		this.w = new double[]{0.5618  ,0.4813 ,  -0.4683 ,   0.5239 ,  -0.4995};
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 	}
 	

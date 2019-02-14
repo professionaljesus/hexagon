@@ -37,6 +37,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Random rand;
 	private double[] weights;
 	private int gurraturn;
+	private boolean write;
 	
 	public Panel() throws IOException {
 		super();
@@ -46,7 +47,10 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         requestFocus();
         
 
+
         mapsize = 4;
+        write = false;
+
 
 
     	player = new Player[3];
@@ -67,7 +71,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	
 	private void crazyTest() {
-		double safe = 0.00000001;
+		double safe = 0.00001;
 		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
 				-(rand.nextDouble() + safe)};
 		
@@ -125,7 +129,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
              
            elapsed = System.nanoTime() - start;
             
-           gamerun();
+       //    gamerun();
            repaint();
 
              
@@ -167,8 +171,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 					winrar = i;
 				}
 			}
-			//System.out.println("Winner: " + player[winrar].getName());
-			if(true) {
+			System.out.println("Winner: " + player[winrar].getName());
+			if(write) {
 
 				 BufferedWriter writer;
 				 String s = String.valueOf(gurraturn);
