@@ -147,10 +147,19 @@ public class SimpleBot extends Player {
 			}
 
 		}
-		if(!Actionlist.isEmpty()) {
-			Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
-			Actionlist.clear();
-			int[] realaction = new int[6];
+		if(Actionlist.isEmpty()){
+			return null;
+		}
+		Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
+		Actionlist.clear();
+		int[] realaction = new int[6];
+		realaction[0] = super.getId();
+		realaction[1] = Action[1];
+		realaction[2] = Action[2];
+		realaction[3] = Action[3];
+		realaction[4] = Action[4];
+		realaction[5] = Action[5];
+		if(realaction[1] == 0){
 			realaction[0] = super.getId();
 			realaction[1] = Action[1];
 			realaction[2] = Action[2];
@@ -172,7 +181,7 @@ public class SimpleBot extends Player {
 				}
 			}
 			return realaction;
-		}else return null;
+		}
 
 	}
 
