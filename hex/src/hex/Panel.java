@@ -29,13 +29,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
-	private final int MAX_TURN = 2000;
+	private final int MAX_TURN = 500;
 	private int turn, mapsize;
 
 	private final int width = 1280;
 	private final int height = 720;
 	private Random rand;
 	private double[] weights;
+	private int gurraturn;
 	
 	public Panel() throws IOException {
 		super();
@@ -44,11 +45,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
         requestFocus();
         
-        mapsize = 6;
+        mapsize = 4;
 
     	player = new Player[3];
-
-
     	rand = new Random();
 
 		crazyTest();
@@ -57,8 +56,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	private void crazyTest() {
 		double safe = 0.00000001;
-		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, rand.nextDouble() + safe, rand.nextDouble() + safe,
-				rand.nextDouble() + safe};
+		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
+				-(rand.nextDouble() + safe)};
 		
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new SimpleBot(2,mapsize, Color.BLUE, "WILDCARD");
@@ -66,6 +65,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;
+		gurraturn = 0;
 	}
 	
 	public void addNotify() {
@@ -114,7 +114,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
            elapsed = System.nanoTime() - start;
             
            gamerun();
-            repaint();
+           repaint();
 
              
             wait = 1000/60 - elapsed / 1000000;
@@ -141,11 +141,13 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			for(Player p: player) {
 				t = System.currentTimeMillis();
 				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
-				System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
+				//System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
 			}
 			H.endTurn();
-			System.out.println("Turn: " + turn);
+			//System.out.println("Turn: " + turn);
 			turn++;
+			if(H.getPhex().get(2).size() > 0)
+				gurraturn++;
 		}else {
 			int winrar = 0;
 			for(int i = 0; i < H.getPhex().size(); i++) {
@@ -153,18 +155,18 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 					winrar = i;
 				}
 			}
-			System.out.println("Winner: " + player[winrar].getName());
-		    
+			//System.out.println("Winner: " + player[winrar].getName());
 			if(true) {
+
 				 BufferedWriter writer;
-				 String s = player[winrar].getName() + ",";
+				 String s = String.valueOf(gurraturn);
 				 for(double w : weights)
-					 s += w + ",";
+					 s += "," + w;
 				 
 				try {
-					writer = new BufferedWriter(new FileWriter("boi.txt"));	
-				 
+				writer = new BufferedWriter(new FileWriter("boi.csv",true));	
 				 writer.write(s);
+				 writer.newLine();
 				 writer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

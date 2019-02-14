@@ -147,30 +147,32 @@ public class SimpleBot extends Player {
 			}
 
 		}
-		Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
-		Actionlist.clear();
-		int[] realaction = new int[6];
-		realaction[0] = super.getId();
-		realaction[1] = Action[1];
-		realaction[2] = Action[2];
-		realaction[3] = Action[3];
-		realaction[4] = Action[4];
-		realaction[5] = Action[5];
-		if(realaction[1] == 0){
+		if(!Actionlist.isEmpty()) {
+			Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
+			Actionlist.clear();
+			int[] realaction = new int[6];
 			realaction[0] = super.getId();
-			realaction[1] = 1;
-			Hexagon a= H.iterator().next();
-			if(a != null){
-				realaction[2] = a.getX();
-				realaction[3] = a.getY();
+			realaction[1] = Action[1];
+			realaction[2] = Action[2];
+			realaction[3] = Action[3];
+			realaction[4] = Action[4];
+			realaction[5] = Action[5];
+			if(realaction[1] == 0){
+				realaction[0] = super.getId();
+				realaction[1] = 1;
+				Hexagon a= H.iterator().next();
+				if(a != null){
+					realaction[2] = a.getX();
+					realaction[3] = a.getY();
+				}
+				Hexagon b= H.iterator().next();
+				if(b != null){
+					realaction[4] = b.getX();
+					realaction[5] = b.getY();
+				}
 			}
-			Hexagon b= H.iterator().next();
-			if(b != null){
-				realaction[4] = b.getX();
-				realaction[5] = b.getY();
-			}
-		}
-		return realaction;
+			return realaction;
+		}else return null;
 
 	}
 

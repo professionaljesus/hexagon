@@ -16,7 +16,7 @@ public class CrazyBot extends Player{
 
 	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		this.w = new double[] {0.7, 0.3 ,-0.5, 0.7, -0.7};
+		this.w = new double[]{0.5,0,-1,1,-0.5};
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 	}
 	
@@ -157,7 +157,7 @@ public class CrazyBot extends Player{
 		
 		Map.Entry<Move, Double> bestmove = null;
 		for(Map.Entry<Move, Double> e: moves.entrySet()) {
-			System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
+			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;
 			}
