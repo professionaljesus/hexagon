@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -32,6 +34,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	private final int width = 1280;
 	private final int height = 720;
+	private Random rand;
+	private double[] weights;
 	
 	public Panel() throws IOException {
 		super();
@@ -45,17 +49,21 @@ public class Panel extends JPanel implements Runnable, KeyListener{
     	player = new Player[3];
 
 
+    	rand = new Random();
 
-
+		crazyTest();
+	}
+	
+	private void crazyTest() {
+		double safe = 0.00000001;
+		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, rand.nextDouble() + safe, rand.nextDouble() + safe,
+				rand.nextDouble() + safe};
+		
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new CrazyBot(2,mapsize, Color.BLUE, "WILDCARD");
-		player[2] = new GustafBot2(3,mapsize, Color.RED, "GURRA");
-
+		player[1] = new SimpleBot(2,mapsize, Color.BLUE, "WILDCARD");
+		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
 
 		H = new HexaMap(mapsize,width,height,player);
-
-
-	
 		turn = 0;
 	}
 	
@@ -104,7 +112,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
              
            elapsed = System.nanoTime() - start;
             
-
+           gamerun();
             repaint();
 
              
@@ -124,9 +132,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         }
 		
 	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
+	
+	
+	private void gamerun() {
 		if(!end() && turn < MAX_TURN) {
 			long t;
 			for(Player p: player) {
@@ -137,7 +145,39 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			H.endTurn();
 			System.out.println("Turn: " + turn);
 			turn++;
+		}else {
+			int winrar = 0;
+			for(int i = 0; i < H.getPhex().size(); i++) {
+				if(H.getPhex().get(i).size() > 0) {
+					winrar = i;
+				}
+			}
+			System.out.println("Winner: " + player[winrar].getName());
+		    
+			if(true) {
+				 BufferedWriter writer;
+				 String s = player[winrar].getName() + ",";
+				 for(double w : weights)
+					 s += w + ",";
+				 
+				try {
+					writer = new BufferedWriter(new FileWriter("boi.txt"));	
+				 
+				 writer.write(s);
+				 writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			crazyTest();
+		   
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		gamerun();
 	}
 
 	@Override

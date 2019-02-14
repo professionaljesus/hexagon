@@ -14,9 +14,9 @@ public class CrazyBot extends Player{
 	private double[] w;
 	private double size;
 
-	public CrazyBot(int id, int size, Color c, String name) {
+	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		w = new double[] {0.7, 0.3 ,0.5, 0.7, 0.1};
+		this.w = new double[] {0.7, 0.3 ,-0.5, 0.7, -0.7};
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 	}
 	
@@ -36,7 +36,7 @@ public class CrazyBot extends Player{
 		
 		for(Hexagon a: h) {
 			totres += a.getResources();
-			connection += 1/(nonfriendly(a).size() + 0.00000001);
+			connection += nonfriendly(a).size()/6;
 		}
 		
 		totres = totres/((double)h.size());
@@ -100,13 +100,11 @@ public class CrazyBot extends Player{
 	}
 	
 	private HashSet<Hexagon> fakeMove(Move m, HashSet<Hexagon> c){
-		
 		Hexagon boi = m.boi.clone();
 		Hexagon target = m.target.clone();
 		c.remove(boi);
 		boi.setResources(boi.getResources() - m.res);
 		c.add(boi);
-
 		
 		if(m.target.getOwner() != getId()) {
 			target.setOwner(getId());
@@ -156,8 +154,10 @@ public class CrazyBot extends Player{
 		
 		
 		
+		
 		Map.Entry<Move, Double> bestmove = null;
 		for(Map.Entry<Move, Double> e: moves.entrySet()) {
+			System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;
 			}
