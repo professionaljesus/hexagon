@@ -19,6 +19,7 @@ import hex.bots.GustafBot;
 import hex.bots.GustafBot2;
 import hex.bots.SimpleBot;
 import hex.bots.Snake;
+import hex.bots.JuanBot.JuanBot;
 
 public class Panel extends JPanel implements Runnable, KeyListener{
 
@@ -57,15 +58,15 @@ public class Panel extends JPanel implements Runnable, KeyListener{
     	rand = new Random();
 
 
-    	//player[0] = new BeppeBot(1,mapsize, Color.YELLOW, "WILDCARD");
-		//player[1] = new BeppeBot(2,mapsize, Color.GREEN, "BEPPNATION");
-		//player[2] = new GustafBot2(3,mapsize, Color.RED, "GURRA");
+    	player[0] = new BeppeBot(1,mapsize, Color.YELLOW, "WILDCARD");
+		player[1] = new BeppeBot(2,mapsize, Color.GREEN, "BEPPNATION");
+		player[2] = new JuanBot(3,mapsize, Color.RED, "GURRA");
 
 
-		//H = new HexaMap(mapsize,width,height,player);
+		H = new HexaMap(mapsize,width,height,player);
 
 
-		crazyTest();
+		//crazyTest();
 	}
 
 
