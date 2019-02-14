@@ -15,7 +15,6 @@ public class Hexagon implements Comparable<Hexagon>{
 		this.resources = 0;
 	}
 	
-	
 	public Hexagon[] getNeighbours() {
 		return neighbours;
 	}
