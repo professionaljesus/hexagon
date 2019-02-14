@@ -10,7 +10,7 @@ import hex.Hexagon;
 import hex.Player;
 
 public class BeppeBot extends Player {
-	
+	//
 	private static boolean printMoveOptions = false;
 
 	HashSet<Hexagon> neighbours = new HashSet<Hexagon>();
