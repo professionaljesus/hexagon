@@ -182,6 +182,7 @@ public class SimpleBot extends Player {
 			}
 			return realaction;
 		}
+		return null;
 
 	}
 
