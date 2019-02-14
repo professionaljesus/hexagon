@@ -147,6 +147,9 @@ public class SimpleBot extends Player {
 			}
 
 		}
+		if(Actionlist.isEmpty()){
+			return null;
+		}
 		Integer[] Action = Collections.max(Actionlist, (e1, e2) -> e1[6].compareTo(e2[6]));
 		Actionlist.clear();
 		int[] realaction = new int[6];

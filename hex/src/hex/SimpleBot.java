@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SimpleBot extends Player {
+	
 	int turnorder;
 	int own;
 	int generating;
@@ -26,18 +27,20 @@ public class SimpleBot extends Player {
 	private List<Integer[]> easynei;
 	private List<Integer[]> nonei;
 
+	
+	
 	public SimpleBot(int id, int size, Color color,String S) {
 		super(id, size, color,S);
 		r = new Random();
 		myMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		heatMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		Actionlist = new HashSet<Integer[]>();
-		map = new HashMap<>();
 		goodnei = new ArrayList<Integer[]>();
 		badnei = new ArrayList<Integer[]>();
 		hardcorenei = new ArrayList<Integer[]>();
 		easynei = new ArrayList<Integer[]>();
 		nonei = new ArrayList<Integer[]>();
+		map = new HashMap<>();
 		for (int x = 0; x < heatMap.length; x++) {
 			for (int y = 0; y < heatMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
@@ -264,12 +267,12 @@ public class SimpleBot extends Player {
 			if(A.getResources()-B.getResources() - resourcs > 1){
 				value +=100;
 			}
-			if(A.getResources()> -B.getResources()){
+			if(A.getResources()> B.getResources()){
 				value +=40;
 			}
 			Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
-			if(A.getResources() > B.getResources()+50){
-				value += 500;
+			if(A.getResources() > B.getResources()+10){
+				value += 400;
 				Actionlist.add(generateMove(super.getId(),resourcs,A.getX(),A.getY(),B.getX(),B.getY(),value));
 			}
 			
@@ -309,10 +312,10 @@ public class SimpleBot extends Player {
 					value = 100;
 					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				}if(B.getOwner() != super.getId()){
-					value += 1000;
+					value += 800;
 					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				}if(B.getResources() < 100+A.getResources()){
-					value += 10000;
+					value += 800;
 					Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				}
 			}
@@ -320,7 +323,7 @@ public class SimpleBot extends Player {
 		}else if(move == 9){
 			if(map.get("GoodA").size() > 6){
 				
-				value =100+A.getResources() - B.getResources() + resourcs;
+				value =1000+A.getResources() - B.getResources() + resourcs;
 				Actionlist.add(generateMove(super.getId(),A.getResources()-1,A.getX(),A.getY(),B.getX(),B.getY(),value));
 				
 			}
