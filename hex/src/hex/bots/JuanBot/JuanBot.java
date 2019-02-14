@@ -20,10 +20,9 @@ public class JuanBot extends Player {
 
     @Override
     public int[] algo(HashSet<Hexagon> H) {
-        ArrayList<Hexagon> hAsList = new ArrayList<>(H);
+        ArrayList<Hexagon> hexKingdom = new ArrayList<>(H);
         // Categorise hexes
-        ArrayList<HexPair> notOwnedHexPairs = getHexPairs(new ArrayList<>(hAsList), HexType.NOTOWNED);
-        ArrayList<HexPair> ownedHexPairs = getHexPairs(new ArrayList<>(hAsList), HexType.OWNED);
+        ArrayList<HexPair> notOwnedHexPairs = getHexPairs(new ArrayList<>(hexKingdom), HexType.NOTOWNED);
 
         int[] instruction = null;
         // If we can expand without competition, DO IT!
@@ -33,8 +32,44 @@ public class JuanBot extends Player {
             Hexagon target = selectCloseHex(selectedHexPair.getChildren());
 
             instruction = createInstruction(1, parent, target);
+        } else {
+            // try to get a sneaky risk free invade, literally can not go wrong.
+            // TODO: DO I NEED TO DEFEND?
+            instruction = freeInvade(hexKingdom);
+            // TODO: PLAN INVADE
         }
         return instruction;
+    }
+
+    /**
+     * Invade risk free hexagons.
+     */
+    private int[] freeInvade(ArrayList<Hexagon> hexKingdom) {
+        ArrayList<HexPair> enemies = getHexPairs(new ArrayList<>(hexKingdom), HexType.ENEMY);
+        //System.out.println(enemies);
+        // Get risk free hexagons
+        for (HexPair hp: enemies) {
+            Hexagon parentHex = hp.getParent();
+
+            int maxResource = 0;
+            Hexagon maxNeighbour = null;
+            int minResource = 100;
+            Hexagon minNeighbour = null;
+            for (Hexagon neighbour: hp.getChildren()) {
+                int neighbourResource = neighbour.getResources();
+                if (neighbourResource < minResource) {
+                    minResource = neighbourResource;
+                    minNeighbour = neighbour;
+                } else if (neighbourResource > maxResource) {
+                    maxResource = neighbourResource;
+                    maxNeighbour = neighbour;
+                }
+            }
+            if ((parentHex.getResources()-1) - minResource > maxResource) {
+                return createInstruction(minResource+1, parentHex, minNeighbour);
+            }
+        }
+        return null;
     }
 
     /**
@@ -76,44 +111,33 @@ public class JuanBot extends Player {
         ArrayList<HexPair> hpList = new ArrayList<>();
         for (Hexagon hex: hexMap) {
             Hexagon[] neighbours = hex.getNeighbours();
-            ArrayList<Hexagon> hexNeighbours = new ArrayList<>();
-            switch(type) {
-                case OWNED:
-                    hexNeighbours = getOwnedHexes(new ArrayList<>(Arrays.asList(neighbours)));
-                    break;
-                case NOTOWNED:
-                    hexNeighbours = getNotOwnedHexes(new ArrayList<>(Arrays.asList(neighbours)));
-                    break;
-            }
+            ArrayList<Hexagon> hexNeighbours = getHexByType(new ArrayList<>(Arrays.asList(neighbours)), type);
             if (hexNeighbours.size() > 0) hpList.add(new HexPair(hex, hexNeighbours));
         }
         return hpList;
     }
 
     /**
-     * Method to get hexes not owned by any person.
+     * Method to get hexes of a specific type.
      * @param hexMap, map of hexes.
-     * @return hexes not owned by anyone.
+     * @return hexes with the type type.
      */
-    private ArrayList<Hexagon> getNotOwnedHexes(ArrayList<Hexagon> hexMap) {
-        ArrayList<Hexagon> notOwned = new ArrayList<>();
+    private ArrayList<Hexagon> getHexByType(ArrayList<Hexagon> hexMap, HexType type) {
+        ArrayList<Hexagon> hexes = new ArrayList<>();
         for (Hexagon hex: hexMap) {
-            if (hex.getOwner() == 0) notOwned.add(hex);
+            switch(type) {
+                case OWNED:
+                    if (hex.getOwner() == id) hexes.add(hex);
+                    break;
+                case NOTOWNED:
+                    if (hex.getOwner() == 0) hexes.add(hex);
+                    break;
+                case ENEMY:
+                    if (hex.getOwner() != id && hex.getOwner() != 0) hexes.add(hex);
+                    break;
+            }
         }
-        return notOwned;
-    }
-
-    /**
-     * Method to get owned hexes.
-     * @param hexMap, map of hexes.
-     * @return hexes owned by id.
-     */
-    private ArrayList<Hexagon> getOwnedHexes(ArrayList<Hexagon> hexMap) {
-        ArrayList<Hexagon> owned = new ArrayList<>();
-        for (Hexagon hex: hexMap) {
-            if (hex.getOwner() == id) owned.add(hex);
-        }
-        return owned;
+        return hexes;
     }
 
     /**
@@ -144,6 +168,11 @@ public class JuanBot extends Player {
 
         public ArrayList<Hexagon> getChildren() {
             return children;
+        }
+
+        @Override
+        public String toString() {
+            return "Parent:" + parent + " == " + children.toString();
         }
     }
 
