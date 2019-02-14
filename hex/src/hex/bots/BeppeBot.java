@@ -16,6 +16,7 @@ public class BeppeBot extends Player {
 	HashSet<Hexagon> inners = new HashSet<Hexagon>();
 	HashSet<Hexagon> freebies = new HashSet<Hexagon>();
 	HashSet<Hexagon> inNeedOfOffensiveSupport = new HashSet<Hexagon>();
+	int counter = 0;
 
 	public BeppeBot(int id, int size, Color c, String name) {
 		super(id, size, c, name);
@@ -27,7 +28,9 @@ public class BeppeBot extends Player {
 		ArrayList<int[]> moves = new ArrayList<int[]>();
 		// ArrayList<HashSet<Hexagon>> layers = new
 		// ArrayList<HashSet<Hexagon>>();
-
+		
+		counter+=1;
+		
 		neighbours.clear();
 		outers.clear();
 		inners.clear();
@@ -38,7 +41,8 @@ public class BeppeBot extends Player {
 		for (Hexagon hex : H) {
 			Hexagon[] neighs = hex.getNeighbours();
 			boolean inner = true;
-			for (int i = 0; i < 6; i++) {
+			for (int j = counter%6; j < 6+counter%6; j++) {
+				int i=j%6;
 				if (neighs[i].getOwner() != getId()) {
 					neighbours.add(neighs[i]);
 					outers.add(hex);
@@ -98,7 +102,7 @@ public class BeppeBot extends Player {
 		for (Hexagon out : outers) {
 			if (source == null) {
 				source = Collections.max(outers);
-			} else if (out.getResources() > 2 * source.getResources()) {
+			} else if (out.getResources() > 5 * source.getResources()) {
 				source = Collections.max(outers);
 			}
 		}
@@ -129,9 +133,9 @@ public class BeppeBot extends Player {
 		// Offensive support
 		for (Hexagon hex : outers) {
 			int max = 0;
-			if (hex.getResources() > max && !hex.equals(source)) {
+			if (hex.getResources()-calculateLowestThreat(hex) > max && !hex.equals(source)) {
 				target = hex;
-				max = hex.getResources();
+				max = hex.getResources()-calculateLowestThreat(target);
 			}
 		}
 
@@ -143,7 +147,7 @@ public class BeppeBot extends Player {
 			flytt[2] = source.getY();
 			flytt[3] = target.getX();
 			flytt[4] = target.getY();
-			flytt[5] = source.getResources()-calculateThreat(source);
+			flytt[5] = calculateSizeOfTroopTransferThatEnsuresDefence(source, target)-calculateLowestThreat(target);
 			flytt[6] = 2;
 			moves.add(flytt);
 		}
@@ -176,6 +180,7 @@ public class BeppeBot extends Player {
 	}
 
 	private int calculateValueOfCapture(Hexagon source, Hexagon target) {
+		
 		int value = 0;
 		value += source.getResources();
 		value -= target.getResources();
@@ -186,7 +191,7 @@ public class BeppeBot extends Player {
 			value += 1000;
 		}
 
-		return value;
+		return (int) (value*Math.pow(0.9,target.getResources()));
 	}
 
 	private int calculateThreat(Hexagon target) {
@@ -194,6 +199,17 @@ public class BeppeBot extends Player {
 		int value = 0;
 		for (int i = 0; i < nei.length; i++) {
 			if (nei[i].getOwner() != getId() && neighbours.contains(nei[i]) && value < nei[i].getResources()) {
+				value = nei[i].getResources();
+			}
+		}
+		return value;
+	}
+	
+	private int calculateLowestThreat(Hexagon target) {
+		Hexagon[] nei = target.getNeighbours();
+		int value = 1000;
+		for (int i = 0; i < nei.length; i++) {
+			if (nei[i].getOwner() != getId() && neighbours.contains(nei[i]) && value > nei[i].getResources()) {
 				value = nei[i].getResources();
 			}
 		}
