@@ -59,16 +59,17 @@ public class Hexagon implements Comparable<Hexagon>{
 	}
 	
 	public int calculateDistanceTo(Hexagon target){
+		if(target.equals(this)){
+			return 0;
+		}
 		int dist = 0;
 		boolean foundTarget = false;
 		HashSet<Hexagon> scanned = new HashSet<Hexagon>();
 		HashSet<Hexagon> newlyScanned = new HashSet<Hexagon>();
 		HashSet<Hexagon> outers = new HashSet<Hexagon>();
-		HashSet<Hexagon> newOuters = new HashSet<Hexagon>();
 		scanned.add(this);
-		scanned.add(this);
+		outers.add(this);
 		while(!foundTarget){
-			newOuters.clear();
 			newlyScanned.clear();
 			dist++;
 			for(Hexagon outer:outers){
@@ -79,13 +80,13 @@ public class Hexagon implements Comparable<Hexagon>{
 					}
 					if(!scanned.contains(neighbours[i])){
 						newlyScanned.add(neighbours[i]);
-					}else{
-						newOuters.add(neighbours[i]);
 					}
 				}
 			}
 			scanned.addAll(newlyScanned);
-			outers = newOuters;
+			outers.clear();
+			outers.addAll(newlyScanned);
+
 		}
 		return dist;
 	}

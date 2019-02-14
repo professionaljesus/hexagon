@@ -58,7 +58,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
     	rand = new Random();
 
 
-    	player[0] = new BeppeBot(1,mapsize, Color.YELLOW, "WILDCARD");
+    	player[0] = new SimpleBot(1,mapsize, Color.YELLOW, "WILDCARD");
 		player[1] = new BeppeBot(2,mapsize, Color.GREEN, "BEPPNATION");
 		player[2] = new JuanBot(3,mapsize, Color.RED, "GURRA");
 
