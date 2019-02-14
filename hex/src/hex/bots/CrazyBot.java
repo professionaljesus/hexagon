@@ -16,11 +16,12 @@ public class CrazyBot extends Player{
 
 	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		this.w = new double[]{0.5618  ,0.4813 ,  -0.4683 ,   0.5239 ,  -0.4995};
+		this.w = new double[] {1, 1, -1, 0, -0.1};
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
+		
 	}
 	
-
+	
 	
 	private double statevalue(HashSet<Hexagon> h) {
 		double amount = (2*(double)h.size())/size;
@@ -36,13 +37,21 @@ public class CrazyBot extends Player{
 		
 		for(Hexagon a: h) {
 			totres += a.getResources();
-			connection += nonfriendly(a).size()/6;
+			connection += (double)nonfriendly(a).size()/6.0;
 		}
 		
-		totres = totres/((double)h.size());
+		connection = connection/((double)h.size());
+		
+		totres = totres/(10.0 * (double)h.size());
 		
 		randtot = randtot/(100.0*(double)rand.size());
 		double en = enemies/(enemies + neutral);
+		
+		System.out.println("amount: " + amount);
+		System.out.println("randtot: " + randtot);
+		System.out.println("totres: " + totres);
+		System.out.println("en: " + en);
+		System.out.println("conn: " + connection);
 		
 		return w[0]*amount + w[1]*randtot + w[2]*en + w[3]*totres + w[4]*connection;
 		
@@ -92,32 +101,37 @@ public class CrazyBot extends Player{
 	}
 	
 	private HashSet<Hexagon> filledCopy(HashSet<Hexagon> h){
-		HashSet<Hexagon> copy = new HashSet<Hexagon>();
+		HashSet<Hexagon> copy	 = new HashSet<Hexagon>();
 		for(Hexagon a : h)
-			copy.add(a);
+			copy.add(a.clone());
 		
 		return copy;
 	}
 	
 	private HashSet<Hexagon> fakeMove(Move m, HashSet<Hexagon> c){
+		
 		Hexagon boi = m.boi.clone();
 		Hexagon target = m.target.clone();
 		c.remove(boi);
 		boi.setResources(boi.getResources() - m.res);
 		c.add(boi);
 		
-		if(m.target.getOwner() != getId()) {
-			target.setOwner(getId());
-			if(target.getResources() <= m.res)
-				target.setResources(m.res - target.getResources());
-			else
+		if(target.getOwner() != getId()) {
+			if(target.getResources() <= m.res) {
+				target.setResources(m.res - target.getResources() );
+				target.setOwner(getId());
+			}else
 				target.setResources(target.getResources() - m.res);
+			
 			c.add(target);
 		}else {
 			c.remove(target);
-			target.setResources(m.res + target.getResources());
+			target.setResources(m.res + target.getResources() );
 			c.add(target);
 		}
+		
+		for(Hexagon a: c)
+			a.setResources(a.getResources() + 1);
 		
 		return c;
 	}
@@ -125,14 +139,10 @@ public class CrazyBot extends Player{
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
 		ArrayList<Hexagon> rand = rand(H);
-		ArrayList<Hexagon> set = new ArrayList<Hexagon>();
-		HashMap<Move, Double> moves = new HashMap<Move,Double>();;
+		HashMap<Move, Double> moves = new HashMap<Move,Double>();
 		HashSet<Hexagon> copy;
 		Move m;
-		for(Hexagon h: H) {
-			if(!rand.contains(h))
-				set.add(h);
-		}
+
 		
 		for(Hexagon r : rand) {
 			for(Hexagon e: nonfriendly(r)) {
@@ -143,21 +153,23 @@ public class CrazyBot extends Player{
 			}
 		}
 		
-		for(Hexagon a : set) {
+		for(Hexagon a : H) {
 			for(Hexagon r: rand) {
-				m = new Move(a.getResources() - 1, a, r);
-				copy = filledCopy(H);
-				copy = fakeMove(m, copy);
-				moves.put(m, statevalue(copy)); 
+				if(!r.equals(a)) {
+					m = new Move(a.getResources() - 1, a, r);
+					copy = filledCopy(H);
+					copy = fakeMove(m, copy);
+					moves.put(m, statevalue(copy)); 
+				}
 			}
 		}
 		
 		
-		
+		System.out.println("------------------------");
 		
 		Map.Entry<Move, Double> bestmove = null;
 		for(Map.Entry<Move, Double> e: moves.entrySet()) {
-			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
+			System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;
 			}
