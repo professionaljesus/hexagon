@@ -57,6 +57,11 @@ public class Hexagon implements Comparable<Hexagon>{
 		return y;
 	}
 	
+	public int calculateDistanceTo(Hexagon target){
+		
+		return 0;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		Hexagon c = (Hexagon) o;

@@ -30,7 +30,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private int turn, mapsize;
 
 	private final int width = 1280;
-	private final int height = 720;
+	private final int height = 640;
 	
 	public Panel() throws IOException {
 		super();
@@ -42,9 +42,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         mapsize = 6;
 
     	player = new Player[3];
-
-
-
 
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new SimpleBot(2,mapsize, Color.BLUE, "WILDCARD");
@@ -75,7 +72,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	}
 	
 	/**
-	 * Om det bara finns en spelare kvar på mappen
+	 * Om det bara finns en spelare kvar pï¿½ mappen
 	 * @return True om bara en kvar, false annars
 	 */
 	private boolean end() {

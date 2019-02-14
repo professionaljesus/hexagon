@@ -7,24 +7,27 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Stack;
 
 public class HexaMap {
 	/**
-	 * Spara hexagon i en HexaMap[][] Använder Axial coordinates
+	 * Spara hexagon i en HexaMap[][] Anvï¿½nder Axial coordinates
 	 **/
 	private Hexagon[][] HexaMap;
 	private int size;
 
 	public static final int HEXAGON_HEIGHT = 68;
 	public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
+	public static final boolean wrapAround = false;
 
 	private Player[] player;
 	private ArrayList<HashSet<Hexagon>> phex;
 	private int width;
 	private int height;
 	private Stack<int[]> stacken;
+	private ArrayList<String> turnInfo;
 
 	/**
 	 * Size resulterar i sum(0,size) 6*n; HexagonMap blir size*2-1
@@ -44,7 +47,7 @@ public class HexaMap {
 		HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 		stacken = new Stack<int[]>();
 
-		// Detta borde göra samma
+		// Detta borde gï¿½ra samma
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
@@ -107,17 +110,18 @@ public class HexaMap {
 	 * Get's called at the endofTurn t[0] user t[1] resource t[2] x t[3] y t[4]
 	 * targetX t[5] targetY
 	 * 
-	 * Om dir > 5 så går den på targetX och Y
+	 * Om dir > 5 sï¿½ gï¿½r den pï¿½ targetX och Y
 	 */
 	public void endTurn() {
 		Collections.shuffle(stacken);
-
+		turnInfo = new ArrayList<String>();
 		while (!stacken.isEmpty()) {
 			int[] t = stacken.pop();
-
-			if(t == null) {
-				System.out.println("Ingen respons");
-			}else{
+			String s = "";
+			if (t == null) {
+				// System.out.println("Ingen respons");
+				s += "Ingen Respons";
+			} else {
 				int id = t[0];
 				int res = t[1];
 				int x = t[2];
@@ -127,11 +131,11 @@ public class HexaMap {
 
 				// Inte din hexagon
 				if (HexaMap[x][y].getOwner() != id) {
-					System.out.println("Player: " + id + " Wrong owner");
+					s += "Player: " + id + " Wrong owner";
 					continue;
 				}
 
-				// Om man har för lite resources
+				// Om man har fï¿½r lite resources
 				if (HexaMap[x][y].getResources() < res)
 					continue;
 
@@ -155,7 +159,7 @@ public class HexaMap {
 						HexaMap[x][y].setOwner(0);
 						phex.get(id - 1).remove(HexaMap[x][y]);
 					}
-				} else { // Någon annans ruta
+				} else { // Nï¿½gon annans ruta
 					for (Hexagon n : HexaMap[targetX][targetY].getNeighbours()) {
 						if (n == null) {
 							break;
@@ -190,7 +194,7 @@ public class HexaMap {
 						}
 					}
 
-					// Du slösa alla
+					// Du slï¿½sa alla
 					if (HexaMap[x][y].getResources() == 0) {
 						HexaMap[x][y].setOwner(0);
 						phex.get(id - 1).remove(HexaMap[x][y]);
@@ -198,9 +202,10 @@ public class HexaMap {
 				}
 			}
 			if (t != null) {
-				System.out.println("Player: " + t[0] + " ( " + t[2] + " , " + t[3] + " ) ----> " + " ( " + t[4] + " , "
-						+ t[5] + " ) " + " Res: " + t[1]);
+				s += "Player: " + t[0] + " ( " + t[2] + " , " + t[3] + " ) ----> " + " ( " + t[4] + " , " + t[5] + " ) "
+						+ " Res: " + t[1];
 			}
+			turnInfo.add(s);
 
 		}
 
@@ -236,19 +241,19 @@ public class HexaMap {
 		int targetY = 0;
 		int[] pos = new int[2];
 		switch (Direction) {
-		case 0: // Höger
+		case 0: // Hï¿½ger
 			if (x + y == size * 3 - 3) { // bottom right
 				targetX = x - (size - 1);
 				targetY = y - (size - 1);
 			} else if (x == size * 2 - 2) { // top right
 				targetX = 0;
-				targetY = y+size;
+				targetY = y + size;
 			} else {
 				targetX = x + 1;
 				targetY = y;
 			}
 			break;
-		case 1: // Neråt Höger
+		case 1: // Nerï¿½t Hï¿½ger
 			if (y == size * 2 - 2) { // bottom
 				targetX = x + (size - 1);
 				targetY = 0;
@@ -260,19 +265,19 @@ public class HexaMap {
 				targetY = y + 1;
 			}
 			break;
-		case 2: // Neråt Vänster
+		case 2: // Nerï¿½t Vï¿½nster
 			if (x == 0) { // bottom left
 				targetX = size * 2 - 2;
 				targetY = y - (size - 1);
 			} else if (y == size * 2 - 2) { // bottom
-				targetX = x + (size-2);
+				targetX = x + (size - 2);
 				targetY = 0;
 			} else {
 				targetX = x - 1;
 				targetY = y + 1;
 			}
 			break;
-		case 3: // Vänster
+		case 3: // Vï¿½nster
 			if (x + y == size - 1) { // top left
 				targetX = x + (size - 1);
 				targetY = y + (size - 1);
@@ -284,19 +289,19 @@ public class HexaMap {
 				targetY = y;
 			}
 			break;
-		case 4: // Upp åt vänster
+		case 4: // Upp ï¿½t vï¿½nster
 			if (y == 0) {// top
 				targetX = x - (size - 1);
 				targetY = size * 2 - 2;
 			} else if (x + y == size - 1) {// top left
 				targetX = x + size;
-				targetY = y + (size-2);
+				targetY = y + (size - 2);
 			} else {
 				targetX = x;
 				targetY = y - 1;
 			}
 			break;
-		case 5: // Upp åt Höger
+		case 5: // Upp ï¿½t Hï¿½ger
 			if (x == size * 2 - 2) {// top right
 				targetX = 0;
 				targetY = y + (size - 1);
@@ -316,34 +321,42 @@ public class HexaMap {
 
 	public void draw(Graphics g) {
 		int sum;
+
+		int counter = 0;
+		if (turnInfo != null) {
+			for (String s : turnInfo) {
+				g.drawString(s, (int) (width * 0.7), (int) (height * 0.5) + counter * 20);
+				counter++;
+			}
+		}
 		
-		for (int i = 0;i<player.length; i++ ){
-			
+		int tempX = (int) (width * 0.7);
+		int tempY = (int) (height * 0.125);
+		g.drawString("Hexagons   |   Resources", tempX + player[0].getName().length() * 15 - 50, tempY - 10);
+
+		
+		for (int i = 0; i < player.length; i++) {
 			g.setColor(player[i].getColor());
-			int tempX = (int) (width*0.8);
-			int tempY = (int) (height*0.125);
-	    	g.fillRect(tempX, tempY+20*i, 10, 10);
-	    	g.setColor(Color.BLACK);
-	    	sum = 0;
-	    	for(Hexagon h: phex.get(i)) {
-	    		sum += h.getResources();
-	    	}
-	    	g.drawString("Hexagons   |   Resources" , tempX+player[0].getName().length()*15 - 50, tempY - 10);
-	    	g.drawString(player[i].getName(), tempX+20, tempY+20*i+10);
-	    	g.drawString(phex.get(i).size() + " | " + sum, tempX + player[0].getName().length()*15, tempY+20*i+10);
-	    }
-		
-		
+			g.fillRect(tempX, tempY + 20 * i, 10, 10);
+			g.setColor(Color.BLACK);
+			sum = 0;
+			for (Hexagon h : phex.get(i)) {
+				sum += h.getResources();
+			}
+			g.drawString(player[i].getName(), tempX + 20, tempY + 20 * i + 10);
+			g.drawString(phex.get(i).size() + " | " + sum, tempX + player[0].getName().length() * 15,
+					tempY + 20 * i + 10);
+		}
+
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					double originX = (width / 2)// Center of the screen
+					double originX = (width / 3)// Center of the screen
 							- HEXAGON_WIDTH * (size - 1) + x * (HEXAGON_WIDTH) + (y - size + 1) * (HEXAGON_WIDTH / 2);// Shift
 					double originY = (height / 2) - HEXAGON_HEIGHT * (size - 1) * 0.75 + y * (HEXAGON_HEIGHT / 2) * 1.5;
 					drawHexagon(g, x, y, originX, originY);
 
-					if (false) {
-
+					if (wrapAround) {
 						drawHexagon(g, x, y, originX + HEXAGON_WIDTH * (0.5) * (size * 3 - 2),
 								originY - HEXAGON_HEIGHT * (0.75) * size);
 						drawHexagon(g, x, y, originX + HEXAGON_WIDTH * (0.5) * (size * 3 - 1),
