@@ -49,18 +49,16 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
 
 
-<<<<<<< HEAD
-        mapsize = 6;
-=======
+
         mapsize = 4;
->>>>>>> branch 'master' of https://github.com/professionaljesus/hexagon.git
+
         write = false;
 
 
 
     	player = new Player[4];
     	rand = new Random();
-<<<<<<< HEAD
+
 
 
     	player[0] = new SimpleBot(1,mapsize, Color.CYAN, "WILDCARD");
@@ -71,9 +69,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		
 
 		//crazyTest();
-=======
+
     	initGame();
->>>>>>> branch 'master' of https://github.com/professionaljesus/hexagon.git
+
 	}
 
 
