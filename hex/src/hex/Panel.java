@@ -49,19 +49,19 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
 
 
-        mapsize = 10;
+        mapsize = 4;
         write = false;
 
 
 
     	player = new Player[3];
     	rand = new Random();
-    	crazyTest();
+    	initGame();
 	}
 
 
 	
-	private void crazyTest() {
+	private void initGame() {
 		double safe = 0.00001;
 		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
 				-(rand.nextDouble() + safe)};
@@ -145,9 +145,15 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private void gamerun() {
 		if(!end() && turn < MAX_TURN) {
 			long t;
+			HashSet<Hexagon> send = new HashSet<Hexagon>();
+
 			for(Player p: player) {
+				send.clear();
+				for(Hexagon a: H.getPhex().get(p.getId() - 1)) {
+					send.add(a.clone());
+				}
 				t = System.currentTimeMillis();
-				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
+				H.move(p.algo(send));
 				//System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
 			}
 			H.endTurn();
@@ -180,7 +186,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 					e.printStackTrace();
 				}
 			}
-			crazyTest();
+			initGame();
 		   
 		}
 	}
