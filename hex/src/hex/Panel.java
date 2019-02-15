@@ -49,13 +49,18 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
 
 
+<<<<<<< HEAD
         mapsize = 6;
+=======
+        mapsize = 4;
+>>>>>>> branch 'master' of https://github.com/professionaljesus/hexagon.git
         write = false;
 
 
 
     	player = new Player[4];
     	rand = new Random();
+<<<<<<< HEAD
 
 
     	player[0] = new SimpleBot(1,mapsize, Color.CYAN, "WILDCARD");
@@ -66,11 +71,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		
 
 		//crazyTest();
+=======
+    	initGame();
+>>>>>>> branch 'master' of https://github.com/professionaljesus/hexagon.git
 	}
 
 
 	
-	private void crazyTest() {
+	private void initGame() {
 		double safe = 0.00001;
 		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
 				-(rand.nextDouble() + safe)};
@@ -154,9 +162,15 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private void gamerun() {
 		if(!end() && turn < MAX_TURN) {
 			long t;
+			HashSet<Hexagon> send = new HashSet<Hexagon>();
+
 			for(Player p: player) {
+				send.clear();
+				for(Hexagon a: H.getPhex().get(p.getId() - 1)) {
+					send.add(a.clone());
+				}
 				t = System.currentTimeMillis();
-				H.move(p.algo(H.getPhex().get(p.getId() - 1)));
+				H.move(p.algo(send));
 				//System.out.println("Player " + p.getId() + " " + (System.currentTimeMillis() - t) + " ms");
 			}
 			H.endTurn();
@@ -189,7 +203,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 					e.printStackTrace();
 				}
 			}
-			crazyTest();
+			initGame();
 		   
 		}
 	}
