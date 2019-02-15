@@ -34,11 +34,62 @@ public class JuanBot extends Player {
             instruction = createInstruction(1, parent, target);
         } else {
             // try to get a sneaky risk free invade, literally can not go wrong.
-            // TODO: DO I NEED TO DEFEND?
             instruction = freeInvade(hexKingdom);
-            // TODO: PLAN INVADE
+            if (instruction == null) {
+                Hexagon safeHex = getSafeHex(hexKingdom);
+                if (safeHex != null) {
+                    Hexagon threatenedHex = getHighThreatHex(hexKingdom);
+                    if (threatenedHex != null) {
+                        instruction = createInstruction(safeHex.getResources()-1, safeHex, threatenedHex);
+                    }
+                    //System.out.println("Moved from " + safeHex + " to " + threatenedHex);
+                }
+            }
+        }
+        if (instruction == null) {
+            instruction = randomMove();
         }
         return instruction;
+    }
+
+    private int[] randomMove() {
+        return null;
+    }
+
+    /**
+     * Get a hex that is threatened..
+     * @param hexKingdom
+     * @return
+     */
+    private Hexagon getHighThreatHex(ArrayList<Hexagon> hexKingdom) {
+        ArrayList<HexPair> hexWithEnemyNeighbour = getHexPairs(new ArrayList<>(hexKingdom), HexType.ENEMY);
+        for (HexPair hp: hexWithEnemyNeighbour) {
+            Hexagon parent = hp.getParent();
+
+            for (Hexagon neighbour: hp.getChildren()) {
+                if (neighbour.getResources() > parent.getResources()) return parent;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get first found hex encapsuled in owned hexes.
+     * @param hexKingdom
+     * @return hexagon encapsuled in owned hex.
+     */
+    private Hexagon getSafeHex(ArrayList<Hexagon> hexKingdom) {
+        ArrayList<HexPair> hexWithEnemyNeighbour = getHexPairs(new ArrayList<>(hexKingdom), HexType.ENEMY);
+        Hexagon highestSafeHex = null;
+        int maxHex = 0;
+        for (HexPair hp: hexWithEnemyNeighbour) {
+            if (hp.getChildren().size() == 6 && hp.getParent().getResources() > maxHex) {
+                maxHex = hp.getParent().getResources();
+                highestSafeHex = hp.getParent();
+            }
+        }
+        if (highestSafeHex != null) System.out.println("MOVING INTERNALLY      ");
+        return highestSafeHex;
     }
 
     /**
@@ -66,7 +117,7 @@ public class JuanBot extends Player {
                 }
             }
             if ((parentHex.getResources()-1) - minResource > maxResource) {
-                return createInstruction(minResource+1, parentHex, minNeighbour);
+                return createInstruction(parentHex.getResources() - minResource - maxResource, parentHex, minNeighbour);
             }
         }
         return null;
