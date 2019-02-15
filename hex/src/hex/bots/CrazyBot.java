@@ -16,7 +16,7 @@ public class CrazyBot extends Player{
 
 	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		this.w = new double[] {1, 1, -1, 0, -0.1};
+		this.w = new double[] {2, 1, 0.7, 0, 1};
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 		
 	}
@@ -37,7 +37,7 @@ public class CrazyBot extends Player{
 		
 		for(Hexagon a: h) {
 			totres += a.getResources();
-			connection += (double)nonfriendly(a).size()/6.0;
+			connection += (6 - nonfriendly(a).size())/6.0;
 		}
 		
 		connection = connection/((double)h.size());
@@ -45,15 +45,15 @@ public class CrazyBot extends Player{
 		totres = totres/(10.0 * (double)h.size());
 		
 		randtot = randtot/(100.0*(double)rand.size());
-		double en = enemies/(enemies + neutral);
+		double easy = neutral/(enemies + neutral);
 		
 		System.out.println("amount: " + amount);
 		System.out.println("randtot: " + randtot);
 		System.out.println("totres: " + totres);
-		System.out.println("en: " + en);
+		System.out.println("easy: " + easy);
 		System.out.println("conn: " + connection);
 		
-		return w[0]*amount + w[1]*randtot + w[2]*en + w[3]*totres + w[4]*connection;
+		return w[0]*amount + w[1]*randtot + w[2]*easy + w[3]*totres + w[4]*connection;
 		
 	}
 	
@@ -138,6 +138,10 @@ public class CrazyBot extends Player{
 
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
+		
+		if(H.isEmpty())
+			return null;
+		
 		ArrayList<Hexagon> rand = rand(H);
 		HashMap<Move, Double> moves = new HashMap<Move,Double>();
 		HashSet<Hexagon> copy;
