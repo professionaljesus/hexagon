@@ -12,14 +12,14 @@ public class BibidipapadoBot extends Player {
 	private int size;
 	private int turn;
 	private HashSet<Integer[]> Actionlist;
+	private Hexagon[][] TrueMap;
 
-	
 	public BibidipapadoBot(int id, int size, Color c, String name) {
 		super(id, size, c, name);
 		this.size = size;
 		turn = 0;
-		InitializeHeatMap();
-		InitializeActionMap();
+		InitializeMaps();
+
 	}
 
 	public int[] algo(HashSet<Hexagon> H) {
@@ -34,7 +34,45 @@ public class BibidipapadoBot extends Player {
 	
 	
 	
-	/**Initialize just the HeatMap.
+	
+	
+	
+	/**End of turn before turning in the move. Cleans up for the next round.
+	 * 
+	 */
+	private void Clean(){
+		
+	}
+	
+	
+	
+	private void KnowledgeBaseUpdate(int[] lastmove){
+		//Update turn
+		//Save lastmove
+		//Update Heatmap
+		//Update TrueMap
+		
+		
+	}
+	
+	private void KnowledgeCalc(){
+		//Check my info
+		//Check what apponent did
+		//Check what info don't know.
+		//Calculate risk
+		//Calculate a model what opponent x do
+	}
+	
+	
+	
+	
+	
+	
+	
+	// ---------------------------------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Initialize just the HeatMap.
 	 */
 	private void InitializeHeatMap() {
 		HeatMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
@@ -46,9 +84,14 @@ public class BibidipapadoBot extends Player {
 			}
 		}
 	}
-	
-	private void InitializeActionMap(){
+
+	/**
+	 * Initialize the Action
+	 */
+	private void InitializeMaps() {
+		InitializeHeatMap();
 		Actionlist = new HashSet<Integer[]>();
+		TrueMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
 	}
-	
+
 }

@@ -49,21 +49,30 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
 
 
-        mapsize = 4;
+        mapsize = 10;
         write = false;
 
 
 
     	player = new Player[3];
     	rand = new Random();
+    	crazyTest();
+	}
 
 
-    	player[0] = new SimpleBot(1,mapsize, Color.YELLOW, "WILDCARD");
+	
+	private void crazyTest() {
+		double safe = 0.00001;
+		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
+				-(rand.nextDouble() + safe)};
+		
+		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
+		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");
+		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
 
-		player[1] = new BeppeBot(2,mapsize, Color.GREEN, "BEPPNATION");
-		player[2] = new JuanBot(3,mapsize, Color.RED, "JUAN");
 		H = new HexaMap(mapsize,width,height,player);
-		//crazyTest();
+		turn = 0;
+		gurraturn = 0;
 	}
 	
 	public void addNotify() {
@@ -102,17 +111,22 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		long start;
         long elapsed;
         long wait;
-
+         
+         
         //game loop
         while(true) {
+             
            start = System.nanoTime();
+             
            elapsed = System.nanoTime() - start;
             
-          //gamerun();
+       //    gamerun();
            repaint();
+
              
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;
+             
              
             try {
                 Thread.sleep(wait);
@@ -121,6 +135,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
                 e.printStackTrace();
                  
             }
+             
+             
         }
 		
 	}
@@ -139,19 +155,16 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			turn++;
 			if(H.getPhex().get(2).size() > 0)
 				gurraturn++;
-		} else {
+		}else {
 			int winrar = 0;
-			int largestSize = 0;
 			for(int i = 0; i < H.getPhex().size(); i++) {
-				if(H.getPhex().get(i).size() > largestSize) {
+				if(H.getPhex().get(i).size() > 0) {
 					winrar = i;
-					largestSize = H.getPhex().get(i).size();
 				}
 			}
 			System.out.println("Winner: " + player[winrar].getName());
+			if(write) {
 
-			// CSV
-			if (write) {
 				 BufferedWriter writer;
 				 String s = String.valueOf(gurraturn);
 				 for(double w : weights)
@@ -167,7 +180,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 					e.printStackTrace();
 				}
 			}
-			//crazyTest();
+			crazyTest();
 		   
 		}
 	}
@@ -187,20 +200,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	public void keyTyped(KeyEvent arg0) {
 		
 		
-	}
-
-	private void crazyTest() {
-		double safe = 0.00001;
-		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
-				-(rand.nextDouble() + safe)};
-
-		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");
-		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
-
-		H = new HexaMap(mapsize,width,height,player);
-		turn = 0;
-		gurraturn = 0;
 	}
 	
 	

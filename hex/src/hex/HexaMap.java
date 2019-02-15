@@ -144,7 +144,6 @@ public class HexaMap {
 				if (HexaMap[targetX][targetY].getOwner() == id) {
 
 					for (Hexagon n : HexaMap[targetX][targetY].getNeighbours()) {
-
 						if (n.getOwner() == id) {
 							illegal = false;
 							break;
