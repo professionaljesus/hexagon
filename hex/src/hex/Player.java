@@ -7,11 +7,12 @@ public abstract class Player {
 	private int id;
 	private Color color;
 	private String name;
-
+	private int size;
 	public Player(int id, int size, Color c, String name) {
 		this.id = id;
 		this.color = c;
 		this.name = name;
+		this.size = size;
 	}
 	
 	public Color getColor() {

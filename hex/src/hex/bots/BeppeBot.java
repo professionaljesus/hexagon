@@ -96,6 +96,7 @@ public class BeppeBot extends Player {
 			}
 		}
 
+
 		// Troopmovements
 		Hexagon source = null;
 		if (!inners.isEmpty()) {
@@ -177,6 +178,8 @@ public class BeppeBot extends Player {
 		}
 
 	}
+	
+	
 
 	private int calculateSizeOfTroopTransferThatEnsuresDefence(Hexagon source, Hexagon target) {
 		return source.getResources() - calculateThreat(source) - 1;

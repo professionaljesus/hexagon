@@ -49,17 +49,14 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
 
 
-        mapsize = 4;
+        mapsize = 10;
         write = false;
 
 
 
     	player = new Player[3];
     	rand = new Random();
-
-
-
-		crazyTest();
+    	crazyTest();
 	}
 
 
@@ -70,7 +67,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 				-(rand.nextDouble() + safe)};
 		
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new SimpleBot(2,mapsize, Color.BLUE, "WILDCARD");
+		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");
 		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
 
 		H = new HexaMap(mapsize,width,height,player);
