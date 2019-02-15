@@ -4,12 +4,14 @@ import hex.Hexagon;
 import hex.Player;
 
 import java.awt.*;
+
 import java.util.*;
 
 public class JuanBot extends Player {
     private int MAP_SIZE;
     private int id;
-    Random rand;
+    private Random rand;
+    private Server server;
 
     public JuanBot(int id, int size, Color c, String name) {
         super(id, size, c, name);
