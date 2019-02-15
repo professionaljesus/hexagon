@@ -95,7 +95,17 @@ public class Hexagon implements Comparable<Hexagon>{
 		Hexagon n = new Hexagon(this.x,this.y);
 		n.setOwner(this.owner);
 		n.setResources(this.resources);
-		n.setNeighbours(this.neighbours);
+		Hexagon[] neigh = new Hexagon[6];
+		if(this.neighbours != null) {
+			for(int i = 0; i < neighbours.length; i++) {
+				neigh[i] = new Hexagon(neighbours[i].getX(), neighbours[i].getY());
+				neigh[i].setOwner(neighbours[i].getOwner());
+				neigh[i].setResources(neighbours[i].getResources());
+			}
+		}
+		
+		n.setNeighbours(neigh);
+		
 		return n;
 		
 	}

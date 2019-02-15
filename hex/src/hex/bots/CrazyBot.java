@@ -46,13 +46,13 @@ public class CrazyBot extends Player{
 		
 		randtot = randtot/(100.0*(double)rand.size());
 		double easy = neutral/(enemies + neutral);
-		
+		/*
 		System.out.println("amount: " + amount);
 		System.out.println("randtot: " + randtot);
 		System.out.println("totres: " + totres);
 		System.out.println("easy: " + easy);
 		System.out.println("conn: " + connection);
-		
+		*/
 		return w[0]*amount + w[1]*randtot + w[2]*easy + w[3]*totres + w[4]*connection;
 		
 	}
@@ -62,7 +62,7 @@ public class CrazyBot extends Player{
 		for(Hexagon a : h) {
 			boolean r = false;
 			for(Hexagon n : a.getNeighbours()) {
-				if(n.getOwner() != getId()) {
+				if(n == null || n.getOwner() != getId()) {
 					r = true;
 					break;
 				}
@@ -76,7 +76,7 @@ public class CrazyBot extends Player{
 	private ArrayList<Hexagon> neutral(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
 		for(Hexagon e : a.getNeighbours()) {
-			if(e.getOwner() == 0)
+			if(e != null && e.getOwner() == 0)
 				enemies.add(e);
 		}
 		return enemies;
@@ -85,7 +85,7 @@ public class CrazyBot extends Player{
 	private ArrayList<Hexagon> nonfriendly(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
 		for(Hexagon e : a.getNeighbours()) {
-			if(e.getOwner() != getId())
+			if(e != null && e.getOwner() != getId())
 				enemies.add(e);
 		}
 		return enemies;
@@ -94,7 +94,7 @@ public class CrazyBot extends Player{
 	private ArrayList<Hexagon> enemies(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
 		for(Hexagon e : a.getNeighbours()) {
-			if(e.getOwner() != getId() && e.getOwner() != 0)
+			if(e != null && e.getOwner() != getId() && e.getOwner() != 0)
 				enemies.add(e);
 		}
 		return enemies;
@@ -169,11 +169,11 @@ public class CrazyBot extends Player{
 		}
 		
 		
-		System.out.println("------------------------");
+		//System.out.println("------------------------");
 		
 		Map.Entry<Move, Double> bestmove = null;
 		for(Map.Entry<Move, Double> e: moves.entrySet()) {
-			System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
+			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;
 			}

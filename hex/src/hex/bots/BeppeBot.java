@@ -191,7 +191,7 @@ public class BeppeBot extends Player {
 		value += source.getResources();
 		value -= target.getResources();
 		//value -= calculateThreat(target);
-		value += calculateSupport(target);
+		//value += calculateSupport(target);
 
 		if (freebies.contains(target)) {
 			value += 1000;
