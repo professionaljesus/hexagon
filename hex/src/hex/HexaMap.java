@@ -99,6 +99,24 @@ public class HexaMap {
 			phex.get(2).add(HexaMap[size * 2 - 2][size - 1]);
 
 			break;
+		case 4:
+			HexaMap[size-1][size/2].setOwner(player[0].getId());
+			HexaMap[size-1][size/2].setResources(10);
+			phex.get(0).add(HexaMap[size-1][size/2]);
+			
+			HexaMap[2*size - 2-size/2][size/2].setOwner(player[1].getId());
+			HexaMap[2*size - 2-size/2][size/2].setResources(10);
+			phex.get(1).add(HexaMap[2*size - 2-size/2][size/2]);
+			
+			HexaMap[size/2][2*size - 2-size/2].setOwner(player[2].getId());
+			HexaMap[size/2][2*size - 2-size/2].setResources(10);
+			phex.get(2).add(HexaMap[size/2][2*size - 2-size/2]);
+			
+			HexaMap[size-1][2*size - 2-size/2].setOwner(player[3].getId());
+			HexaMap[size-1][2*size - 2-size/2].setResources(10);
+			phex.get(3).add(HexaMap[size-1][2*size - 2-size/2]);
+			
+			break;
 		}
 	}
 

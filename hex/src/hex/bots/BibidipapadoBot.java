@@ -26,24 +26,66 @@ public class BibidipapadoBot extends Player {
 		return null;
 	}
 
-	// Prepare Data and summerice Data - Knowledge Base
+	// Prepare Data and summarize Data - Knowledge Base
 
 	// Model with moves - Model
 
 	
 	
+	/**Primitive move, will always generate a better board
+	 * 0 : Take empty
+	 * 1 : Take enemy
+	 * 2 : Transfer
+	 * 3 : Get under 100
+	 * 4 : Move Best Hexagon to frontline
+	 */
+	private void PrimMove(int move, int res, Hexagon A, Hexagon B){
+		
+	}
 	
-	
-	
-	
+	/**Strategy for when PrimMove is not good 
+	 * 
+	 */
+	private void Strategy(){
+		
+	}
 	
 	/**End of turn before turning in the move. Cleans up for the next round.
 	 * 
 	 */
 	private void Clean(){
-		
+		Actionlist.clear();
 	}
 	
+	/**
+	 * Generate Integer[7]
+	 * @param res
+	 * @param A
+	 * @param B
+	 * @param value
+	 * @return
+	 */
+	private Integer[] generateMove(int res, Hexagon A, Hexagon B,int value){
+		Integer[] temp = new Integer[7];
+		temp[0] = super.getId();
+		temp[1] = res;
+		temp[2] = A.getX();
+		temp[3] = A.getY();
+		temp[4] = B.getX();
+		temp[5] = B.getY();
+		temp[6] = value;
+		return temp;
+	}
+	
+	
+	/** Get the closets enemy prio lowest res
+	 * 
+	 * @param A
+	 * @return
+	 */
+	private Hexagon ClosestEnemy(Hexagon A){
+		return null;
+	}
 	
 	
 	private void KnowledgeBaseUpdate(int[] lastmove){
@@ -57,7 +99,7 @@ public class BibidipapadoBot extends Player {
 	
 	private void KnowledgeCalc(){
 		//Check my info
-		//Check what apponent did
+		//Check what opponent did
 		//Check what info don't know.
 		//Calculate risk
 		//Calculate a model what opponent x do
