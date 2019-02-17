@@ -50,7 +50,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 
 
-        mapsize = 4;
+        mapsize = 5;
 
         write = false;
 
