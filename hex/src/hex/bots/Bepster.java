@@ -35,10 +35,6 @@ public class Bepster extends Player {
 				inners.add(hex);
 			}
 		}
-		
-		
-		
-
 		return null;
 	}
 	
@@ -53,6 +49,20 @@ public class Bepster extends Player {
 			}
 		}
 		return move;
+	}
+
+	private double averageDist(Hexagon target){
+		int dist = 0;
+		int nr = 0;
+		for(Hexagon hex: outers){
+			dist += target.calculateDistanceTo(hex);
+			nr++;
+		}
+		for(Hexagon hex: inners){
+			dist += target.calculateDistanceTo(hex);
+			nr++;
+		}
+		return dist/nr;
 	}
 
 }
