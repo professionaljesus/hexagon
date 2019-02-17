@@ -13,10 +13,12 @@ public class Server {
     private ServerSocket serverSocket = null;
     private boolean listening = true;
     volatile Queue<String> requests;
+    volatile Queue<String> responses;
 
     public Server(int port) {
         this.port = port;
-        requests = new LinkedList<String>();
+        requests = new LinkedList<>();
+        responses = new LinkedList<>();
     }
 
     public void run(int mapSize, String method) throws IOException {
@@ -67,10 +69,9 @@ public class Server {
             while (true) {
                 if (requests.peek() != null) {
                     String request = requests.poll();
-                    System.out.println(request);
                     out.println(request);
                     String response = in.readLine();
-                    System.out.println(response);
+                    responses.offer(response);
                 }
             }
 
@@ -93,6 +94,11 @@ public class Server {
      */
     public void send(String request) {
         requests.offer(request);
+    }
+
+    public String receive() {
+        while (responses.peek()==null);
+        return responses.poll();
     }
 
     public Queue<String> getRequests() {

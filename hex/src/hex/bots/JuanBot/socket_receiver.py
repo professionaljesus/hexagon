@@ -2,6 +2,7 @@ import socket
 import sys
 import os
 import random
+import json
 from socket_wrapper import SocketWrapper
 
 def connect():
@@ -15,7 +16,7 @@ def connect():
     while (True):
         hexagons = socket_wrapper.read_line()
         print("Received map: " + hexagons)
-        socket_wrapper.send("Received map, here are the instructions! \n")
+        socket_wrapper.send(json.dumps((2, 5, 3, 3, 3, 2)) + "\n")
     s.close()
 
 if __name__ == "__main__":
