@@ -121,7 +121,7 @@ public class BibidipapadoBot extends Player {
 		for (int x = 0; x < HeatMap.length; x++) {
 			for (int y = 0; y < HeatMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					HeatMap[x][y] = new Hexagon(x, y);
+					HeatMap[x][y] = new Hexagon(x, y,size);
 				}
 			}
 		}

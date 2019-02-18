@@ -38,8 +38,13 @@ public class HexaMap {
         this.width = width;
         this.height = height;
 
+        HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+        stacken = new Stack<int[]>();
+
         phex = new ArrayList<HashSet<Hexagon>>();
         playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
+        playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
+
         for (int i = 0; i < player.length; i++){
             phex.add(new HashSet<Hexagon>());
             playerHexesAndNeighbours.add(new HashSet<Hexagon>());
@@ -48,17 +53,16 @@ public class HexaMap {
 
         this.player = player;
 
-        HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
-        stacken = new Stack<int[]>();
+		// Detta borde g�ra samma
+		for (int x = 0; x < HexaMap.length; x++) {
+			for (int y = 0; y < HexaMap[x].length; y++) {
+				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
+					HexaMap[x][y] = new Hexagon(x, y, size);
+				}
+			}
+		}
 
-        // Detta borde g�ra samma
-        for (int x = 0; x < HexaMap.length; x++) {
-            for (int y = 0; y < HexaMap[x].length; y++) {
-                if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-                    HexaMap[x][y] = new Hexagon(x, y);
-                }
-            }
-        }
+
 
         for (Hexagon[] uu : HexaMap) {
             for (Hexagon u : uu) {

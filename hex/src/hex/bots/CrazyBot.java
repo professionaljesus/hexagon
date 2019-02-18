@@ -16,7 +16,7 @@ public class CrazyBot extends Player{
 
 	public CrazyBot(int id, int size, Color c, String name , double[] weights) {
 		super(id, size, c, name);
-		this.w = new double[] {2, 1, 0.7, 0, 1};
+		this.w = weights;
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 		
 	}
@@ -24,36 +24,44 @@ public class CrazyBot extends Player{
 	
 	
 	private double statevalue(HashSet<Hexagon> h) {
-		double amount = (2*(double)h.size())/size;
+		double indanger = 0;
+		double setsize = (double)h.size();
+		double amount = setsize/size;
 		ArrayList<Hexagon> rand = rand(h);
-		double randtot = 0, totres = 0;
-		double enemies = 0,neutral = 0;
+		double randtot = 0;
 		double connection = 0;
+		double enres = 0;
 		for(Hexagon r: rand) {
 			randtot += r.getResources();
-			enemies += enemies(r).size();
-			neutral += neutral(r).size();
+			for(Hexagon e: enemies(r)) {
+				enres += e.getResources();
+				if(e.getResources() > r.getResources())
+					indanger++;
+			}
+
 		}
 		
 		for(Hexagon a: h) {
-			totres += a.getResources();
 			connection += (6 - nonfriendly(a).size())/6.0;
 		}
 		
-		connection = connection/((double)h.size());
+		indanger = -indanger/setsize;
 		
-		totres = totres/(10.0 * (double)h.size());
-		
+		connection = connection/setsize;
+				
 		randtot = randtot/(100.0*(double)rand.size());
-		double easy = neutral/(enemies + neutral);
-		/*
-		System.out.println("amount: " + amount);
-		System.out.println("randtot: " + randtot);
-		System.out.println("totres: " + totres);
+		
+		enres = -enres/randtot;
+		
+		//System.out.println("amount: " + amount);
+		/*System.out.println("randtot: " + randtot);
 		System.out.println("easy: " + easy);
+		System.out.println("totres: " + totres);
 		System.out.println("conn: " + connection);
+		System.out.println("--------------");
 		*/
-		return w[0]*amount + w[1]*randtot + w[2]*easy + w[3]*totres + w[4]*connection;
+		
+		return w[0]*amount + w[1]*connection + w[2]*indanger;
 		
 	}
 	
@@ -113,6 +121,7 @@ public class CrazyBot extends Player{
 		Hexagon boi = m.boi.clone();
 		Hexagon target = m.target.clone();
 		c.remove(boi);
+
 		boi.setResources(boi.getResources() - m.res);
 		c.add(boi);
 		
@@ -132,7 +141,7 @@ public class CrazyBot extends Player{
 		
 		for(Hexagon a: c)
 			a.setResources(a.getResources() + 1);
-		
+				
 		return c;
 	}
 
