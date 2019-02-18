@@ -51,7 +51,7 @@ public class HexaMap {
 		for (int x = 0; x < HexaMap.length; x++) {
 			for (int y = 0; y < HexaMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					HexaMap[x][y] = new Hexagon(x, y);
+					HexaMap[x][y] = new Hexagon(x, y, size);
 				}
 			}
 		}

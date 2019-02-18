@@ -5,9 +5,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -30,49 +36,38 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private Thread thread;
 	private HexaMap H;
 	private Player[] player;
-	private final int MAX_TURN = 500;
+	private final int MAX_TURN = 1000;
 	private int turn, mapsize;
 
 	private final int width = 1280;
 	private final int height = 720;
-	private Random rand;
 	private double[] weights;
-	private int gurraturn;
-	private boolean write;
-	
+
 	public Panel() throws IOException {
 		super();
 		setPreferredSize(new Dimension(width,height));
 		setFocusable(true);
 
         requestFocus();
-        
-
 
         mapsize = 4;
-        write = false;
-
-
-
+        
     	player = new Player[3];
-    	rand = new Random();
     	initGame();
 	}
 
 
-	
 	private void initGame() {
-		double safe = 0.00001;
-		weights = new double[] {rand.nextDouble() + safe, rand.nextDouble() + safe, -(rand.nextDouble() + safe), rand.nextDouble() + safe,
-				-(rand.nextDouble() + safe)};
-		
+
+		weights = new double[]{6,9,2};
+
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");
 		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;
-		gurraturn = 0;
+	
 	}
 	
 	public void addNotify() {
@@ -119,9 +114,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
            start = System.nanoTime();
              
            elapsed = System.nanoTime() - start;
-            
-       //    gamerun();
-           repaint();
+
+        	  repaint();
 
              
             wait = 1000/60 - elapsed / 1000000;
@@ -129,7 +123,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
              
              
             try {
-                Thread.sleep(wait);
+            		Thread.sleep(wait);
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -143,7 +137,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	
 	private void gamerun() {
-		if(!end() && turn < MAX_TURN) {
+		if(H.getPhex().get(2).size() > 0 && !end() && turn < MAX_TURN) {
 			long t;
 			HashSet<Hexagon> send = new HashSet<Hexagon>();
 
@@ -159,9 +153,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			H.endTurn();
 			//System.out.println("Turn: " + turn);
 			turn++;
-			if(H.getPhex().get(2).size() > 0)
-				gurraturn++;
 		}else {
+			
 			int winrar = 0;
 			for(int i = 0; i < H.getPhex().size(); i++) {
 				if(H.getPhex().get(i).size() > 0) {
@@ -169,24 +162,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 				}
 			}
 			System.out.println("Winner: " + player[winrar].getName());
-			if(write) {
-
-				 BufferedWriter writer;
-				 String s = String.valueOf(gurraturn);
-				 for(double w : weights)
-					 s += "," + w;
-				 
-				try {
-				writer = new BufferedWriter(new FileWriter("boi.csv",true));	
-				 writer.write(s);
-				 writer.newLine();
-				 writer.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			initGame();
+			
 		   
 		}
 	}

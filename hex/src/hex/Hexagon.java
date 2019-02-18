@@ -3,16 +3,17 @@ package hex;
 import java.util.HashSet;
 
 public class Hexagon implements Comparable<Hexagon>{
-	private int owner, x ,y;
+	private int owner, x ,y, size;
 	private int resources;
 	private Hexagon[] neighbours;
 	
 	
-	public Hexagon(int x, int y) {
+	public Hexagon(int x, int y, int size) {
 		this.x = x;
 		this.y = y;
 		this.owner = 0;
 		this.resources = 0;
+		this.size = size;
 	}
 	
 	public Hexagon[] getNeighbours() {
@@ -92,13 +93,13 @@ public class Hexagon implements Comparable<Hexagon>{
 	
 	@Override
 	public Hexagon clone() {
-		Hexagon n = new Hexagon(this.x,this.y);
+		Hexagon n = new Hexagon(this.x,this.y,this.size);
 		n.setOwner(this.owner);
 		n.setResources(this.resources);
 		Hexagon[] neigh = new Hexagon[6];
 		if(this.neighbours != null) {
 			for(int i = 0; i < neighbours.length; i++) {
-				neigh[i] = new Hexagon(neighbours[i].getX(), neighbours[i].getY());
+				neigh[i] = new Hexagon(neighbours[i].getX(), neighbours[i].getY(), this.size);
 				neigh[i].setOwner(neighbours[i].getOwner());
 				neigh[i].setResources(neighbours[i].getResources());
 			}
@@ -113,7 +114,7 @@ public class Hexagon implements Comparable<Hexagon>{
 	@Override
 	public boolean equals(Object o) {
 		Hexagon c = (Hexagon) o;
-		if(c.getX() == x && c.getY() == y)
+		if(c.getX() == this.x && c.getY() == this.y)
 			return true;
 		else
 			return false;
@@ -124,6 +125,12 @@ public class Hexagon implements Comparable<Hexagon>{
 	@Override
 	public int compareTo(Hexagon o) {
 		return this.resources - o.getResources();
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return	this.x + (this.y*(2*this.size - 1));
 	}
 
 

@@ -44,8 +44,8 @@ public class SimpleBot extends Player {
 		for (int x = 0; x < heatMap.length; x++) {
 			for (int y = 0; y < heatMap[x].length; y++) {
 				if (x + y >= size - 1 && x + y <= size * 3 - 3) {
-					heatMap[x][y] = new Hexagon(x, y);
-					myMap[x][y] = new Hexagon(x, y);
+					heatMap[x][y] = new Hexagon(x, y,size);
+					myMap[x][y] = new Hexagon(x, y,size);
 				}
 			}
 		}
