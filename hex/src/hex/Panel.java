@@ -61,6 +61,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private void initGame() {
 
 		weights = new double[]{6,9,2};
+		
 
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");

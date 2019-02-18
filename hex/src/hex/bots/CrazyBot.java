@@ -28,17 +28,12 @@ public class CrazyBot extends Player{
 		double setsize = (double)h.size();
 		double amount = setsize/size;
 		ArrayList<Hexagon> rand = rand(h);
-		double randtot = 0;
 		double connection = 0;
-		double enres = 0;
 		for(Hexagon r: rand) {
-			randtot += r.getResources();
 			for(Hexagon e: enemies(r)) {
-				enres += e.getResources();
 				if(e.getResources() > r.getResources())
 					indanger++;
 			}
-
 		}
 		
 		for(Hexagon a: h) {
@@ -48,19 +43,7 @@ public class CrazyBot extends Player{
 		indanger = -indanger/setsize;
 		
 		connection = connection/setsize;
-				
-		randtot = randtot/(100.0*(double)rand.size());
-		
-		enres = -enres/randtot;
-		
-		//System.out.println("amount: " + amount);
-		/*System.out.println("randtot: " + randtot);
-		System.out.println("easy: " + easy);
-		System.out.println("totres: " + totres);
-		System.out.println("conn: " + connection);
-		System.out.println("--------------");
-		*/
-		
+						
 		return w[0]*amount + w[1]*connection + w[2]*indanger;
 		
 	}
