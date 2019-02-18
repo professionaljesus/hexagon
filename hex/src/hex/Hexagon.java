@@ -23,6 +23,7 @@ public class Hexagon implements Comparable<Hexagon>{
 	public Hexagon[] getNeighbours(int id) {
 		HashSet<Hexagon> visibleHexes = HexaMap.getPlayerHexesAndNeighbours().get(id-1);
 		Hexagon[] nei = new Hexagon[6];
+
 		for(int i = 0; i<6; i++){
 			if(visibleHexes.contains(neighbours[i])){
 				nei[i] = neighbours[i];
@@ -109,19 +110,7 @@ public class Hexagon implements Comparable<Hexagon>{
 		Hexagon n = new Hexagon(this.x,this.y);
 		n.setOwner(this.owner);
 		n.setResources(this.resources);
-		Hexagon[] neigh = new Hexagon[6];
-		if(this.neighbours != null) {
-			for(int i = 0; i < neighbours.length; i++) {
-				neigh[i] = new Hexagon(neighbours[i].getX(), neighbours[i].getY());
-				neigh[i].setOwner(neighbours[i].getOwner());
-				neigh[i].setResources(neighbours[i].getResources());
-			}
-		}
-		
-		n.setNeighbours(neigh);
-		
 		return n;
-		
 	}
 	
 	@Override

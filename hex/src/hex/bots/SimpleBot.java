@@ -102,7 +102,7 @@ public class SimpleBot extends Player {
 				generating++;
 			}
 			myMap[h.getX()][h.getY()] = h;
-			for (Hexagon ne : h.getNeighbours()) {
+			for (Hexagon ne : h.getNeighbours(getId())) {
 				if(ne == null){
 					break;
 				}
