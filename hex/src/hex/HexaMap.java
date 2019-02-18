@@ -15,8 +15,8 @@ public class HexaMap {
     /**
      * Spara hexagon i en HexaMap[][] Anv�nder Axial coordinates
      **/
-    private Hexagon[][] HexaMap;
-    private int size;
+    private static Hexagon[][] HexaMap;
+    private static int size;
 
     public static final int HEXAGON_HEIGHT = 68;
     public static final int HEXAGON_WIDTH = (int) (HEXAGON_HEIGHT * Math.cos(Math.PI / 6));
@@ -37,11 +37,12 @@ public class HexaMap {
         this.size = size;
         this.width = width;
         this.height = height;
-        
+
         HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
         stacken = new Stack<int[]>();
 
         phex = new ArrayList<HashSet<Hexagon>>();
+        playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
         playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
 
         for (int i = 0; i < player.length; i++){
@@ -125,9 +126,48 @@ public class HexaMap {
 
                 break;
         }
-
         updatePlayerHexesAndNeighbours();
     }
+
+    public static Hexagon[][] getClonedBoard(){
+        Hexagon[][] clone = new Hexagon[size*2-1][size*2-1];
+        for (int x = 0; x < HexaMap.length; x++) {
+            for (int y = 0; y < HexaMap[x].length; y++) {
+                if (x + y >= size - 1 && x + y <= size * 3 - 3) {
+                    clone[x][y] = HexaMap[x][y].clone();
+                }
+            }
+        }
+        for (Hexagon[] uu : clone) {
+            for (Hexagon u : uu) {
+                if (u != null) {
+                    Hexagon[] n = new Hexagon[6];
+                    for (int i = 0; i < 6; i++) {
+                        n[i] = getNeighbour(u.getX(), u.getY(), i).clone();
+                    }
+                    u.setNeighbours(n);
+                }
+            }
+        }
+        return clone;
+    }
+
+    public static ArrayList<HashSet<Hexagon>> getClonedPhex() {
+        ArrayList<HashSet<Hexagon>> cloned = new ArrayList<>();
+        Hexagon[][] clonedHexaMap = getClonedBoard();
+
+        for(int i = 0; i<phex.size(); i++){
+            HashSet<Hexagon> clonedSet = new HashSet<Hexagon>();
+            for(Hexagon hex: phex.get(i)){
+                clonedSet.add(clonedHexaMap[hex.getX()][hex.getY()]);
+            }
+            cloned.add(clonedSet);
+        }
+
+        return cloned;
+    }
+
+
 
     public static ArrayList<HashSet<Hexagon>> getPhex() {
         return phex;
@@ -271,12 +311,12 @@ public class HexaMap {
         return HexaMap;
     }
 
-    public Hexagon getNeighbour(int x, int y, int direction) {
+    public static Hexagon getNeighbour(int x, int y, int direction) {
         int[] target = getNeighbourXY(x, y, direction);
         return HexaMap[target[0]][target[1]];
     }
 
-    public int[] getNeighbourXY(int x, int y, int Direction) {
+    public static int[] getNeighbourXY(int x, int y, int Direction) {
         int targetX = 0;
         int targetY = 0;
         int[] pos = new int[2];

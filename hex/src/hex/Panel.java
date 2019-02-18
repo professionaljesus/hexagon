@@ -145,8 +145,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 			for(Player p: player) {
 				send.clear();
-				for(Hexagon a: H.getPhex().get(p.getId() - 1)) {
-					send.add(a.clone());
+				for(Hexagon a: H.getClonedPhex().get(p.getId() - 1)) {
+					send.add(a);
 				}
 				t = System.currentTimeMillis();
 				H.move(p.algo(send));
