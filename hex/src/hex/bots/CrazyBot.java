@@ -92,7 +92,7 @@ public class CrazyBot extends Player{
 	}
 	
 	private HashSet<Hexagon> filledCopy(HashSet<Hexagon> h){
-		HashSet<Hexagon> copy	 = new HashSet<Hexagon>();
+		HashSet<Hexagon> copy = new HashSet<Hexagon>();
 		for(Hexagon a : h)
 			copy.add(a.clone());
 		
