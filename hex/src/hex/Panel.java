@@ -54,6 +54,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         
     	player = new Player[3];
     	initGame();
+
 	}
 
 

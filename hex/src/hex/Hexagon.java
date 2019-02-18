@@ -15,9 +15,23 @@ public class Hexagon implements Comparable<Hexagon>{
 		this.resources = 0;
 		this.size = size;
 	}
-	
+
 	public Hexagon[] getNeighbours() {
 		return neighbours;
+	}
+
+	//Neighbours you cant see will be returned as null
+	public Hexagon[] getNeighbours(int id) {
+		HashSet<Hexagon> visibleHexes = HexaMap.getPlayerHexesAndNeighbours().get(id-1);
+		Hexagon[] nei = new Hexagon[6];
+		for(int i = 0; i<6; i++){
+			if(visibleHexes.contains(neighbours[i])){
+				nei[i] = neighbours[i];
+			}else{
+				nei[i] = null;
+			}
+		}
+		return nei;
 	}
 	
 	public void setNeighbours(Hexagon[] n) {

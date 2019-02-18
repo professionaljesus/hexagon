@@ -28,11 +28,7 @@ public class BeppeBot extends Player {
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
 		ArrayList<int[]> moves = new ArrayList<int[]>();
-		// ArrayList<HashSet<Hexagon>> layers = new
-		// ArrayList<HashSet<Hexagon>>();
-		
-		counter+=1;
-		
+
 		neighbours.clear();
 		outers.clear();
 		inners.clear();
@@ -43,10 +39,9 @@ public class BeppeBot extends Player {
 		for (Hexagon hex : H) {
 			Hexagon[] neighs = hex.getNeighbours();
 			boolean inner = true;
-			for (int j = counter%6; j < 6+counter%6; j++) {
-				int i=j%6;
-				if (neighs[i].getOwner() != getId()) {
-					neighbours.add(neighs[i]);
+			for (int j = 0; j < 6; j++) {
+				if (neighs[j].getOwner() != getId()) {
+					neighbours.add(neighs[j]);
 					outers.add(hex);
 					inner = false;
 				}
