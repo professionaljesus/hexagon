@@ -37,8 +37,13 @@ public class HexaMap {
         this.size = size;
         this.width = width;
         this.height = height;
+        
+        HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
+        stacken = new Stack<int[]>();
 
         phex = new ArrayList<HashSet<Hexagon>>();
+        playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
+
         for (int i = 0; i < player.length; i++){
             phex.add(new HashSet<Hexagon>());
             playerHexesAndNeighbours.add(new HashSet<Hexagon>());
@@ -55,8 +60,7 @@ public class HexaMap {
 				}
 			}
 		}
-        HexaMap = new Hexagon[1 + (size - 1) * 2][1 + (size - 1) * 2];
-        stacken = new Stack<int[]>();
+
 
 
         for (Hexagon[] uu : HexaMap) {
