@@ -40,7 +40,7 @@ public class BeppeBot extends Player {
 			Hexagon[] neighs = hex.getNeighbours();
 			boolean inner = true;
 			for (int j = 0; j < 6; j++) {
-				if (neighs[j].getOwner() != getId()) {
+				if (neighs[j] != null && neighs[j].getOwner() != getId()) {
 					neighbours.add(neighs[j]);
 					outers.add(hex);
 					inner = false;

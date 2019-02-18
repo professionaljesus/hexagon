@@ -142,7 +142,7 @@ public class HexaMap {
                 if (u != null) {
                     Hexagon[] n = new Hexagon[6];
                     for (int i = 0; i < 6; i++) {
-                        n[i] = getNeighbour(u.getX(), u.getY(), i).clone();
+                        n[i] = clone[getNeighbourXY(u.getX(),u.getY(),i)[0]][getNeighbourXY(u.getX(),u.getY(),i)[1]];
                     }
                     u.setNeighbours(n);
                 }
