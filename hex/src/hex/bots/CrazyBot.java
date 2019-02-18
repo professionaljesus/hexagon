@@ -52,7 +52,7 @@ public class CrazyBot extends Player{
 		ArrayList<Hexagon> rand = new ArrayList<Hexagon>();
 		for(Hexagon a : h) {
 			boolean r = false;
-			for(Hexagon n : a.getNeighbours()) {
+			for(Hexagon n : a.getNeighbours(getId())) {
 				if(n == null || n.getOwner() != getId()) {
 					r = true;
 					break;
@@ -66,7 +66,7 @@ public class CrazyBot extends Player{
 	
 	private ArrayList<Hexagon> neutral(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
-		for(Hexagon e : a.getNeighbours()) {
+		for(Hexagon e : a.getNeighbours(getId())) {
 			if(e != null && e.getOwner() == 0)
 				enemies.add(e);
 		}
@@ -75,7 +75,7 @@ public class CrazyBot extends Player{
 	
 	private ArrayList<Hexagon> nonfriendly(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
-		for(Hexagon e : a.getNeighbours()) {
+		for(Hexagon e : a.getNeighbours(getId())) {
 			if(e != null && e.getOwner() != getId())
 				enemies.add(e);
 		}
@@ -84,7 +84,7 @@ public class CrazyBot extends Player{
 	
 	private ArrayList<Hexagon> enemies(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
-		for(Hexagon e : a.getNeighbours()) {
+		for(Hexagon e : a.getNeighbours(getId())) {
 			if(e != null && e.getOwner() != getId() && e.getOwner() != 0)
 				enemies.add(e);
 		}

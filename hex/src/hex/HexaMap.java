@@ -43,7 +43,6 @@ public class HexaMap {
 
         phex = new ArrayList<HashSet<Hexagon>>();
         playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
-        playerHexesAndNeighbours = new ArrayList<HashSet<Hexagon>>();
 
         for (int i = 0; i < player.length; i++){
             phex.add(new HashSet<Hexagon>());
