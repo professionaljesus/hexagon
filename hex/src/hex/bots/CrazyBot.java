@@ -69,7 +69,7 @@ public class CrazyBot extends Player{
 		ArrayList<Hexagon> rand = new ArrayList<Hexagon>();
 		for(Hexagon a : h) {
 			boolean r = false;
-			for(Hexagon n : a.getNeighbours()) {
+			for(Hexagon n : a.getNeighbours(getId())) {
 				if(n == null || n.getOwner() != getId()) {
 					r = true;
 					break;
