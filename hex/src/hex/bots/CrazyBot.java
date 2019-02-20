@@ -92,15 +92,7 @@ public class CrazyBot extends Player{
 		}
 		return enemies;
 	}
-	
-	private HashSet<Hexagon> filledCopy(HashSet<Hexagon> h){
-		HashSet<Hexagon> copy = new HashSet<Hexagon>();
-		for(Hexagon a : h)
-			copy.add(a.clone());
 		
-		return copy;
-	}
-	
 	private HashSet<Hexagon> fakeMove(Move m, HashSet<Hexagon> c){
 		
 		Hexagon boi = m.boi.clone();
