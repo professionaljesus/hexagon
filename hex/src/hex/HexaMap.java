@@ -179,6 +179,7 @@ public class HexaMap {
     private void updatePlayerHexesAndNeighbours(){
         for(int i = 0; i<phex.size();i++){
             for(Hexagon hex: phex.get(i)){
+                playerHexesAndNeighbours.get(i).add(hex);
                 for(Hexagon nei: hex.getNeighbours()){
                     playerHexesAndNeighbours.get(i).add(nei);
                 }

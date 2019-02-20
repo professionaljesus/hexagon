@@ -60,12 +60,11 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	private void initGame() {
 
-		weights = new double[]{6,9,2};
-		
+		weights = new double[]{6,7,1};
 
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new SimpleBot(2,mapsize, Color.CYAN, "WILDCARD");
-		player[2] = new CrazyBot(3,mapsize, Color.RED, "GURRA", weights);
+		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA", weights);
+		player[2] = new SimpleBot(3,mapsize, Color.CYAN, "WILDCARD");
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;
@@ -139,7 +138,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	
 	private void gamerun() {
-		if(H.getPhex().get(2).size() > 0 && !end() && turn < MAX_TURN) {
+		if(H.getPhex().get(1).size() > 0 && !end() && turn < MAX_TURN) {
 			long t;
 			HashSet<Hexagon> send = new HashSet<Hexagon>();
 

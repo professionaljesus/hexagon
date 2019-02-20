@@ -2,10 +2,12 @@ package hex.bots;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import hex.HexaMap;
 import hex.Hexagon;
 import hex.Player;
 
@@ -76,7 +78,7 @@ public class CrazyBot extends Player{
 	private ArrayList<Hexagon> nonfriendly(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
 		for(Hexagon e : a.getNeighbours(getId())) {
-			if(e != null && e.getOwner() != getId())
+			if(e == null || e.getOwner() != getId())
 				enemies.add(e);
 		}
 		return enemies;
@@ -102,7 +104,10 @@ public class CrazyBot extends Player{
 	private HashSet<Hexagon> fakeMove(Move m, HashSet<Hexagon> c){
 		
 		Hexagon boi = m.boi.clone();
+		boi.setNeighbours(m.boi.getNeighbours(getId()));
 		Hexagon target = m.target.clone();
+		target.setNeighbours(m.target.getNeighbours(getId()));
+
 		c.remove(boi);
 
 		boi.setResources(boi.getResources() - m.res);
@@ -124,6 +129,7 @@ public class CrazyBot extends Player{
 		
 		for(Hexagon a: c)
 			a.setResources(a.getResources() + 1);
+		
 				
 		return c;
 	}
@@ -143,9 +149,10 @@ public class CrazyBot extends Player{
 		for(Hexagon r : rand) {
 			for(Hexagon e: nonfriendly(r)) {
 				m = new Move(r.getResources() - 1, r, e);
-				copy = filledCopy(H);
+				copy = HexaMap.getClonedPhex().get(this.getId() - 1);
 				copy = fakeMove(m, copy);
 				moves.put(m, statevalue(copy)); 
+				System.out.println(copy + " " + statevalue(copy));
 			}
 		}
 		
@@ -153,7 +160,7 @@ public class CrazyBot extends Player{
 			for(Hexagon r: rand) {
 				if(!r.equals(a)) {
 					m = new Move(a.getResources() - 1, a, r);
-					copy = filledCopy(H);
+					copy = HexaMap.getClonedPhex().get(this.getId() - 1);
 					copy = fakeMove(m, copy);
 					moves.put(m, statevalue(copy)); 
 				}
@@ -168,6 +175,7 @@ public class CrazyBot extends Player{
 			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;
+				
 			}
 		}
 

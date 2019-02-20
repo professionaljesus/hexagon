@@ -1,5 +1,6 @@
 package hex;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Hexagon implements Comparable<Hexagon>{
@@ -24,7 +25,6 @@ public class Hexagon implements Comparable<Hexagon>{
 	public Hexagon[] getNeighbours(int id) {
 		HashSet<Hexagon> visibleHexes = HexaMap.getPlayerHexesAndNeighbours().get(id-1);
 		Hexagon[] nei = new Hexagon[6];
-
 		for(int i = 0; i<6; i++){
 			if(visibleHexes.contains(neighbours[i])){
 				nei[i] = neighbours[i];
