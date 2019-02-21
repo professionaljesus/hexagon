@@ -19,6 +19,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+
 import hex.bots.BeppeBot;
 import hex.bots.CrazyBot;
 import hex.bots.GustafBot;
@@ -41,7 +42,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	private final int width = 1280;
 	private final int height = 720;
-	private double[] weights;
 
 	public Panel() throws IOException {
 		super();
@@ -49,21 +49,19 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		setFocusable(true);
 
         requestFocus();
-
+        
         mapsize = 4;
         
     	player = new Player[3];
     	initGame();
 
 	}
-
+	
 
 	private void initGame() {
 
-		weights = new double[]{6,7,1};
-
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA", weights);
+		player[1] = new GustafBot(2,mapsize, Color.RED, "GURRA");
 		player[2] = new SimpleBot(3,mapsize, Color.CYAN, "WILDCARD");
 
 		H = new HexaMap(mapsize,width,height,player);
@@ -91,11 +89,13 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	 * Om det bara finns en spelare kvar p� mappen
 	 * @return True om bara en kvar, false annars
 	 */
-	private boolean end() {
+	public boolean end() {
 		int left = 0;
+
 		for(HashSet<Hexagon> a : H.getPhex()) {
-			if(!a.isEmpty())
+			if(!a.isEmpty()) {
 				left++;
+			}
 		}
 		
 		return left < 2;
@@ -112,13 +112,13 @@ public class Panel extends JPanel implements Runnable, KeyListener{
         //game loop
         while(true) {
              
-           start = System.nanoTime();
-             
-           elapsed = System.nanoTime() - start;
 
-        	  repaint();
+            start = System.nanoTime();
+        	
+        	repaint();
 
-             
+            elapsed = System.nanoTime() - start;
+
             wait = 1000/60 - elapsed / 1000000;
             if (wait < 0) wait  = 5;
              
@@ -130,6 +130,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
                 e.printStackTrace();
                  
             }
+           
              
              
         }
@@ -138,7 +139,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 	
 	private void gamerun() {
-		if(H.getPhex().get(1).size() > 0 && !end() && turn < MAX_TURN) {
+		if(!end() && turn < MAX_TURN) {
 			long t;
 			HashSet<Hexagon> send = new HashSet<Hexagon>();
 
@@ -154,24 +155,12 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			H.endTurn();
 			//System.out.println("Turn: " + turn);
 			turn++;
-		}else {
-			
-			int winrar = 0;
-			for(int i = 0; i < H.getPhex().size(); i++) {
-				if(H.getPhex().get(i).size() > 0) {
-					winrar = i;
-				}
-			}
-			System.out.println("Winner: " + player[winrar].getName());
-			initGame();
-			
-		   
 		}
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		gamerun();
+			gamerun();
 	}
 
 	@Override
