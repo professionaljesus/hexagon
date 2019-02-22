@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import com.evo.NEAT.Genome;
+import com.Boi;
 
 import hex.HexaMap;
 import hex.Hexagon;
@@ -17,9 +17,9 @@ public class CrazyBot extends Player{
 	
 	private double[] w;
 	private double size;
-	private Genome gene;
+	private Boi gene;
 
-	public CrazyBot(int id, int size, Color c, String name , Genome gene) {
+	public CrazyBot(int id, int size, Color c, String name , Boi gene) {
 		super(id, size, c, name);
 		this.gene = gene;
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
@@ -28,7 +28,7 @@ public class CrazyBot extends Player{
 	
 	
 	
-	private float statevalue(HashSet<Hexagon> h) {
+	private double statevalue(HashSet<Hexagon> h) {
 		double indanger = 0;
 		double setsize = (double)h.size();
 		double amount = setsize/size;
@@ -49,11 +49,10 @@ public class CrazyBot extends Player{
 		
 		connection = connection/setsize;
 		
-		float[] inputs = new float[] {(float) amount,(float)connection,(float)indanger};
 		
-		
+		double[] inputs = {amount,connection,indanger};
 						
-		return gene.evaluateNetwork(inputs)[0];
+		return gene.evaluateNetwork(inputs);
 		
 	}
 	
@@ -140,7 +139,7 @@ public class CrazyBot extends Player{
 			return null;
 		
 		ArrayList<Hexagon> rand = rand(H);
-		HashMap<Move, Float> moves = new HashMap<Move,Float>();
+		HashMap<Move, Double> moves = new HashMap<Move,Double>();
 		HashSet<Hexagon> copy;
 		Move m;
 
@@ -168,8 +167,8 @@ public class CrazyBot extends Player{
 		
 		//System.out.println("------------------------");
 		
-		Map.Entry<Move, Float> bestmove = null;
-		for(Map.Entry<Move, Float> e: moves.entrySet()) {
+		Map.Entry<Move, Double> bestmove = null;
+		for(Map.Entry<Move, Double> e: moves.entrySet()) {
 			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
 			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
 				bestmove = e;

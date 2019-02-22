@@ -19,7 +19,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
-
+import com.Boi;
 import hex.bots.BeppeBot;
 import hex.bots.CrazyBot;
 import hex.bots.GustafBot;
@@ -59,9 +59,9 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	
 
 	private void initGame() {
-
+		
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new GustafBot(2,mapsize, Color.RED, "GURRA");
+		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA",new Boi(new double[]{222.3849980835538, 7.4038381071806054, 0.0404629055591264}));
 		player[2] = new SimpleBot(3,mapsize, Color.CYAN, "WILDCARD");
 
 		H = new HexaMap(mapsize,width,height,player);
