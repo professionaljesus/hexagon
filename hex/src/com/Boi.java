@@ -46,6 +46,10 @@ public class Boi implements Comparable<Boi>{
 		return j;
 	}
 	
+	public void setWeights(double[] w) {
+		weights = w;
+	}
+	
 	public double[] getWeights() {
 		return weights;
 	}

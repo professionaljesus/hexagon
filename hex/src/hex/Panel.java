@@ -61,7 +61,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private void initGame() {
 		
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA",new Boi(new double[]{222.3849980835538, 7.4038381071806054, 0.0404629055591264}));
+		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA",new Boi(new double[]{0.8837214190122404, 0.46487856044682585, 0.05472276970794476}));
 		player[2] = new SimpleBot(3,mapsize, Color.CYAN, "WILDCARD");
 
 		H = new HexaMap(mapsize,width,height,player);

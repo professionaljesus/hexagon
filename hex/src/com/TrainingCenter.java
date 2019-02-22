@@ -40,8 +40,6 @@ public class TrainingCenter{
 
 	private final int width = 1280;
 	private final int height = 720;
-	private double[] weights;
-	private boolean training = false;
 	public int winner;
 	
 	
@@ -49,11 +47,10 @@ public class TrainingCenter{
 	public TrainingCenter(Boi[] gen) {
 		
         mapsize = 4;        
-    	player = new Player[3];
+    	player = new Player[gen.length];
 
     	player[0] = new CrazyBot(1,mapsize, Color.GREEN, "Crazy1", gen[0]);
 		player[1] = new CrazyBot(2,mapsize, Color.RED, "Crazy2", gen[1]);
-		player[2] = new CrazyBot(3,mapsize, Color.CYAN, "Crazy3", gen[2]);
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;
