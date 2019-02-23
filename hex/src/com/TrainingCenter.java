@@ -46,7 +46,7 @@ public class TrainingCenter{
 
 	public TrainingCenter(Boi[] gen) {
 		
-        mapsize = 4;        
+        mapsize = 3;        
     	player = new Player[gen.length];
 
     	player[0] = new CrazyBot(1,mapsize, Color.GREEN, "Crazy1", gen[0]);

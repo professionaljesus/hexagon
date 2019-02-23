@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class TrainGen {
 	private ArrayList<ArrayList<Boi>> spec;
-	private final int inputs = 3, population = 40;
+	private final int inputs = 3, population = 70;
 	private int species;
 	
 	public TrainGen() {
@@ -120,11 +120,13 @@ public class TrainGen {
 		
 		for(ArrayList<Boi> yas: spec) {
 			Collections.sort(yas);
-			for(int i = 0; i < yas.size() && i < 5; i++) {
+			for(int i = 0; i < yas.size() && i < 5; i++) {	
+				System.out.println(Arrays.toString(yas.get(i).getWeights()));
 				yas.get(i).setFitness(0);
 				topfighters.add(yas.get(i));
 			}
 		}
+		
 		
 		TrainingCenter t;
 		Boi[] fighters = new Boi[2];
@@ -132,7 +134,7 @@ public class TrainGen {
 		for(int tour = 0; tour < tournament; tour++) {
 			Collections.shuffle(topfighters);
 
-			for(int i = 1; i < topfighters.size(); i++) {
+			for(int i = 0; i < topfighters.size(); i++) {
 				System.out.println(i);
 
 				for(int j = i + 1; j < topfighters.size(); j++) {
@@ -173,7 +175,7 @@ public class TrainGen {
 	public void breedTop() {
 		double[][] my = new double[species][inputs];
 		double[][] sigma = new double[species][inputs];
-
+		int currentpop = 0;
 		
 		for(int s = 0; s < species; s++) {
 			Collections.sort(spec.get(s));
@@ -182,7 +184,7 @@ public class TrainGen {
 	
 			double[] mean = new double[inputs];
 			double[] sd = new double[inputs];
-			double[][] all = new double[pop/5][inputs];
+			double[][] all = new double[pop/5 + 1][inputs];
 			double max = 0;
 			double divider = 1;
 			double[] w = new double[inputs];
@@ -194,6 +196,8 @@ public class TrainGen {
 						max = Math.abs(all[i][j]);
 				}
 				if(max > 10) {
+					System.out.println("Max: " + max);
+					System.out.println(Arrays.toString(all[i]));
 					divider = highest((int)max);
 					
 					for(int j = 0; j < inputs; j++) {
@@ -201,6 +205,9 @@ public class TrainGen {
 						mean[j] += w[j];
 					}
 					spec.get(s).get(i).setWeights(w);
+					System.out.println(Arrays.toString(w));
+
+					max = 0;
 				}else {
 					for(int j = 0; j < inputs; j++)
 						mean[j] += all[i][j];
@@ -216,12 +223,13 @@ public class TrainGen {
 			}
 			
 			ArrayList<Boi> topbois = new ArrayList<Boi>();
-			System.out.println(spec.get(s));
+			System.out.println(s + " - " + spec.get(s));
 
-			for(int i = 0; i < spec.get(s).size() && i < 3; i++) {
+			for(int i = 0; i < pop && i < 2; i++) {
 				spec.get(s).get(i).setFitness(0);
 				topbois.add(spec.get(s).get(i));
 				System.out.println(Arrays.toString(spec.get(s).get(i).getWeights()));
+				currentpop++;
 			}
 			
 			spec.get(s).clear();
@@ -231,19 +239,27 @@ public class TrainGen {
 			my[s] = mean;
 			sigma[s] = sd;
 			
-			
 
 		}
-				
+		
+		int part = population/species;
 		for(int s = 0; s < species; s++) {
-			int part = population/spec.size();
-			for(int i = spec.get(s).size(); i < part; i++) {
-				if(i < 2*(part/3))
-					placeInSpecies(new Boi(inputs,my[s],sigma[s]));
-				else
-					placeInSpecies(new Boi(inputs));
+			System.out.println("Current Population: " + currentpop);
+			System.out.println(s + " -SD- " +Arrays.toString(sigma[s]));
+
+			for(int i = currentpop; i < currentpop + part/2; i++) {
+				placeInSpecies(new Boi(inputs,my[s],sigma[s]));
 			}
+			currentpop += part/2;
+
 		}
+		System.out.println("Current Population: " + currentpop);
+
+		for(int i = currentpop; i < population; i++) {
+			placeInSpecies(new Boi(inputs));
+			currentpop++;
+		}
+		System.out.println("Current Population: " + currentpop);
 
 		
 	}
@@ -253,10 +269,11 @@ public class TrainGen {
     public static void main(String arg0[]){
     	
     	TrainGen t = new TrainGen("data.csv");
+    	t.runSimulations();
     	/*for(int i = 0; i < 10; i++) {
+			t.breedTop();
+
     		t.runSimulations();
-    		if(i < 9)
-    			t.breedTop();
     		
     		t.saveGeneration("data.csv");
     	}*/
