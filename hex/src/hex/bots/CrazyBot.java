@@ -150,6 +150,12 @@ public class CrazyBot extends Player{
 				copy = HexaMap.getClonedPhex().get(this.getId() - 1);
 				copy = fakeMove(m, copy);
 				moves.put(m, statevalue(copy)); 
+				if(r.getResources() > e.getResources() + 1) {
+					m = new Move(e.getResources() + 1, r, e);
+					copy = HexaMap.getClonedPhex().get(this.getId() - 1);
+					copy = fakeMove(m, copy);
+					moves.put(m, statevalue(copy)); 
+				}
 			}
 		}
 		

@@ -14,6 +14,7 @@ public class Boi implements Comparable<Boi>{
 		weights = w;
 	}
 	
+
 	public Boi(int b){
 		rand = new Random();
 		weights = new double[b];

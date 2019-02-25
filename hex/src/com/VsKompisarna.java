@@ -54,8 +54,8 @@ public class VsKompisarna{
 	
 	public void initGame(Boi b) {
     	player[0] = new CrazyBot(1,mapsize, Color.GREEN, "CrazyBot", b);
-		player[1] = new SimpleBot(2,mapsize, Color.RED, "Beppe");
-		player[2] = new BeppeBot(3,mapsize, Color.RED, "Jonte");
+		player[1] = new SimpleBot(2,mapsize, Color.RED, "Jonte");
+		player[2] = new BeppeBot(3,mapsize, Color.RED, "Beppe");
 
 		H = new HexaMap(mapsize,width,height,player);
 
