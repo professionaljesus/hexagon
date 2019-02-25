@@ -1,11 +1,14 @@
 package com;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Boi implements Comparable<Boi>{
 	private double[] weights;
 	private Random rand;
 	private double fitness;
+
 	
 	public Boi(double[] w) {
 		weights = w;
@@ -21,6 +24,16 @@ public class Boi implements Comparable<Boi>{
 		
 	}
 	
+	public Boi(Boi mom, Boi dad) {
+		double totfit = mom.fitness + dad.fitness;
+		rand = new Random();
+		weights = new double[mom.weights.length];
+		fitness = 0;
+		for(int i = 0; i < weights.length; i++)
+			weights[i] = rand.nextDouble()*totfit < mom.fitness ? mom.weights[i]:dad.weights[i]; 
+			
+	}
+	
 	public Boi(int b, double[] my, double[] sigma) {
 		rand = new Random();
 		weights = new double[b];
@@ -29,6 +42,7 @@ public class Boi implements Comparable<Boi>{
 		for(int i = 0; i < b; i++)
 			weights[i] = my[i] + rand.nextGaussian()*sigma[i];
 	}
+	
 	
 	public void setFitness(double f) {
 		fitness = f;
@@ -55,6 +69,12 @@ public class Boi implements Comparable<Boi>{
 	}
 	
 	@Override
+	public boolean equals(Object o) {
+		Boi b = (Boi) o;
+		return Arrays.equals(this.weights, b.weights);
+	}
+	
+	@Override
 	public String toString() {
 		String ret = this.fitness + "";
 		//for(int i = 0; i < weights.length; i++)
@@ -72,4 +92,6 @@ public class Boi implements Comparable<Boi>{
 		else
 			return 1;
 	}
+	
+
 }

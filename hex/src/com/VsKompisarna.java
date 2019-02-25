@@ -24,10 +24,12 @@ import javax.swing.JPanel;
 import hex.HexaMap;
 import hex.Hexagon;
 import hex.Player;
+import hex.bots.BeppeBot;
 import hex.bots.CrazyBot;
+import hex.bots.SimpleBot;
 
 
-public class TrainingCenter{
+public class VsKompisarna{
 
 	/**
 	 * 
@@ -44,23 +46,20 @@ public class TrainingCenter{
 	
 	
 
-	public TrainingCenter(Boi[] gen) {
-		
+	public VsKompisarna(Boi b) {
         mapsize = 4;        
-    	player = new Player[gen.length];
-    	
-    	initGame(gen);
-
+    	player = new Player[3];
+    	initGame(b);
 	}
 	
-	public void initGame(Boi[] gen) {
-		for(int i = 0; i < gen.length; i++)
-			player[i] = new CrazyBot(i + 1,mapsize, Color.GREEN, "Crazy1", gen[i]);
+	public void initGame(Boi b) {
+    	player[0] = new CrazyBot(1,mapsize, Color.GREEN, "Crazy1", b);
+		player[1] = new SimpleBot(2,mapsize, Color.RED, "Beppe");
+		player[2] = new BeppeBot(3,mapsize, Color.RED, "Jonte");
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;
 	}
-	
 
 
 	/**
@@ -88,6 +87,7 @@ public class TrainingCenter{
 				index = i;
 			}
 		}
+		
 		return index;
 		
 	}

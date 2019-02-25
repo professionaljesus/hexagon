@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
-public class TrainGen {
+import com.NeatBoi.Connection;
+
+public class TrainNeatGen {
 	private ArrayList<ArrayList<Boi>> spec;
-	private final int inputs = 3, population = 40;
+	private final int inputs = 3, population = 70;
 	private int species;
 	
-	public TrainGen() {
+	public TrainNeatGen() {
 		species = (int) Math.round(Math.pow(2.0, (inputs - 1)));
 		spec = new ArrayList<ArrayList<Boi>>();
 		for(int i = 0; i < species; i++)
@@ -28,7 +28,7 @@ public class TrainGen {
 		}
 	}
 	
-	public TrainGen(String filename) {
+	public TrainNeatGen(String filename) {
 		species = (int) Math.round(Math.pow(2.0, (inputs - 1)));
 		spec = new ArrayList<ArrayList<Boi>>();
 
@@ -94,7 +94,7 @@ public class TrainGen {
 	}
 	
 	public void runSimulations() {
-		TrainingCenter t = null;
+		TrainingCenter t;
 		Boi[] fighters = new Boi[2];
 		for(ArrayList<Boi> yas: spec) {
 			Collections.shuffle(yas);
@@ -104,12 +104,9 @@ public class TrainGen {
 				for(int j = i + 1; j < yas.size(); j++) {
 					fighters[0] = yas.get(i);
 					fighters[1] = yas.get(j);
-					if(t == null)
-						t = new TrainingCenter(fighters);
-					else
-						t.initGame(fighters);
+					t = new TrainingCenter(fighters);
 					
-					while(!t.end() && t.turn < 100)
+					while(!t.end() && t.turn < 200)
 						t.gamerun();
 					
 					fighters[t.getWinner()].setFitness(fighters[t.getWinner()].getFitness() + 100.0/((double)t.turn));
@@ -126,13 +123,14 @@ public class TrainGen {
 		for(ArrayList<Boi> yas: spec) {
 			Collections.sort(yas);
 			for(int i = 0; i < yas.size() && i < 5; i++) {	
+				System.out.println(Arrays.toString(yas.get(i).getWeights()));
 				yas.get(i).setFitness(0);
 				topfighters.add(yas.get(i));
 			}
 		}
 		
 		
-		TrainingCenter t = null;
+		TrainingCenter t;
 		Boi[] fighters = new Boi[2];
 		
 		for(int tour = 0; tour < tournament; tour++) {
@@ -144,16 +142,12 @@ public class TrainGen {
 				for(int j = i + 1; j < topfighters.size(); j++) {
 					fighters[0] = topfighters.get(i);
 					fighters[1] = topfighters.get(j);
-					if(t == null)
-						t = new TrainingCenter(fighters);
-					else
-						t.initGame(fighters);
-					
+					t = new TrainingCenter(fighters);
 					
 					while(!t.end() && t.turn < 200)
 						t.gamerun();
 					
-					fighters[t.getWinner()].setFitness(fighters[t.getWinner()].getFitness() + 100.0/((double)t.turn));
+					fighters[t.getWinner()].setFitness(fighters[t.getWinner()].getFitness() + 1/((double)t.turn));
 				}
 			}
 		}
@@ -165,6 +159,9 @@ public class TrainGen {
 		
 	}
 	
+	public void interSpeciesBreeding() {
+		
+	}
 	
 	private static int highest(int a) {
 		int highest = 10;
@@ -175,23 +172,6 @@ public class TrainGen {
 				highest*=10;
 		}
 			
-	}
-	
-	public void breeding() {
-		ArrayList<Boi> nextgen = new ArrayList<Boi>();
-		for(int s = 0; s < species; s++) {
-			for(int i = 0; i < spec.get(s).size() && i < 5; i++) {
-				nextgen.add(spec.get(s).get(i));
-				for(int j = 1; j < ((population/species)/2 - i); j++)
-					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j)));
-			}
-			spec.get(s).clear();
-		}
-		System.out.println("Nextgen size:" + nextgen.size());
-		
-		for(Boi b : nextgen)
-			placeInSpecies(b);
-		
 	}
 	
 	public void breedTop() {
@@ -287,64 +267,22 @@ public class TrainGen {
 	}
 	
 	
-	public HashMap<Boi, int[]> vsKompisLaget(ArrayList<Boi> top, int tournament) {
-		int[] winner = new int[3];
-		VsKompisarna t = null;
-		
-		HashMap<Boi, int[]> m = new HashMap<Boi,int[]>();
-		
-		for(Boi b : top) {
-			if(t == null)
-				t = new VsKompisarna(b);
-			else
-				t.initGame(b);
-			
-			for(int i = 0; i < tournament; i++) {
-				System.out.println(i);
-			
-				while(!t.end() && t.turn < 200)
-					t.gamerun();
-				
-				winner[t.getWinner()]++;
-			}
-			
-			m.put(b, winner);
-			
-		}
-		
-		return m;
-		
-	}
-	
-	
-	
 	
     public static void main(String arg0[]){
     	
-    	TrainGen t = new TrainGen();
-    	t.runSimulations();
+    	NeatBoi mom = new NeatBoi(3);
+    	NeatBoi dad = new NeatBoi(3);
+    	mom.setFitness(5);
+    	dad.setFitness(3);
+    	mom.conns.add(mom.new Connection(0,3));
+    	dad.conns.add(dad.new Connection(1,2));
+    	dad.conns.add(dad.new Connection(1,2));
+    	mom.conns.add(mom.new Connection(1,2,9));
+    	
+    	NeatBoi sick = new NeatBoi(mom,dad);
 
-    	for(int i = 0; i < 5; i++) {
-			t.breeding();
 
-    		t.runSimulations();
-    		
-    		t.saveGeneration("data.csv");
-    		System.out.println("Generation: "+i);
-    	}
-    	
-    	ArrayList<Boi> top = t.runGlobalSimulation(2);
-    	
-    	for(Boi b : top)
-    		System.out.println(Arrays.toString(b.getWeights()));
-    	
-    	HashMap<Boi,int[]> m = t.vsKompisLaget(top, 10);
-    	
-    	for(Entry<Boi,int[]> e: m.entrySet()) {
-    		System.out.println(Arrays.toString(e.getValue()) + " " + Arrays.toString(e.getKey().getWeights()));
-    	}
-    	
-    	
+
     	
     }
 }
