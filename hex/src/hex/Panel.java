@@ -60,6 +60,7 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 
 	private void initGame() {
 		//0.6015911100889212, 0.2711100296066967, 0.061405684209602795
+		
 		//0.8837214190122404, 0.46487856044682585, 0.05472276970794476
 		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
 		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA",new Boi(new double[]{0.6015911100889212, 0.2711100296066967, 0.061405684209602795}));
@@ -156,7 +157,8 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 			H.endTurn();
 			//System.out.println("Turn: " + turn);
 			turn++;
-		}
+		}else
+			initGame();
 	}
 	
 	@Override

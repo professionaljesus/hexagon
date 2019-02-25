@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 
 public class TrainGen {
 	private ArrayList<ArrayList<Boi>> spec;
-	private final int inputs = 3, population = 40;
+	private final int inputs = 3, population = 70;
 	private int species;
 	
 	public TrainGen() {
@@ -54,12 +54,17 @@ public class TrainGen {
 			e.printStackTrace();
 		}
 		
-		double[] w = new double[inputs];
+		
  		for(int i = 0; i < read.size(); i++) {
-			for(int j = 0; j < read.get(i).length; j++)
+ 			double[] w = new double[inputs];
+			for(int j = 0; j < inputs; j++)
 				w[j] = Double.parseDouble(read.get(i)[j]);
+			
+			Boi b = new Boi(w);
+			b.setFitness(Double.parseDouble(read.get(i)[inputs]));
 			placeInSpecies(new Boi(w));
 		}
+
 	}
 	
 	public void saveGeneration(String filename) {
@@ -70,8 +75,9 @@ public class TrainGen {
 			for(ArrayList<Boi> yas : spec) {
 				for(Boi b : yas) {
 						for(double d:b.getWeights())
-							write += "," + d;
-						writer.write(write.substring(1));
+							write += d + ",";
+
+						write += b.getFitness();
 						writer.newLine();
 						write = "";
 				}
@@ -89,7 +95,7 @@ public class TrainGen {
 		for(int i = 0; i < w.length - 1; i++)
 			index += (w[i] >= w[i + 1] ? 1.0:0.0) * Math.pow(2,i);
 		
-		spec.get((int) index).add(b);
+		this.spec.get((int) index).add(b);
 		
 	}
 	
@@ -182,7 +188,7 @@ public class TrainGen {
 		for(int s = 0; s < species; s++) {
 			for(int i = 0; i < spec.get(s).size() && i < 5; i++) {
 				nextgen.add(spec.get(s).get(i));
-				for(int j = 1; j < ((population/species)/2 - i); j++)
+				for(int j = 1; j < spec.get(s).size() && j < ((population/species)/2 - i); j++)
 					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j)));
 			}
 			spec.get(s).clear();
@@ -288,23 +294,27 @@ public class TrainGen {
 	
 	
 	public HashMap<Boi, int[]> vsKompisLaget(ArrayList<Boi> top, int tournament) {
-		int[] winner = new int[3];
 		VsKompisarna t = null;
 		
 		HashMap<Boi, int[]> m = new HashMap<Boi,int[]>();
 		
 		for(Boi b : top) {
+			
 			if(t == null)
 				t = new VsKompisarna(b);
-			else
-				t.initGame(b);
+
+			int[] winner = new int[3];
 			
 			for(int i = 0; i < tournament; i++) {
+
+				t.initGame(b);
+				
 				System.out.println(i);
-			
-				while(!t.end() && t.turn < 200)
+				
+				while(!t.end()) 
 					t.gamerun();
 				
+								
 				winner[t.getWinner()]++;
 			}
 			
@@ -333,10 +343,12 @@ public class TrainGen {
     		System.out.println("Generation: "+i);
     	}
     	
-    	ArrayList<Boi> top = t.runGlobalSimulation(2);
+    	//TrainGen t = new TrainGen("data.csv");
     	
-    	for(Boi b : top)
-    		System.out.println(Arrays.toString(b.getWeights()));
+    	ArrayList<Boi> top = new ArrayList<Boi>();
+    	
+    	for(ArrayList<Boi> ab: t.spec)
+    		top.addAll(ab);
     	
     	HashMap<Boi,int[]> m = t.vsKompisLaget(top, 10);
     	
