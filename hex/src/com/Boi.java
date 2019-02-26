@@ -25,13 +25,32 @@ public class Boi implements Comparable<Boi>{
 		
 	}
 	
-	public Boi(Boi mom, Boi dad) {
+	public Boi(Boi mom, Boi dad, int childnbr) {
 		double totfit = mom.fitness + dad.fitness;
 		rand = new Random();
 		weights = new double[mom.weights.length];
 		fitness = 0;
-		for(int i = 0; i < weights.length; i++)
-			weights[i] = rand.nextDouble()*totfit < mom.fitness ? mom.weights[i]:dad.weights[i]; 
+		for(int i = 0; i < weights.length; i++) {
+			switch (childnbr){
+				case 0:
+					weights[i] = 0.5*mom.weights[i] + 0.5*dad.weights[i]; 
+					break;
+				case 1:
+					weights[i] = 1.5*mom.weights[i] - 0.5*dad.weights[i]; 
+					break;
+				case 2:
+					weights[i] = -0.5*mom.weights[i] + 1.5*dad.weights[i]; 
+					break;
+				default:
+					weights[i] = rand.nextDouble()*totfit < mom.fitness ? mom.weights[i]:dad.weights[i];
+					break;
+			
+			}
+		}
+			 
+			
+		if(rand.nextDouble() < 0.1)
+			weights[rand.nextInt(weights.length)] += rand.nextBoolean()?-0.2:0.2;
 			
 	}
 	

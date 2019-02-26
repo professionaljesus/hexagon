@@ -18,6 +18,7 @@ public class TrainGen {
 	private final int inputs = 3, population = 70;
 	private int species;
 	private Random rand;
+	private final double diff = 1.5;
 	
 	public TrainGen() {
 		rand = new Random();
@@ -306,11 +307,20 @@ public class TrainGen {
 	
 	public void breeding() {
 		ArrayList<Boi> nextgen = new ArrayList<Boi>();
+		int j = 0;
 		for(int s = 0; s < species; s++) {
-			for(int i = 0; i < spec.get(s).size() && i < 5; i++) {
+			for(int i = 0; i < spec.get(s).size() && i < 3; i++) {
+				j = i + 1;
+				while(j < i + 3 && spec.get(s).size() > j && diff > spec.get(s).get(i).getFitness() - spec.get(s).get(j).getFitness()) {
+					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j),0));
+					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j),1));
+					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j),2));
+					j++;
+				}
+				
+				spec.get(s).get(i).setFitness(0);
 				nextgen.add(spec.get(s).get(i));
-				for(int j = i + 1; j < spec.get(s).size() && j < 5; j++)
-					nextgen.add(new Boi(spec.get(s).get(i),spec.get(s).get(j)));
+
 			}
 			
 			for(int i = 0; i < population/species - spec.get(s).size(); i++)
@@ -330,6 +340,8 @@ public class TrainGen {
 	
 	
 	public HashMap<Boi, int[]> vsKompisLaget(ArrayList<Boi> top, int tournament) {
+		System.out.println("Mot Kompisarna");
+		
 		VsKompisarna t = null;
 		
 		HashMap<Boi, int[]> m = new HashMap<Boi,int[]>();
@@ -367,9 +379,9 @@ public class TrainGen {
     	
     	TrainGen t = new TrainGen();
 
-    	/*t.runSimulations();
+    	t.runSimulations();
 
-    	for(int i = 0; i < 10; i++) {
+    	for(int i = 0; i < 7; i++) {
 			t.breeding();
 
     		t.runSimulations();
@@ -382,12 +394,7 @@ public class TrainGen {
     	
     	ArrayList<Boi> top = t.runGlobalSimulation(2);
     	
-    	for(ArrayList<Boi> ab: t.spec)
-    		top.addAll(ab);
-    	*/
-    	ArrayList<Boi> top = new ArrayList<Boi>();
-    	top.add(new Boi(new double[]{0.28840757649341964, 0.14188537681292093, 0.01269229409707147}));
-    	HashMap<Boi,int[]> m = t.vsKompisLaget(top, 1000);
+    	HashMap<Boi,int[]> m = t.vsKompisLaget(top, 10);
     	
     	for(Entry<Boi,int[]> e: m.entrySet()) {
     		System.out.println(Arrays.toString(e.getValue()) + " " + Arrays.toString(e.getKey().getWeights()));
