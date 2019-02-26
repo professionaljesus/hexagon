@@ -1,10 +1,7 @@
 package hex.bots.BepsiMax;
 
-import com.Boi;
-import hex.Panel;
 import hex.Player;
-import hex.bots.CrazyBot;
-import hex.bots.SimpleBot;
+import hex.Panel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +11,12 @@ import java.util.Random;
 
 public class RunTrainingSimulations {
 
+    public static int nrChromosomes = 16;
+    public static int nrWeights = 10;
+
     public static void main(String[] args) throws IOException {
-        double chromosomes[][] = createRandomGeneration();
+        //double chromosomes[][] = createRandomGeneration();
+        double chromosomes[][] = readGeneration("BeppesHemligaData.csv");
         int mapsize = 4;
 
         JFrame frame = new JFrame("FrameDemo");
@@ -23,33 +24,29 @@ public class RunTrainingSimulations {
         player[0] = new Bepster(1,mapsize, Color.GREEN, "BEPPNATION",chromosomes[0]);
         player[1] = new Bepster(2,mapsize, Color.RED, "GURRA",chromosomes[1]);
         player[2] = new Bepster(3,mapsize, Color.CYAN, "WILDCARD",chromosomes[2]);
-        Panel tc = new Panel(player,mapsize);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new Panel(player,mapsize));
         frame.pack();
         frame.setVisible(true);
 
-        //TrainingCenter tc = new TrainingCenter(chromosomes);
-//        tc.initGame();
-//        while(!tc.end() && tc.turn < 100){
-//            tc.gamerun();
-//        }
-//        System.out.println("The winner is: "+ tc.winner);
+//        TrainingCenter tc = new TrainingCenter(chromosomes,10);
+//        saveGeneration("BeppesHemligaData.csv", chromosomes);
     }
 
     public static double[][] createRandomGeneration(){
         Random rand = new Random();
-        double[][] chromosomes = new double[50][11];
-        for(int i=0; i<50; i++){
-            for(int j = 0; j<11; j++){
-                chromosomes[i][j] = rand.nextDouble()*2-1;
+        double[][] chromosomes = new double[nrChromosomes][nrWeights+1];
+        for(int i=0; i<nrChromosomes; i++){
+            chromosomes[i][0] = 1000;
+            for(int j = 1; j<nrWeights+1; j++){
+                chromosomes[i][j] = 1-rand.nextDouble()*2;
             }
         }
         return chromosomes;
     }
 
-    public static void readGeneration(String filename){
+    public static double[][] readGeneration(String filename){
         ArrayList<String[]> read = new ArrayList<String[]>();
 
         BufferedReader reader;
@@ -69,13 +66,31 @@ public class RunTrainingSimulations {
             e.printStackTrace();
         }
 
+        double[][] chromosomes = new double[read.size()][read.get(0).length];
+
+        for (int i = 0; i<read.size();i++){
+            for (int j = 0; j<read.get(0).length; j++){
+                chromosomes[i][j] = Double.parseDouble(read.get(i)[j]);
+            }
+        }
+        return chromosomes;
     }
 
-//    public static void saveGeneration(String filename) {
-//        BufferedWriter writer;
-//        String write = "";
-//        try {
-//            writer = new BufferedWriter(new FileWriter(filename));
+    public static void saveGeneration(String filename, double[][] chromosomes) {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(filename));
+            for(double[] c: chromosomes){
+                String line = "";
+                for(double d: c){
+                    line += d + ",";
+                }
+                writer.write(line);
+                writer.flush();
+                writer.newLine();
+            }
+
+
 //            for(ArrayList<Boi> yas : spec) {
 //                for(Boi b : yas) {
 //                    for(double d:b.getWeights())
@@ -88,10 +103,10 @@ public class RunTrainingSimulations {
 //                    write = "";
 //                }
 //            }
-//            writer.close();
-//        } catch (IOException e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//        }
-//    }
+            writer.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+    }
 }

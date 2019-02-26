@@ -120,14 +120,14 @@ public class Bepster extends Player {
         }
 
 
-        valueOfBestFoundCapture = valueOfBestFoundCapture*chromosome[0];
-        valueOfBestFoundBoost = valueOfBestFoundBoost*chromosome[1];
+        valueOfBestFoundCapture = valueOfBestFoundCapture*chromosome[1];
+        valueOfBestFoundBoost = valueOfBestFoundBoost*chromosome[2];
 
         if(bestCapture != null && (valueOfBestFoundCapture >= valueOfBestFoundBoost || bestBoost == null)){
-            System.out.println("Capture: " + bestCapture[0]  + " "+ bestCapture[1]+ " "+ bestCapture[2]+ " "+ bestCapture[3]+ " "+ bestCapture[4]+ " "+ bestCapture[5]);
+            //System.out.println("Capture: " + bestCapture[0]  + " "+ bestCapture[1]+ " "+ bestCapture[2]+ " "+ bestCapture[3]+ " "+ bestCapture[4]+ " "+ bestCapture[5]);
             return bestCapture;
         }else if(bestBoost != null && valueOfBestFoundBoost>valueOfBestFoundCapture){
-            //System.out.println("returned boost");
+            //System.out.println("Boost");
             return bestBoost;
 
         }else{
@@ -137,19 +137,19 @@ public class Bepster extends Player {
 
     private double valueOfCapture(int trooploss, int troopsInTarget, int troopsInSource, double averageDistToFriends) {
         double value = 0;
-        value += chromosome[2] * trooploss;
-        value += chromosome[3] * troopsInTarget;
+        value += chromosome[3] * trooploss;
         value += chromosome[4] * troopsInTarget;
         value += chromosome[5] * troopsInTarget;
+        value += chromosome[6] * troopsInTarget;
         return value;
     }
 
     private double valueOfBoost(int sourceRes, int targetRes, int largestEnemy, int nrOfSurroundingEnemyHexes){
         double value = 0;
-        value += chromosome[6] * sourceRes;
-        value += chromosome[7] * targetRes;
-        value += chromosome[8] * largestEnemy;
-        value += chromosome[9] * nrOfSurroundingEnemyHexes;
+        value += chromosome[7] * sourceRes;
+        value += chromosome[8] * targetRes;
+        value += chromosome[9] * largestEnemy;
+        value += chromosome[10] * nrOfSurroundingEnemyHexes;
         return value;
     }
 
