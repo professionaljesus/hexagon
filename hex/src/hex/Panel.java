@@ -5,28 +5,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
 import com.Boi;
-import hex.bots.BeppeBot;
+import hex.bots.BepsiMax.BeppeBot;
 import hex.bots.CrazyBot;
-import hex.bots.GustafBot;
-import hex.bots.GustafBot2;
 import hex.bots.SimpleBot;
-import hex.bots.Snake;
-import hex.bots.JuanBot.JuanBot;
 
 public class Panel extends JPanel implements Runnable, KeyListener{
 
@@ -43,22 +30,21 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 	private final int width = 1280;
 	private final int height = 720;
 
-	public Panel() throws IOException {
+	public Panel(Player[] player, int mapsize) throws IOException {
 		super();
 		setPreferredSize(new Dimension(width,height));
 		setFocusable(true);
 
         requestFocus();
         
-        mapsize = 4;
-        
-    	player = new Player[3];
+        this.mapsize = mapsize;
+    	this.player = player;
     	initGame();
 
 	}
 	
 
-	private void initGame() {
+	public void initGame() {
 		//0.6015911100889212, 0.2711100296066967, 0.061405684209602795
 		
 		//0.8837214190122404, 0.46487856044682585, 0.05472276970794476
@@ -67,9 +53,6 @@ public class Panel extends JPanel implements Runnable, KeyListener{
 		 * 0.2687604520880118, 0.14188537681292093, 0.01269229409707147
 		 * 0.28840757649341964, 0.14188537681292093, 0.01269229409707147
 		 */
-		player[0] = new BeppeBot(1,mapsize, Color.GREEN, "BEPPNATION");
-		player[1] = new CrazyBot(2,mapsize, Color.RED, "GURRA",new Boi(new double[]{0.28840757649341964, 0.14188537681292093, 0.01269229409707147}));
-		player[2] = new SimpleBot(3,mapsize, Color.CYAN, "WILDCARD");
 
 		H = new HexaMap(mapsize,width,height,player);
 		turn = 0;

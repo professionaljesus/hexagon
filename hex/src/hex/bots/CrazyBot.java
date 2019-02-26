@@ -25,9 +25,7 @@ public class CrazyBot extends Player{
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
 		
 	}
-	
-	
-	
+
 	private double statevalue(HashSet<Hexagon> h) {
 		double indanger = 0;
 		double setsize = (double)h.size();
