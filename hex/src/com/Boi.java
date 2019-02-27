@@ -12,6 +12,7 @@ public class Boi implements Comparable<Boi>{
 	
 	public Boi(double[] w) {
 		weights = w;
+		fitness = 0;
 	}
 	
 

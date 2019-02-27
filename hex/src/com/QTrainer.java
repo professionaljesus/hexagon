@@ -26,10 +26,11 @@ import hex.Hexagon;
 import hex.Player;
 import hex.bots.BeppeBot;
 import hex.bots.CrazyBot;
+import hex.bots.QBert;
 import hex.bots.SimpleBot;
 
 
-public class VsKompisarna{
+public class QTrainer{
 
 	/**
 	 * 
@@ -46,14 +47,14 @@ public class VsKompisarna{
 	
 	
 
-	public VsKompisarna(Boi b) {
+	public QTrainer(Q b) {
         mapsize = 4;        
     	player = new Player[3];
     	initGame(b);
 	}
 	
-	public void initGame(Boi b) {
-		player[0] = new CrazyBot(1,mapsize, Color.GREEN, "CrazyBot", b);
+	public void initGame(Q b) {
+		player[0] = new QBert(1,mapsize, Color.GREEN, "CrazyBot", b);
 		player[1] = new SimpleBot(2,mapsize, Color.RED, "Jonte");
 		player[2] = new BeppeBot(3,mapsize, Color.RED, "Beppe");
 

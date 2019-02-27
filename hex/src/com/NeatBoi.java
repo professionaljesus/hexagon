@@ -8,26 +8,32 @@ public class NeatBoi implements Comparable<NeatBoi>{
 	private Random rand;
 	private double fitness;
 	public static int innovation = 0;
-	private Node[] nodes;
+	private Node[] input;
 	public ArrayList<Connection> conns;
-	private static final int size = 200;
+	private Node output;
+	private ArrayList<Node> hidden;
 	
 	public NeatBoi(double[] w) {
 		weights = w;
 	}
 	
 	public NeatBoi(int b){
-		nodes = new Node[size];
+		input = new Node[b];
 		conns = new ArrayList<Connection>();
+		hidden = new ArrayList<Node>();
+		output = new Node();
 
 		rand = new Random();
 		weights = new double[b];
 		fitness = 0;
 		for(int i = 0; i < b; i++) {
-			nodes[i] = new Node();
-			conns.add(new Connection(i,size - 1,i));
+			input[i] = new Node();
+			conns.add(new Connection(input[i],output,i));
 		}
-		nodes[size - 1] = new Node();
+		innovation = b;
+		
+		for(Connection c : conns)
+			c.out.addIn(c.in);
 		
 		
 	}
@@ -59,6 +65,18 @@ public class NeatBoi implements Comparable<NeatBoi>{
 			}
 			
 			if(mc.get(i) != null && dc.get(i) != null) {
+				if(!mc.get(i).enabled) {
+					newconn.add(mc.get(i));
+					break;
+				}
+					
+				if(!dc.get(i).enabled) {
+					newconn.add(dc.get(i));
+					break;
+				}
+				
+				
+				
 				switch(best){
 				case -1:
 					newconn.add(mc.get(i));
@@ -71,6 +89,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 					break;
 				case 1:
 					newconn.add(dc.get(i));
+					break;
 				}
 
 			}
@@ -82,9 +101,19 @@ public class NeatBoi implements Comparable<NeatBoi>{
 		System.out.println(newconn.size());
 		System.out.println(newconn);
 		this.conns = newconn;
-		this.nodes = mom.nodes;
 		
 
+	}
+	
+	private void connectionMutation() {
+		this.conns.add(null);
+	}
+	
+	private void nodeMutation() {
+		int which = rand.nextInt(conns.size());
+		Connection c1, c2;
+		Node n = new Node();
+		
 	}
 	
 	
@@ -98,13 +127,19 @@ public class NeatBoi implements Comparable<NeatBoi>{
 	
 	public double evaluateNetwork(double[] inputs) {
 		for(int i = 0; i < inputs.length; i++)
-			nodes[i].value = inputs[i];
-		
-		for(Connection c : conns) {
-			if(c != null && c.enabled)
-				nodes[c.out].addValue(nodes[c.in].value*c.weight);
-		}
-		return nodes[size - 1].value;
+			this.input[i].value = inputs[i];
+			
+		return eval(output);
+	}
+	
+	private double eval(Node n) {
+		if(n.in.size() == 0)
+			return n.value;
+		ArrayList<Node> list = n.in;
+		double val = 0;
+		for(int i = 0; i < list.size(); i++)
+			 val += eval(n.in.get(i))*n.we.get(i);
+		return val;
 	}
 	
 	public void setWeights(double[] w) {
@@ -136,22 +171,39 @@ public class NeatBoi implements Comparable<NeatBoi>{
 	
 	class Node{
 		double value;
-		ArrayList<Connection> conns;
-		int outs;
+		ArrayList<Node> in;
+		ArrayList<Double> we;
 		
 		public Node() {
 			value = 0;
-			conns = new ArrayList<Connection>();
-			outs = 0;
+			in = new ArrayList<Node>();
+			we = new ArrayList<Double>();
+
 		}
 		
-		public void addValue(double v) {
-			value += v;
+		public double evalNode() {
+			if(in.size() == 0)
+				return value;
+			value = 0;
+			for(int i = 0; i < we.size(); i++)
+				value += we.get(i) * in.get(i).evalNode();
+			
+			return value;
 		}
 		
-		public void incOuts() {
-			outs++;
+		
+		public void addIn(Node n, double w) {
+			in.add(n);
+			we.add(w);
 		}
+
+
+		@Override
+		public Node clone() {
+			Node n = new Node();
+			return n;
+		}
+		
 		
 		private double sigmoid(double input) {
 			return 1/(1 + Math.exp(-input));
@@ -159,30 +211,42 @@ public class NeatBoi implements Comparable<NeatBoi>{
 		}
 
 	}
+
 	
 	class Connection{
-		private int in, out, innov;
+		private int innov;
+		private Node in, out;
 		private double weight;
 		private boolean enabled;
 		
-		public Connection(int in, int out) {
+		public Connection(Node in, Node out) {
 			this.in = in;
 			this.out = out;
 			this.weight = rand.nextDouble() - 0.5;
+			this.out.addIn(in,weight);
 			this.enabled = true;
 			this.innov = innovation;
 			innovation++;
 
 			}
 		
-		public Connection(int in, int out, int innov) {
+		public Connection(Node in, Node out, int innov) {
 			this.in = in;
 			this.out = out;
 			this.weight = rand.nextDouble() - 0.5;
+			this.out.addIn(in,weight);
 			this.enabled = true;
 			this.innov = innov;
-			innovation = innov + 1;
 			
+		}
+		
+		@Override
+		public Connection clone() {
+			Connection c = new Connection(this.in.clone(), this.out.clone(), this.innov);
+			c.weight = this.weight;
+			c.enabled = this.enabled;
+			
+			return c;
 		}
 		
 		@Override
