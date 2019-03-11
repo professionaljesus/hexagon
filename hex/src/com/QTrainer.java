@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import hex.HexaMap;
 import hex.Hexagon;
 import hex.Player;
-import hex.bots.BeppeBot;
+import hex.bots.BepsiMax.BeppeBot;
 import hex.bots.CrazyBot;
 import hex.bots.QBert;
 import hex.bots.SimpleBot;
@@ -47,14 +47,13 @@ public class QTrainer{
 	
 	
 
-	public QTrainer(Q b) {
+	public QTrainer() {
         mapsize = 4;        
     	player = new Player[3];
-    	initGame(b);
 	}
 	
-	public void initGame(Q b) {
-		player[0] = new QBert(1,mapsize, Color.GREEN, "CrazyBot", b);
+	public void initGame(Q q) {
+		player[0] = new QBert(1,mapsize, Color.GREEN, "QBert", q);
 		player[1] = new SimpleBot(2,mapsize, Color.RED, "Jonte");
 		player[2] = new BeppeBot(3,mapsize, Color.RED, "Beppe");
 
@@ -74,11 +73,15 @@ public class QTrainer{
 	 */
 	public boolean end() {
 		int left = 0;
-
-		for(HashSet<Hexagon> a : H.getPhex()) {
+		HashSet<Hexagon> a;
+		for(int i = 0; i < H.getPhex().size(); i++) {
+			a = H.getPhex().get(i);
 			if(!a.isEmpty()) {
 				left++;
+			}else if(i == 0) {
+				return true;
 			}
+
 		}
 		
 		return left < 2;
@@ -107,10 +110,31 @@ public class QTrainer{
 			for(Hexagon a: H.getClonedPhex().get(p.getId() - 1)) {
 				send.add(a);
 			}
-			H.move(p.algo(send));
+			H.move(p.algo(send));	
 		}
 		H.endTurn();
 		turn++;
+	}
+	
+	public static void main(String arg0[]){
+		Q brain = new Q();
+		QTrainer t = new QTrainer();
+		double wins = 0, games = 0;
+		while(true) {
+			t.initGame(brain);
+			while(!t.end() && t.turn < 2000)
+				t.gamerun();
+			
+			if(t.getWinner() == 0)
+				wins++;
+			games++;
+			
+			System.out.println((wins/games)*100 + "%");
+		}
+		
+		
+		
+	
 	}
 	
 		

@@ -3,12 +3,17 @@ package hex.bots;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 
 import com.Boi;
 import com.Q;
+import com.State;
 
 import hex.HexaMap;
 import hex.Hexagon;
@@ -16,29 +21,39 @@ import hex.Player;
 
 public class QBert extends Player{
 	
-	private double[] w;
-	private double size;
-	private Q gene;
+	private int size;
+	private ArrayList<Integer> aot;
+	private float[][][][] Q;
+	private Random random;
+	private int acts, round;
+	private double discount;
+	private ArrayList<int[]> states;
+	private ArrayList<Integer> actions;
 
-	public QBert(int id, int size, Color c, String name , Q q) {
+	public QBert(int id, int size, Color c, String name, Q q) {
 		super(id, size, c, name);
-		this.gene = q;
 		this.size = (2*size - 1)*(2*size - 1) - (size)*(size-1);
-		
+		this.aot = new ArrayList<Integer>();
+		this.actions = new ArrayList<Integer>();
+		this.states = new ArrayList<int[]>();
+		this.Q = q.getMap();
+		this.acts = Q[0][0][0].length;
+		this.random = new Random();
+		this.discount = 0.3;
+		this.round = 0;
 	}
 	
-	
-	
-	private double statevalue(HashSet<Hexagon> h) {
-		double indanger = 0;
-		double setsize = (double)h.size();
-		double amount = setsize/size;
+	private int[] coordinates(HashSet<Hexagon> h) {
+		float setsize = (float)h.size();
+		float amount = setsize/size;
+		float indanger = 0;
+		ArrayList<Hexagon> indangerhexagons = new ArrayList<Hexagon>();
 		ArrayList<Hexagon> rand = rand(h);
-		double connection = 0;
+		float connection = 0;
 		for(Hexagon r: rand) {
 			for(Hexagon e: enemies(r)) {
-				if(e.getResources() > r.getResources())
-					indanger++;
+				if(!indangerhexagons.contains(r) && e.getResources() > r.getResources())
+					indangerhexagons.add(r);
 			}
 		}
 		
@@ -46,15 +61,159 @@ public class QBert extends Player{
 			connection += (6 - nonfriendly(a).size())/6.0;
 		}
 		
-		indanger = -indanger/setsize;
+		indanger = ((float) indangerhexagons.size())/setsize;
 		
 		connection = connection/setsize;
 		
+		int x = Math.round(amount*100);
+		int y = Math.round(indanger*100);
+		int z = Math.round(100*connection);
 		
-		double[] inputs = {amount,connection,indanger};
+		if(x > Q.length) {
+			System.out.println("x " + x);
+			x = Q.length - 1;
+		}
+		if(y > Q[0].length) {
+			System.out.println("y " + y);
+			y = Q[0].length - 1;
+		}
+		if(z > Q[0][0].length) {
+			System.out.println("z " + z);
+			z = Q[0][0].length - 1;
+		}
+		
+		return new int[] {x,y,z};
+		
+	}
+	
+	private void updateQ(int[] current) {
+		int b = 3;
+		if(round >= b)
+			Q[states.get(round - b)[0]][states.get(round - b)[1]][states.get(round - b)[2]][actions.get(round - b)] += aot.get(round - 1) - aot.get(round - b) + discount*maxReward(states.get(round - 1))[1];
+	}
+	
+	/*
+	 * 0 - boost most in danger
+	 * 1 - attack least protected not owned hex
+	 * 2 - attack easiest enemy
+	 * 3 - attack enemy with least friends
+	 */
+	
+	private Move action(int a, HashSet<Hexagon> h) {
+		actions.set(actions.size() - 1, a);
+		ArrayList<Hexagon> rand = rand(h);
+		ArrayList<Hexagon> set = new ArrayList<Hexagon>();
+		for(Hexagon boi : h) {
+			if(!rand.contains(boi))
+				set.add(boi);
+		}
+		
+		Collections.sort(set, Collections.reverseOrder());
+		
+		int max = 0, min = 10000;
+		Hexagon attacker = null;
+		Hexagon target = null;
+		int resources = 0;
+
+
+		switch(a) {
+		case 0:
+			for(Hexagon r: rand) {
+				int indanger = 0;
+				for(Hexagon e: enemies(r)) {
+					if(e.getResources() > r.getResources())
+						indanger++;
+				}
+				if(target == null || indanger > max) {
+					max = indanger;
+					target = r;
+				}
+			}
+			if(!set.isEmpty())
+				resources = set.get(0).getResources() - 1;
+			break;
+		case 1:
+			
+			for(Hexagon r : rand) {
+				for(Hexagon n : neutral(r)) {
+					if(target == null  || enemies(n).size() < min) {
+						target = n;
+						attacker = r;
+						min = enemies(n).size();
+					}
+				}
+			}
+			if(attacker != null)
+				resources = attacker.getResources() - 1;
+			break;
+		case 2:
+			for(Hexagon r : rand) {
+				for(Hexagon e: enemies(r)) {
+					if(target == null || (e.getResources() < min && e.getResources() < r.getResources())) {
+						min = e.getResources();
+						target = e;
+						attacker = r;
+					}
+					if(attacker != null && target.equals(e) && attacker.getResources() < r.getResources())
+						attacker = r;
 						
-		return gene.evaluateNetwork(inputs);
+				}
+					
+			}
+			if(attacker != null)
+				resources = attacker.getResources() - 1;
+			break;
+		case 3:
+			for(Hexagon r : rand) {
+				for(Hexagon e: enemies(r)) {
+					if(target == null || (enemies(e).size() < min && e.getResources() < r.getResources())) {
+						min = enemies(e).size();
+						target = e;
+						attacker = r;
+					}
+					if(attacker != null && target.equals(e) && attacker.getResources() < r.getResources())
+						attacker = r;
+						
+				}
+					
+			}
+			if(attacker != null)
+				resources = attacker.getResources() - 1;
+			break;
+			
+		default:
+			return null;
+			
+		}
+		if(resources != 0 && attacker != null && target != null)
+			return new Move(resources, attacker, target);
+		else
+			return action(random.nextInt(acts),h);
+
+
+	}
+	
+	
+	private int whatDo(int[] state) {
+		if(random.nextDouble() < 0.25)
+			return random.nextInt(acts);
 		
+		return (int)maxReward(state)[0];
+			
+	}
+	
+	private float[] maxReward(int[] state) {
+		
+		float[] actionlist = Q[state[0]][state[1]][state[2]];
+		float max = 0;
+		int action = random.nextInt(actionlist.length);
+		for(int i = 0; i < actionlist.length; i++) {
+			if(actionlist[i] > max) {
+				max = actionlist[i];
+				action = i;
+			}
+		}
+		return new float[] {(float)action,max};
 	}
 	
 	private ArrayList<Hexagon> rand(HashSet<Hexagon> h){
@@ -72,6 +231,8 @@ public class QBert extends Player{
 		}
 		return rand;
 	}
+	
+	
 	
 	private ArrayList<Hexagon> neutral(Hexagon a){
 		ArrayList<Hexagon> enemies = new ArrayList<Hexagon>();
@@ -100,91 +261,23 @@ public class QBert extends Player{
 		return enemies;
 	}
 		
-	private HashSet<Hexagon> fakeMove(Move m, HashSet<Hexagon> c){
-		
-		Hexagon boi = m.boi.clone();
-		boi.setNeighbours(m.boi.getNeighbours(getId()));
-		Hexagon target = m.target.clone();
-		target.setNeighbours(m.target.getNeighbours(getId()));
-
-		c.remove(boi);
-
-		boi.setResources(boi.getResources() - m.res);
-		c.add(boi);
-		
-		if(target.getOwner() != getId()) {
-			if(target.getResources() <= m.res) {
-				target.setResources(m.res - target.getResources() );
-				target.setOwner(getId());
-			}else
-				target.setResources(target.getResources() - m.res);
-			
-			c.add(target);
-		}else {
-			c.remove(target);
-			target.setResources(m.res + target.getResources() );
-			c.add(target);
-		}
-		
-		for(Hexagon a: c)
-			a.setResources(a.getResources() + 1);
-		
-				
-		return c;
-	}
 
 	@Override
 	public int[] algo(HashSet<Hexagon> H) {
-		
 		if(H.isEmpty())
 			return null;
 		
-		ArrayList<Hexagon> rand = rand(H);
-		HashMap<Move, Double> moves = new HashMap<Move,Double>();
-		HashSet<Hexagon> copy;
-		Move m;
+		aot.add(H.size());
+		states.add(coordinates(H));
+		actions.add(1);
+		round++;
 
-		
-		for(Hexagon r : rand) {
-			for(Hexagon e: nonfriendly(r)) {
-				m = new Move(r.getResources() - 1, r, e);
-				copy = HexaMap.getClonedPhex().get(this.getId() - 1);
-				copy = fakeMove(m, copy);
-				moves.put(m, statevalue(copy)); 
-				if(r.getResources() > e.getResources() + 1) {
-					m = new Move(e.getResources() + 1, r, e);
-					copy = HexaMap.getClonedPhex().get(this.getId() - 1);
-					copy = fakeMove(m, copy);
-					moves.put(m, statevalue(copy)); 
-				}
-			}
-		}
-		
-		for(Hexagon a : H) {
-			for(Hexagon r: rand) {
-				if(!r.equals(a)) {
-					m = new Move(a.getResources() - 1, a, r);
-					copy = HexaMap.getClonedPhex().get(this.getId() - 1);
-					copy = fakeMove(m, copy);
-					moves.put(m, statevalue(copy)); 
-				}
-			}
-		}
-		
-		
-		//System.out.println("------------------------");
-		
-		Map.Entry<Move, Double> bestmove = null;
-		for(Map.Entry<Move, Double> e: moves.entrySet()) {
-			//System.out.println("Crazy Idea : " + e.getKey() + " v: " + e.getValue());
-			if(bestmove == null || e.getValue().compareTo(bestmove.getValue()) > 0) {
-				bestmove = e;
-				
-			}
-		}
+		updateQ(states.get(round - 1));
 
-		return bestmove != null ? bestmove.getKey().getMove() : null;
+
+		return action(whatDo(states.get(round - 1)), H).movearr;
 	}
+	
 	
 	private class Move{
 		int[] movearr;

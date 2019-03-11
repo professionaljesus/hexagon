@@ -32,8 +32,6 @@ public class NeatBoi implements Comparable<NeatBoi>{
 		}
 		innovation = b;
 		
-		for(Connection c : conns)
-			c.out.addIn(c.in);
 		
 		
 	}
@@ -52,8 +50,9 @@ public class NeatBoi implements Comparable<NeatBoi>{
 				mom.conns.add(i, null);
 				if(dc.size() <= i || dc.get(i) == null)
 					newconn.add(null);
-				else
+				else {
 					newconn.add(dc.get(i));
+				}
 			}
 				
 			if(dc.size() <= i || (dc.get(i) != null && dc.get(i).innov > i)) {
@@ -77,7 +76,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 				
 				
 				
-				switch(best){
+			switch(best){
 				case -1:
 					newconn.add(mc.get(i));
 					break;
@@ -105,15 +104,20 @@ public class NeatBoi implements Comparable<NeatBoi>{
 
 	}
 	
-	private void connectionMutation() {
-		this.conns.add(null);
+	private void connectionMutation(double chance) {
+		
+
 	}
 	
-	private void nodeMutation() {
-		int which = rand.nextInt(conns.size());
-		Connection c1, c2;
-		Node n = new Node();
-		
+	private void nodeMutation(double chance) {
+		for(int i = 0; i < conns.size(); i++) {
+			if(rand.nextDouble() < chance) {
+				conns.get(i).enabled = false;
+				Node n = new Node();
+				conns.add(new Connection(conns.get(i).in,n));
+				conns.add(new Connection(n,conns.get(i).out));
+			}
+		}
 	}
 	
 	
@@ -139,6 +143,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 		double val = 0;
 		for(int i = 0; i < list.size(); i++)
 			 val += eval(n.in.get(i))*n.we.get(i);
+		
 		return val;
 	}
 	
@@ -180,7 +185,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 			we = new ArrayList<Double>();
 
 		}
-		
+
 		public double evalNode() {
 			if(in.size() == 0)
 				return value;
@@ -188,7 +193,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 			for(int i = 0; i < we.size(); i++)
 				value += we.get(i) * in.get(i).evalNode();
 			
-			return value;
+			return sigmoid(value);
 		}
 		
 		
@@ -218,7 +223,7 @@ public class NeatBoi implements Comparable<NeatBoi>{
 		private Node in, out;
 		private double weight;
 		private boolean enabled;
-		
+
 		public Connection(Node in, Node out) {
 			this.in = in;
 			this.out = out;

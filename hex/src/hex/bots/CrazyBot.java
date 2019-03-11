@@ -18,7 +18,7 @@ public class CrazyBot extends Player{
 	private double[] w;
 	private double size;
 	private Boi gene;
-
+	//0.28840757649341964, 0.14188537681292093, 0.01269229409707147
 	public CrazyBot(int id, int size, Color c, String name , Boi gene) {
 		super(id, size, c, name);
 		this.gene = gene;
